@@ -6,7 +6,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "My Site",
+  title: "QPaymets",
   tagline: " ",
   url: "https://your-docusaurus-test-site.com",
   baseUrl: "/",
@@ -16,7 +16,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "facebook", // Usually your GitHub org/user name.
+  organizationName: "scripsi", // Usually your GitHub org/user name.
   projectName: "docusaurus", // Usually your repo name.
 
   markdown: {
@@ -38,7 +38,7 @@ const config = {
           docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
         },
         blog: {
-          showReadingTime: true,
+          showReadingTime: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -60,7 +60,7 @@ const config = {
         },
       },
       navbar: {
-        title: "My Site",
+        title: "QPayments",
         logo: {
           alt: "My Site Logo",
           src: "img/logo.svg",
@@ -70,19 +70,21 @@ const config = {
             type: "doc",
             docId: "intro",
             position: "left",
-            label: "Tutorial",
+            label: "Integration Guide",
           },
-          { to: "/blog", label: "Blog", position: "left" },
           {
-            label: "Petstore API",
+            label: "Payments API",
             position: "left",
-            to: "/docs/category/petstore-api",
+            to: "/docs/payment-api",
           },
+          { to: "/blog", label: "Release Notes", position: "left" },
+/*
           {
             href: "https://github.com/facebook/docusaurus",
             label: "GitHub",
             position: "right",
           },
+*/
         ],
       },
       footer: {
@@ -98,7 +100,7 @@ const config = {
             ],
           },
           {
-            title: "Community",
+            title: "Contacts",
             items: [
               {
                 label: "Stack Overflow",
@@ -128,7 +130,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+//        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,
@@ -141,6 +143,12 @@ const config = {
     }),
 
   plugins: [
+    [
+      require.resolve("@cmfcmf/docusaurus-search-local"),
+      {
+        // Options here
+      },
+    ],
     [
       "docusaurus-plugin-openapi-docs",
       {
@@ -165,7 +173,7 @@ const config = {
   themes:
   [
   "docusaurus-theme-openapi-docs",
-  '@docusaurus/theme-mermaid'
+  '@docusaurus/theme-mermaid',
   ],
 };
 
