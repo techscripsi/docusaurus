@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_template_openapi_docs=self.webpackChunkdocusaurus_template_openapi_docs||[]).push([[5945],{86240:e=>{e.exports=JSON.parse('{"title":"API Reference","description":"Some description.","slug":"/payment-api","permalink":"/docusaurus/docs/payment-api","navigation":{"next":{"title":"Pets","permalink":"/docusaurus/docs/petstore/pet"}}}')}}]);
