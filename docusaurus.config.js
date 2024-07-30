@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const config = {
   title: "QPaymets",
   tagline: " ",
-  url: "https://your-docusaurus-test-site.com",
+  url: "https://techscripsi.github.io/docusaurus/",
   baseUrl: "/docusaurus/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
