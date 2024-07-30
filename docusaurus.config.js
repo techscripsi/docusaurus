@@ -19,6 +19,11 @@ const config = {
   organizationName: "scripsi", // Usually your GitHub org/user name.
   projectName: "docusaurus", // Usually your repo name.
 
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en'],
+  },
+
   markdown: {
     mermaid: true,
   },
@@ -32,8 +37,10 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+/*
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+*/
           docLayoutComponent: "@theme/DocPage",
           docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
         },
@@ -41,8 +48,10 @@ const config = {
           showReadingTime: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+/*
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+*/
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -77,7 +86,7 @@ const config = {
             position: "left",
             to: "/docs/payment-api",
           },
-          { to: "/blog", label: "Release Notes", position: "left" },
+          { to: "/blog", label: "Release Log", position: "left" },
 /*
           {
             href: "https://github.com/facebook/docusaurus",
