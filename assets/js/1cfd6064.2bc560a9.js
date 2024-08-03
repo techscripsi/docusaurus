@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkds=self.webpackChunkds||[]).push([[5241],{83851:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"API Reference","description":"Some description.","slug":"/payment-api","permalink":"/docusaurus/docs/payment-api","sidebar":"openApiSidebar","navigation":{"next":{"title":"Pets","permalink":"/docusaurus/docs/petstore/pet"}}}}')}}]);
