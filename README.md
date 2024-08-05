@@ -41,9 +41,13 @@ Nimble Exporter собирает следующие метрики.
 ## Установка
 
 1. Склонируйте репозиторий.
-    git clone https://github.com/deckhouse/nimble_exporter.git
+```bash
+git clone https://github.com/deckhouse/nimble_exporter.git
+```
 1. Перейдите в папку `nimble_exporter` — для этого выполните следующую команду.
-    cd nimble_exporter
+```bash
+cd nimble_exporter
+```
 1. Продолжите процедуру в зависимости от нужного типа
 
 ### Автономная сборка и запуск
@@ -73,6 +77,11 @@ Nimble Exporter собирает следующие метрики.
 | `auth_hash` | Хэш-значение для проверки подлинности. | Не задано |
 | `loglevel` | Уровень отображения информации о событиях (уровень логирования):<ul><br /><li><code>error</code> - только ошибки;</li><li><code>info</code> - ошибки и общие сведения о работе сервера;</li><li><code>verbose</code> - более детальные сведения, чем в <code>info</code>;</li><li><code>debug</code> - наиболее полные сведения.</li></ul>| `info` |
 | `logfmt` | Выходной формат метрик, возможны следующие значения:<br /><ul><li><code>normal</code>;</li><li><code>json</code>.</li></ul> | `json` |
+
+Настройки задаются флагами при запуске приложения:
+
+
+
 
 ## Запуск
 
