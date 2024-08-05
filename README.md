@@ -40,7 +40,7 @@ Nimble Exporter собирает следующие метрики.
 | [Git](https://git-scm.com/) | Для всех типов установок. |
 | [go](https://go.dev/doc/install) | Для автономной сборки. |
 | [Docker Engine](https://docs.docker.com/engine/install/) | Для создания Docker-образа. |
-| [werf](https://ru.werf.io/) | Для интеграции с werf и развёртывания в кластере.<br />Подробные инструкции по интеграции с werf приведены по [ссылке](https://ru.werf.io/getting_started/).|
+| [werf](https://ru.werf.io/) | Для интеграции с werf и развёртывания в кластере.<br />Подробные инструкции по интеграции с werf приведены по [ссылке](https://ru.werf.io/getting_started/?usage=ci&ci=gitlabCiCd&runnerType=hostRunner&os=linux&buildBackend=docker&projectType=simplified&sharedCICD=no&repoType=application).|
 | [kubernetes](https://kubernetes.io/) | Для развёртывания в кластере. |
 
 ## Установка
@@ -71,9 +71,9 @@ Nimble Exporter собирает следующие метрики.
 	Dockerfile  go.mod  go.sum  main.go  monitoring nimble-exporter README.md
 	```
 1. Для проверки запустите экспортер с параметрм `--help`.
-```bash
-./nimble-exporter --help
-```
+	```bash
+	./nimble-exporter --help
+	```
 В выдаче командной строки должен отобразиться список параметров запуска экспортера (см. [описание параметров](#Параметры-запуска) ниже).
 
 ### Создание Docker-контейнера
@@ -86,13 +86,14 @@ Nimble Exporter собирает следующие метрики.
 1. После выполения команды убедитесь, что контейнер создан.
 	```bash
 	sudo docker ps -a
-	```<br />Имя созданного контейнера (в настоящем примере: `srt-exporter`) должно отобразиться в выдаче командной строки.
+	```
+Имя созданного контейнера (в настоящем примере: `srt-exporter`) должно отобразиться в выдаче командной строки.
 	```bash
 	CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
 	3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
 	264f9941854f   hello-world    "/hello"                 37 hours ago         Exited (0) 37 hours ago               nervous_engelbart
 	```
-1. Для проверки запустите контейнер с параметром `--help`.
+3. Для проверки запустите контейнер с параметром `--help`.
 	```bash
 	sudo docker run srt-exporter ./nimble_expter --help
 	```
@@ -111,49 +112,65 @@ Nimble Exporter собирает следующие метрики.
 | `loglevel` | Уровень отображения информации о событиях (уровень логирования):<ul><br /><li><code>error</code> - только ошибки;</li><li><code>info</code> - ошибки и общие сведения о работе сервера;</li><li><code>verbose</code> - более детальные сведения, чем в <code>info</code>;</li><li><code>debug</code> - наиболее полные сведения.</li></ul>| `info` |
 | `logfmt` | Выходной формат метрик, возможны следующие значения:<br /><ul><li><code>normal</code>;</li><li><code>json</code>.</li></ul> | `json` |
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Обратите внимание, что параметры `auth_salt` и `auth_hash` не заданы. Если инфраструктура подразумевает проверку подлинности для получения данных метрики, укажите эти параметры при запуске экспортера.
 
-### Запуск автономной сборки
+### Строка запуска
 
-### Запуск Docker-контейнера
+В общем виде строка запуска выглядит следующим образом.
 
-## Интеграция с werf и использование в кластерной среде
+```
+<CMD> -<параметр1> <значение1> -<параметр2> <значение2>
+```
+Здесь:
+* `<CMD>` - команда запуска экспортера:
+  * для автономной сборки это `./nimble-exporter`, если запускать из папки сборки (в настоящем примере это папка `nimble_exporter`);
+  * для Docker-контейнера в настоящем примере это `sudo docker run srt-exporter ./nimble_expter`;
+* `<параметр>` — параметр запуска экспортера;
+* `<значение>` - задаваемое значение указанного парметра.
+> [!NOTE]  
+> Параметры и возможные значение приведены в разделе [Параметры запуска](#Параметры-запуска) выше.
 
+Ниже представлены примеры запуска экспортера с заданием значенией `auth_salt` и `auth_hash`
 
+* **Автономной сборка**
+```bash
+./nimble-exporter -auth_salt "5144404" -auth_hash "0cc175b9c0f1b6a831c859e269772661"
+```
 
-
-контейнеры
-docker ps -a
-образ
-docker images
-
-## Запуск
-
-
+* **Docker-контейнер**
+```bash
+sudo docker run srt-exporter ./nimble_expter -auth_salt "5144404" -auth_hash "0cc175b9c0f1b6a831c859e269772661"
+```
 
 ## Развёртывание в кластере с werf
 
-Для развёртывания Nimble Exporter в кластере используйте 
+> [!TIP]
+> Пример развёртывания приложения в кластере приведён в [документации werf](https://ru.werf.io/guides/django/100_basic/30_deploy.html).
+
+1. Создайте образ приложения с помощью Docker и werf.
+1. Для развёртывания Nimble Exporter в кластере используйте конфигурацию следующего вида.
 
 ```shell
       - name: srt-exporter
-        image: {{ $.Values.werf.image.exporter }}
+        image: {{ $.Values.werf.image.srt-exporter }}
         command:
         - /nimble_exporter
-        - -auth_salt=590
-        - -auth_hash=xxxx
+        - -auth_salt=5144404
+        - -auth_hash=0cc175b9c0f1b6a831c859e269772661
         ports:
         - containerPort: 9017
-          name: exporter
+          name: srt-exporter
           protocol: TCP
         resources:
-          {{ toYaml $.Values.resources.exporter |  nindent 10 }}
+          {{ toYaml $.Values.resources.srt-exporter |  nindent 10 }}
 ```
 
-* image - образ
+Ниже приведено описание некоторых настроек.
 
-Комментарий
-
-По-разному называется: prometheus exporter for nimble srt, nimble_exporter, srt-exporter, exporter. Остановился на Nimble Exporter.
-Не уверен, нужно ли всякий раз упоминать необходимость sudo.
+* `name` - имя приложения-экспортера, в настоящем примере это `srt-exporter`;
+* `image` - шаблон полного имени Docker-образа экспортера;
+* `auth_salt` - Значние «соли» для проверки подлинности.
+* `auth_hash` - Хэш-значение для проверки подлинности
+> [!TIP]
+> Вы также можете задать [другие параметры запуска](#Параметры-запуска).
