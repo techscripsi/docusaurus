@@ -24,9 +24,9 @@ Nimble Exporter собирает следующие метрики.
 | `SrtSenders` | Метрики отправителей трансляций. | `/manage/srt_sender_stats` | 
 | `SrtReceivers` | Метрики получателей трансляций. | `/manage/srt_receiver_stats` |
 
-| **Примечание** |
-| :--- |
-| Возвращаемые поля по запросу метрик отправителей/получателей трансляций приведены в [спецификации SRT](https://datatracker.ietf.org/doc/html/draft-sharabayko-srt-01). |
+
+> [!NOTE]
+> Возвращаемые поля по запросу метрик отправителей/получателей трансляций приведены в [спецификации SRT](https://datatracker.ietf.org/doc/html/draft-sharabayko-srt-01).
 
 ## Системные требования
 
@@ -82,9 +82,9 @@ Nimble Exporter собирает следующие метрики.
 	```
 	Имя созданного контейнера должно отобразиться в выдаче командной строки.
 
-```diff
+```bash
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
-+3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
+3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
 264f9941854f   hello-world    "/hello"                 37 hours ago         Exited (0) 37 hours ago               nervous_engelbart
 ```
 
