@@ -41,13 +41,13 @@ Nimble Exporter собирает следующие метрики.
 ## Установка
 
 1. Склонируйте репозиторий.
-```bash
-git clone https://github.com/deckhouse/nimble_exporter.git
-```
+	```bash
+	git clone https://github.com/deckhouse/nimble_exporter.git
+	```
 1. Перейдите в папку `nimble_exporter` — для этого выполните следующую команду.
-```bash
-cd nimble_exporter
-```
+	```bash
+	cd nimble_exporter
+	```
 1. Продолжите процедуру в зависимости от нужного типа
 
 ### Автономная сборка и запуск
