@@ -6,17 +6,17 @@
 * [Собираемые метрики](#Собираемые-метрики)
 * [Системные требования](#Системные-требования)
 * [Установка](#Установка)
-   * [Автономная сборка](#Автономная сборка)
+   * [Автономная сборка](#Автономная-сборка)
    * [Создание Docker-контейнера](#Создание-Docker-контейнера)
 * [Запуск](#Запуск)
    * [Параметры запуска](#Параметры-запуска)
    * [Запуск автономной сборки](#Запуск-автономной-сборки)
-   * [Запуск Docker-контейнера](Запуск Docker-контейнера)
-* [Интеграция с werf и использование в кластерной среде](#Интеграция-с-werf-и-использование-в-кластерной-среде)
+   * [Запуск Docker-контейнера](#Запуск-Docker-контейнера)
+* [Развёртывание в кластере с werf](#Развёртывание-в-кластере-с-werf)
 
 ## О приложении
 
-Nimble Exporter - экспортер метрик стриминогового сервера [Nimble Streamer](https://softvelum.com/nimble/) для системы мониторинга [Prometheus](https://prometheus.io/). Для получения метрик экспортер использует [API](https://softvelum.com/nimble/api/) сервера Nimble Streamer.
+Nimble Exporter - экспортер метрик стриминогового сервера [Nimble Streamer](https://softvelum.com/nimble/){:target="_blank"} для системы мониторинга [Prometheus](https://prometheus.io/). Для получения метрик экспортер использует [API](https://softvelum.com/nimble/api/) сервера Nimble Streamer.
 
 Полученные метрики экспортер по умолчанию на выходе представляет в JSON-формате. Это позволяет визуализировать данные с помощью [Grafana](https://grafana.com/).
 
@@ -46,11 +46,11 @@ Nimble Exporter собирает следующие метрики.
 ## Установка
 
 1. Склонируйте репозиторий.
-	```bash
+	```
 	git clone https://github.com/deckhouse/nimble_exporter.git
 	```
 1. Перейдите в папку `nimble_exporter` — для этого выполните следующую команду.
-	```bash
+	```
 	cd nimble_exporter
 	```
 1. Продолжите процедуру в зависимости от нужного типа:
@@ -60,18 +60,18 @@ Nimble Exporter собирает следующие метрики.
 ### Автономная сборка
 
 1. В папке `nimble_exporter` выполните следующую команду.
-	```bash
+	```
 	go build
 	```
 1. Убедитесь, что в папке собран исполняемый файл `nimble-exporter` — для этого выполните команду отображения содержимого текущей папки.
-	```bash
+	```
 	ls -al
 	```<br />Значение `nimble-exporter` должно отобразиться в выдаче командной строки.
 	```
 	Dockerfile  go.mod  go.sum  main.go  monitoring nimble-exporter README.md
 	```
 1. Для проверки запустите экспортер с параметрм `--help`.
-	```bash
+	```
 	./nimble-exporter --help
 	```
 В выдаче командной строки должен отобразиться список параметров запуска экспортера (см. [описание параметров](#Параметры-запуска) ниже).
@@ -79,22 +79,23 @@ Nimble Exporter собирает следующие метрики.
 ### Создание Docker-контейнера
 
 1. В папке `nimble_exporter` выполните следующую команду.
-	```bash
+	```
 	sudo docker build -t srt-exporter .
 	```
 	Здесь: `srt-exporter` — имя будущего Docker-контейнера.
 1. После выполения команды убедитесь, что контейнер создан.
-	```bash
+	```
 	sudo docker ps -a
 	```
 Имя созданного контейнера (в настоящем примере: `srt-exporter`) должно отобразиться в выдаче командной строки.
-	```bash
+
+	```
 	CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
 	3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
 	264f9941854f   hello-world    "/hello"                 37 hours ago         Exited (0) 37 hours ago               nervous_engelbart
 	```
 3. Для проверки запустите контейнер с параметром `--help`.
-	```bash
+	```
 	sudo docker run srt-exporter ./nimble_expter --help
 	```
 В выдаче командной строки должен отобразиться список параметров запуска экспортера (см. [описание параметров](#Параметры-запуска) ниже).
@@ -134,12 +135,12 @@ Nimble Exporter собирает следующие метрики.
 Ниже представлены примеры запуска экспортера с заданием значенией `auth_salt` и `auth_hash`
 
 * **Автономной сборка**
-```bash
+```
 ./nimble-exporter -auth_salt "5144404" -auth_hash "0cc175b9c0f1b6a831c859e269772661"
 ```
 
 * **Docker-контейнер**
-```bash
+```
 sudo docker run srt-exporter ./nimble_expter -auth_salt "5144404" -auth_hash "0cc175b9c0f1b6a831c859e269772661"
 ```
 
