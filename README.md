@@ -82,10 +82,9 @@ Nimble Exporter собирает следующие метрики.
 	```
 	Имя созданного контейнера должно отобразиться в выдаче командной строки.
 
-```bash
+```diff
 CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS                      PORTS     NAMES
-highlight-next-line
-3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
++3cc121b3fe5b   srt-exporter   "./nimble_exporter -…"   About a minute ago   Exited (0) 59 seconds ago             great_solomon
 264f9941854f   hello-world    "/hello"                 37 hours ago         Exited (0) 37 hours ago               nervous_engelbart
 ```
 
