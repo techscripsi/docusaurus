@@ -15,10 +15,6 @@
 
 ## О приложении
 
-<a href="" target="_blank"></a>
-<a href="" target="_blank"></a>
-<a href="" target="_blank"></a>
-
 Nimble Exporter - экспортер метрик стриминогового сервера [Nimble Streamer](https://softvelum.com/nimble/) для системы мониторинга [Prometheus](https://prometheus.io/). Для получения метрик экспортер использует [API](https://softvelum.com/nimble/api/) сервера Nimble Streamer.
 
 Полученные метрики экспортер по умолчанию на выходе представляет в JSON-формате. Это позволяет визуализировать данные с помощью [Grafana](https://grafana.com/).
@@ -138,7 +134,7 @@ Nimble Exporter собирает следующие метрики.
 
 Ниже представлены примеры запуска экспортера с заданием значенией `auth_salt` и `auth_hash`
 
-* **Автономной сборка**
+* **Автономная сборка**
 ```
 ./nimble-exporter -auth_salt "5144404" -auth_hash "0cc175b9c0f1b6a831c859e269772661"
 ```
@@ -175,7 +171,7 @@ sudo docker run srt-exporter ./nimble_expter -auth_salt "5144404" -auth_hash "0c
 
 * `name` - имя приложения-экспортера, в настоящем примере это `srt-exporter`;
 * `image` - шаблон полного имени Docker-образа экспортера;
-* `auth_salt` - Значние «соли» для проверки подлинности.
-* `auth_hash` - Хэш-значение для проверки подлинности
+* `auth_salt` - Значние «соли» для проверки подлинности;
+* `auth_hash` - Хэш-значение для проверки подлинности.
 > [!TIP]
 > Вы также можете задать [другие параметры запуска](#Параметры-запуска).
