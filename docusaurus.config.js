@@ -152,11 +152,11 @@ const config = {
                 href: 'https://scripsi.io/',
               },
               {
-                label: 'Gitbook',
+                label: 'Sphinx',
                 href: 'https://scripsi.io/',
               },
               {
-                label: 'Twitter',
+                label: 'Gitbook',
                 href: 'https://scripsi.io',
               },
             ],
