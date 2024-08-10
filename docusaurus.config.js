@@ -8,19 +8,19 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'QPayments',
+  title: 'QPay',
   tagline: ' ',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://techscripsi.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/docusaurus/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'facebook', // Usually your GitHub org/user name.
+  organizationName: 'techscripsi', // Usually your GitHub org/user name.
   projectName: 'docusaurus', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -44,16 +44,20 @@ const config = {
           docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+/*
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+*/
         },
 
         blog: {
-          showReadingTime: true,
+          showReadingTime: false,
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+/*
           editUrl:
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+*/
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -101,9 +105,9 @@ const config = {
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
       navbar: {
-        title: 'QPayments',
+//        title: 'QPay',
         logo: {
-          alt: 'QPayments Logo',
+          alt: 'QPay Logo',
           src: 'img/logo.svg',
         },
         items: [
@@ -111,47 +115,49 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Integration',
           },
           {
-            label: "Payments API",
+            label: "QPay API",
             position: "left",
             to: "/docs/payment-api",
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
-//          {
-//            href: 'https://github.com/facebook/docusaurus',
-//            label: 'GitHub',
-//            position: 'right',
-//          },
+          {to: '/blog', label: 'Releases', position: 'left'},
+/*
+          {
+            href: 'https://github.com/techscripsi/docusaurus',
+            label: 'Source',
+            position: 'right',
+          },
+*/
         ],
       },
       footer: {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
+            title: 'Scripsi',
             items: [
               {
-                label: 'Tutorial',
-                to: '/docs/intro',
+                label: 'Back to Scripsi',
+                href: 'https://scripsi.io/',
               },
             ],
           },
           {
-            title: 'Community',
+            title: 'Other Examples',
             items: [
               {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                label: 'Antora',
+                href: 'https://scripsi.io/',
               },
               {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
+                label: 'Gitbook',
+                href: 'https://scripsi.io/',
               },
               {
                 label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
+                href: 'https://scripsi.io',
               },
             ],
           },
@@ -159,24 +165,24 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
+                label: 'Releases',
                 to: '/blog',
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
+                href: 'https://github.com/techscripsi/docusaurus',
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `${new Date().getFullYear()} Scripsi, Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
       },
     mermaid: {
-      theme: {light: 'neutral', dark: 'forest'},
+      theme: {light: 'forest', dark: 'forest'},
       },
     }),
 };
