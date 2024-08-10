@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkds=self.webpackChunkds||[]).push([[7472],{55513:s=>{s.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"2024.08.10","permalink":"/docusaurus/blog/20240810111438","unlisted":false}]}')}}]);
