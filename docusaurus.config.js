@@ -113,9 +113,9 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'start',
             position: 'left',
-            label: 'Integration',
+            label: 'Start',
           },
           {
             label: "QPay API",
@@ -182,7 +182,7 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
     mermaid: {
-      theme: {light: 'forest', dark: 'forest'},
+      theme: {light: 'neutral', dark: 'dark'},
       },
     }),
 };

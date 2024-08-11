@@ -33,3 +33,135 @@
 .svg {
   fill: yellow;
 }
+
+.actor {
+  stroke: red;
+  fill: #ececff;
+}
+text.actor {
+  fill: black;
+  stroke: none;
+  font-family: Helvetica;
+}
+
+[data-theme='dark'] .actor {
+  stroke: red;
+  fill: yellow;
+}
+
+[data-theme='dark'] text.actor {
+  fill: green;
+  stroke: none;
+  font-family: Helvetica; 
+}
+
+.actor-line {
+  stroke: blue;
+}
+
+[data-theme='dark'] .actor-line {
+  stroke: green;
+}
+
+.messageLine0 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  marker-end: 'url(#arrowhead)';
+  stroke: black;
+}
+
+[data-theme='dark'] .messageLine0 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+/*  marker-end: 'url(#arrowhead)'; */
+  stroke: purple;
+}
+
+.messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  stroke: black;
+}
+
+[data-theme='dark'] .messageLine1 {
+  stroke-width: 1.5;
+  stroke-dasharray: '2 2';
+  stroke: blue;
+}
+
+#arrowhead {
+  fill: green;
+}
+/*
+[data-theme='dark'] #arrowhead {
+  fill: green;
+}
+*/
+.messageText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+
+[data-theme='dark'] .messageText {
+  fill: green;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+
+.labelBox {
+  stroke: #ccccff;
+  fill: #ececff;
+}
+
+.labelText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+}
+
+[data-theme='dark'] .labelText {
+  fill: yelow;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+}
+
+[data-theme='dark'] .loopText {
+  fill: yellow;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+}
+
+.loopLine {
+  stroke-width: 2;
+  stroke-dasharray: '2 2';
+  marker-end: 'url(#arrowhead)';
+  stroke: #ccccff;
+}
+
+[data-theme='dark'] .loopLine {
+  stroke-width: 2;
+  stroke-dasharray: '2 2';
+  marker-end: 'url(#arrowhead)';
+  stroke: yellow;
+}
+
+.note {
+  stroke: #decc93;
+  fill: #fff5ad;
+}
+
+.noteText {
+  fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
