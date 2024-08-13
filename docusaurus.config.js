@@ -88,6 +88,8 @@ const config = {
     ],
   ],
 
+  trailingSlash: false,
+
   markdown: {
     mermaid: true,
   },

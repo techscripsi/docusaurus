@@ -66,15 +66,15 @@ text.actor {
 .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  marker: 'url(#triangle)';
-  stroke: green;
+  marker-end: 'url(#arrowhead)';
+  stroke: black;
 }
 /*
 [data-theme='dark'] .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   marker-end: 'url(#arrowhead)';
-  stroke: yellow;
+  stroke: purple;
 }
 */
 .messageLine1 {
@@ -89,7 +89,7 @@ text.actor {
   stroke: blue;
 }
 
-#triangle {
+#arrowhead {
   fill: green;
 }
 /*

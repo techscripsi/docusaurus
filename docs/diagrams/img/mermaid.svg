@@ -225,7 +225,7 @@ opt</text>
 </g>
 <text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="80" x="231">
 Входит в ваше приложение</text>
-<line marker-end="url(#arrowhead)" style="fill: none;" stroke="none" stroke-width="2" class="messageLine0" y2="117" x2="385" y1="117" x1="76">
+<line marker="url(#triangle)" style="fill: red;" stroke="red" stroke-width="2" class="messageLine0" y2="117" x2="385" y1="117" x1="76">
 </line>
 <text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="132" x="597">
 checkPurchasesAvailbility</text>
