@@ -35,46 +35,43 @@
 }
 
 .actor {
-  stroke: red;
-  fill: #ececff;
+  stroke: #0077FF;
+  fill: #EBF4FF;
 }
+
 text.actor {
-  fill: black;
+  fill: #0077FF;
   stroke: none;
   font-family: Helvetica;
 }
 
-[data-theme='dark'] .actor {
-  stroke: red;
-  fill: yellow;
-}
-
-[data-theme='dark'] text.actor {
-  fill: green;
-  stroke: none;
-  font-family: Helvetica; 
-}
-
 .actor-line {
-  stroke: blue;
+  stroke: #0077FF;
+  fill: #0077FF;
+}
+
+.activation0 {
+  stroke: "red";
+  fill: "red";
 }
 
 [data-theme='dark'] .actor-line {
-  stroke: green;
+  stroke: #0077FF;
+  fill: #0077FF;
 }
 
 .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   marker: 'url(#arrowhead)';
-  stroke: green;
+  stroke: #0077FF;
 }
 
 [data-theme='dark'] .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   marker-end: 'url(#arrowhead)';
-  stroke: yellow;
+  stroke: #0077FF;
 }
 
 .messageLine1 {
@@ -86,19 +83,9 @@ text.actor {
 [data-theme='dark'] .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  stroke: blue;
+  stroke: #0077FF;
 }
 
-/*
-#arrowhead {
-  fill: green;
-}
-*/
-/*
-[data-theme='dark'] #arrowhead {
-  fill: green;
-}
-*/
 .messageText {
   fill: black;
   stroke: none;
@@ -106,8 +93,16 @@ text.actor {
   font-size: 14px;
 }
 
+.messageTextLink {
+  fill: #0077FF;
+  stroke: none;
+  font-family: monospace;
+  font-size: 14px;
+  text-decoration-line: underline;
+}
+
 [data-theme='dark'] .messageText {
-  fill: green;
+  fill: white;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
@@ -115,7 +110,7 @@ text.actor {
 
 .labelBox {
   stroke: #ccccff;
-  fill: #ececff;
+  fill: #7AB5FA;
 }
 
 .labelText {
@@ -137,7 +132,7 @@ text.actor {
 }
 
 [data-theme='dark'] .loopText {
-  fill: yellow;
+  fill: white;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
 }
@@ -146,14 +141,14 @@ text.actor {
   stroke-width: 2;
   stroke-dasharray: '2 2';
   marker-end: 'url(#arrowhead)';
-  stroke: #ccccff;
+  stroke: #0077FF;
 }
 
 [data-theme='dark'] .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
   marker-end: 'url(#arrowhead)';
-  stroke: yellow;
+  stroke: #0077FF;
 }
 
 .note {

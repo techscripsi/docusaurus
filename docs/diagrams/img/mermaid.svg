@@ -5,7 +5,7 @@
 <svg aria-roledescription="sequence" role="graphics-document document" viewBox="-50 -10 1441 1886" style="max-width: 100%;" xmlns="http://www.w3.org/2000/svg" width="100%" id="graph-div" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="Приложение для оплаты" height="65" width="202" stroke="#666" fill="#eaeaea" y="1800" x="1139">
+<rect class="actor actor-bottom" ry="3" rx="3" name="Приложение для оплаты" height="65" width="202" stroke="#2288FF" fill="#eaeaea" y="1800" x="1139">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="1240">
 <tspan dy="0" x="1240">
@@ -13,7 +13,7 @@
 </text>
 </g>
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="RuStore Cервер" height="65" width="150" stroke="#666" fill="#eaeaea" y="1800" x="939">
+<rect class="actor actor-bottom" ry="3" rx="3" name="RuStore Cервер" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="1800" x="939">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="1014">
 <tspan dy="0" x="1014">
@@ -21,7 +21,7 @@ RuStore Cервер</tspan>
 </text>
 </g>
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="RuStore_Billing_Client" height="65" width="172" stroke="#666" fill="#eaeaea" y="1800" x="717">
+<rect class="actor actor-bottom" ry="3" rx="3" name="RuStore_Billing_Client" height="65" width="172" stroke="#2288FF" fill="#eaeaea" y="1800" x="717">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="803">
 <tspan dy="0" x="803">
@@ -29,7 +29,7 @@ RuStore_Billing_Client</tspan>
 </text>
 </g>
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="Ваш сервер" height="65" width="150" stroke="#666" fill="#eaeaea" y="1800" x="517">
+<rect class="actor actor-bottom" ry="3" rx="3" name="Ваш сервер" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="1800" x="517">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="592">
 <tspan dy="0" x="592">
@@ -37,7 +37,7 @@ RuStore_Billing_Client</tspan>
 </text>
 </g>
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="Ваше приложение" height="65" width="156" stroke="#666" fill="#eaeaea" y="1800" x="311">
+<rect class="actor actor-bottom" ry="3" rx="3" name="Ваше приложение" height="65" width="156" stroke="#2288FF" fill="#eaeaea" y="1800" x="311">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="389">
 <tspan dy="0" x="389">
@@ -45,7 +45,7 @@ RuStore_Billing_Client</tspan>
 </text>
 </g>
 <g>
-<rect class="actor actor-bottom" ry="3" rx="3" name="Покупатель" height="65" width="150" stroke="#666" fill="#eaeaea" y="1800" x="0">
+<rect class="actor actor-bottom" ry="3" rx="3" name="Покупатель" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="1800" x="0">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="1832.5" x="75">
 <tspan dy="0" x="75">
@@ -56,7 +56,7 @@ RuStore_Billing_Client</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="1240" y1="5" x1="1240" id="actor36">
 </line>
 <g id="root-36">
-<rect class="actor actor-top" ry="3" rx="3" name="Приложение для оплаты" height="65" width="202" stroke="#666" fill="#eaeaea" y="0" x="1139">
+<rect class="actor actor-top" ry="3" rx="3" name="Приложение для оплаты" height="65" width="202" stroke="#2288FF" fill="#eaeaea" y="0" x="1139">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="1240">
 <tspan dy="0" x="1240">
@@ -68,7 +68,7 @@ RuStore_Billing_Client</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="1014" y1="5" x1="1014" id="actor35">
 </line>
 <g id="root-35">
-<rect class="actor actor-top" ry="3" rx="3" name="RuStore Cервер" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="939">
+<rect class="actor actor-top" ry="3" rx="3" name="RuStore Cервер" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="0" x="939">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="1014">
 <tspan dy="0" x="1014">
@@ -80,7 +80,7 @@ RuStore Cервер</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="803" y1="5" x1="803" id="actor34">
 </line>
 <g id="root-34">
-<rect class="actor actor-top" ry="3" rx="3" name="RuStore_Billing_Client" height="65" width="172" stroke="#666" fill="#eaeaea" y="0" x="717">
+<rect class="actor actor-top" ry="3" rx="3" name="RuStore_Billing_Client" height="65" width="172" stroke="#2288FF" fill="#eaeaea" y="0" x="717">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="803">
 <tspan dy="0" x="803">
@@ -92,7 +92,7 @@ RuStore_Billing_Client</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="592" y1="5" x1="592" id="actor33">
 </line>
 <g id="root-33">
-<rect class="actor actor-top" ry="3" rx="3" name="Ваш сервер" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="517">
+<rect class="actor actor-top" ry="3" rx="3" name="Ваш сервер" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="0" x="517">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="592">
 <tspan dy="0" x="592">
@@ -104,7 +104,7 @@ RuStore_Billing_Client</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="389" y1="5" x1="389" id="actor32">
 </line>
 <g id="root-32">
-<rect class="actor actor-top" ry="3" rx="3" name="Ваше приложение" height="65" width="156" stroke="#666" fill="#eaeaea" y="0" x="311">
+<rect class="actor actor-top" ry="3" rx="3" name="Ваше приложение" height="65" width="156" stroke="#2288FF" fill="#eaeaea" y="0" x="311">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="389">
 <tspan dy="0" x="389">
@@ -116,7 +116,7 @@ RuStore_Billing_Client</tspan>
 <line stroke="#999" stroke-width="0.5px" class="200" y2="1800" x2="75" y1="5" x1="75" id="actor31">
 </line>
 <g id="root-31">
-<rect class="actor actor-top" ry="3" rx="3" name="Покупатель" height="65" width="150" stroke="#666" fill="#eaeaea" y="0" x="0">
+<rect class="actor actor-top" ry="3" rx="3" name="Покупатель" height="65" width="150" stroke="#2288FF" fill="#eaeaea" y="0" x="0">
 </rect>
 <text class="actor" alignment-baseline="central" dominant-baseline="central" style="text-anchor: middle; font-size: 16px; font-weight: 400;" y="32.5" x="75">
 <tspan dy="0" x="75">
@@ -146,7 +146,7 @@ RuStore_Billing_Client</tspan>
 </defs>
 <defs>
 <marker id="arrowhead" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto">
-<path d="M 0 0 L 10 5 L 0 10 z" fill="green" />
+<path d="M 0 0 L 10 5 L 0 10 z" fill="#0077FF" />
 </marker>
 </defs>
 <defs>
@@ -174,27 +174,27 @@ RuStore_Billing_Client</tspan>
 </marker>
 </defs>
 <g>
-<rect class="activation0" ry="0" rx="0" height="104" width="10" stroke="#666" fill="#EDF2AE" y="117" x="384">
+<rect class="activation0" ry="0" rx="0" height="104" width="10" stroke="#2288FF" fill="#75B4FF" y="117" x="384">
 </rect>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="50" width="10" stroke="#666" fill="#EDF2AE" y="171" x="798">
+<rect class="activation0" ry="0" rx="0" height="50" width="10" stroke="#2288FF" fill="#75B4FF" y="171" x="798">
 </rect>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="498" width="10" stroke="#666" fill="#EDF2AE" y="221" x="384">
+<rect class="activation0" ry="0" rx="0" height="498" width="10" stroke="#2288FF" fill="#75B4FF" y="221" x="384">
 </rect>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="50" width="10" stroke="#666" fill="#EDF2AE" y="275" x="798">
+<rect class="activation0" ry="0" rx="0" height="50" width="10" stroke="#2288FF" fill="#75B4FF" y="275" x="798">
 </rect>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="236" width="10" stroke="#666" fill="#EDF2AE" y="483" x="798">
+<rect class="activation0" ry="0" rx="0" height="236" width="10" stroke="#2288FF" fill="#75B4FF" y="483" x="798">
 </rect>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="291" width="10" stroke="#666" fill="#EDF2AE" y="721" x="384">
+<rect class="activation0" ry="0" rx="0" height="291" width="10" stroke="#2288FF" fill="#75B4FF" y="721" x="384">
 </rect>
 </g>
 <g>
@@ -220,11 +220,11 @@ opt</text>
 </text>
 </g>
 <g>
-<rect class="activation0" ry="0" rx="0" height="428" width="10" stroke="#666" fill="#EDF2AE" y="1298" x="384">
+<rect class="activation0" ry="0" rx="0" height="428" width="10" stroke="#2288FF" fill="#75B4FF" y="1298" x="384">
 </rect>
 </g>
 <g>
-<rect class="activation1" ry="0" rx="0" height="482" width="10" stroke="#666" fill="#EDF2AE" y="1298" x="803">
+<rect class="activation1" ry="0" rx="0" height="482" width="10" stroke="#2288FF" fill="#75B4FF" y="1298" x="803">
 </rect>
 </g>
 <g>
@@ -233,8 +233,11 @@ opt</text>
 Входит в ваше приложение</text>
 <line marker-end="url(#arrowhead)" style="fill: red;" stroke="red" stroke-width="2" class="messageLine0" y2="117" x2="385" y1="117" x1="76">
 </line>
-<text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="132" x="597">
-checkPurchasesAvailbility</text>
+<a xlink:href="#checkpurchasesavailbility">
+<text dy="1em" class="messageTextLink" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="132" x="597">
+checkPurchasesAvailbility
+</text>
+</a>
 <line marker-end="url(#arrowhead)" style="fill: none;" stroke="none" stroke-width="2" class="messageLine0" y2="169" x2="799" y1="169" x1="394">
 </line>
 <text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="184" x="598">
