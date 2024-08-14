@@ -110,7 +110,7 @@ const config = {
 //        title: 'QPay',
         logo: {
           alt: 'QPay Logo',
-          src: 'img/logo.svg',
+          src: 'img/logo-9BC834.svg',
         },
         items: [
           {

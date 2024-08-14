@@ -3,6 +3,7 @@
 <?xml-stylesheet href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" type="text/css"?>
 
 <svg aria-roledescription="sequence" role="graphics-document document" viewBox="-50 -10 1441 1886" style="max-width: 100%;" xmlns="http://www.w3.org/2000/svg" width="100%" id="graph-div" height="100%" xmlns:xlink="http://www.w3.org/1999/xlink">
+
 <g>
 <rect class="actor actor-bottom" ry="3" rx="3" name="Приложение для оплаты" height="65" width="202" stroke="#666" fill="#eaeaea" y="1800" x="1139">
 </rect>
@@ -144,6 +145,11 @@ RuStore_Billing_Client</tspan>
 </symbol>
 </defs>
 <defs>
+<marker id="arrowhead" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto">
+<path d="M 0 0 L 10 5 L 0 10 z" fill="green" />
+</marker>
+</defs>
+<defs>
 <marker orient="auto" markerHeight="12" markerWidth="12" markerUnits="userSpaceOnUse" refY="5" refX="7.9" id="arrowhead">
 <path d="M 0 0 L 10 5 L 0 10 z">
 </path>
@@ -225,7 +231,7 @@ opt</text>
 </g>
 <text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="80" x="231">
 Входит в ваше приложение</text>
-<line marker="url(#triangle)" style="fill: red;" stroke="red" stroke-width="2" class="messageLine0" y2="117" x2="385" y1="117" x1="76">
+<line marker-end="url(#arrowhead)" style="fill: red;" stroke="red" stroke-width="2" class="messageLine0" y2="117" x2="385" y1="117" x1="76">
 </line>
 <text dy="1em" class="messageText" style="font-size: 16px; font-weight: 400;" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" y="132" x="597">
 checkPurchasesAvailbility</text>
