@@ -30,64 +30,58 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-.svg {
-  fill: yellow;
+.rect01 {
+  stroke: none;
+  fill: #EBF4FF;
+}
+
+[data-theme='dark'] .rect01 {
+  stroke: none;
+  fill: #002552;
+}
+
+.rect02 {
+  stroke: none;
+  fill: #F5F5F5;
+}
+
+[data-theme='dark'] .rect02 {
+  stroke: none;
+  fill: #292929;
 }
 
 .actor {
   stroke: #0077FF;
-  fill: #EBF4FF;
+  fill: #0077FF;
 }
 
 text.actor {
-  fill: #0077FF;
+  fill: white;
   stroke: none;
   font-family: Helvetica;
-}
-
-.actor-line {
-  stroke: #0077FF;
-  fill: #0077FF;
-}
-
-.activation0 {
-  stroke: "red";
-  fill: "red";
-}
-
-[data-theme='dark'] .actor-line {
-  stroke: #0077FF;
-  fill: #0077FF;
 }
 
 .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  marker: 'url(#arrowhead)';
-  stroke: #0077FF;
-}
-
-[data-theme='dark'] .messageLine0 {
-  stroke-width: 1.5;
-  stroke-dasharray: '2 2';
-  marker-end: 'url(#arrowhead)';
-  stroke: #0077FF;
+  stroke: #0068cf;
 }
 
 .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
-  stroke: black;
-}
-
-[data-theme='dark'] .messageLine1 {
-  stroke-width: 1.5;
-  stroke-dasharray: '2 2';
-  stroke: #0077FF;
+  stroke: #0068cf;
 }
 
 .messageText {
   fill: black;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-size: 14px;
+}
+
+[data-theme='dark'] .messageText {
+  fill: white;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-size: 14px;
@@ -101,12 +95,14 @@ text.actor {
   text-decoration-line: underline;
 }
 
-[data-theme='dark'] .messageText {
-  fill: white;
+[data-theme='dark'] .messageTextLink {
+  fill: #0077FF;
   stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
+  font-family: monospace;
   font-size: 14px;
+  text-decoration-line: underline;
 }
+
 
 .labelBox {
   stroke: #ccccff;
@@ -120,18 +116,6 @@ text.actor {
 }
 
 [data-theme='dark'] .labelText {
-  fill: yelow;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-}
-
-.loopText {
-  fill: black;
-  stroke: none;
-  font-family: 'trebuchet ms', verdana, arial;
-}
-
-[data-theme='dark'] .loopText {
   fill: white;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
@@ -140,25 +124,30 @@ text.actor {
 .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
-  marker-end: 'url(#arrowhead)';
-  stroke: #0077FF;
+  stroke: #CECECE;
 }
 
 [data-theme='dark'] .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
-  marker-end: 'url(#arrowhead)';
-  stroke: #0077FF;
+  stroke: #EBEBEB;
 }
 
-.note {
-  stroke: #decc93;
-  fill: #fff5ad;
-}
-
-.noteText {
+.loopText {
   fill: black;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
-  font-size: 14px;
+  font-weight: bold;
+}
+
+[data-theme='dark'] .loopText {
+  fill: white;
+  stroke: none;
+  font-family: 'trebuchet ms', verdana, arial;
+  font-weight: bold;
+}
+
+.activation0 {
+  fill: #75B4FF;
+  stroke: #0077FF;
 }
