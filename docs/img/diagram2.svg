@@ -1,0 +1,211 @@
+<svg id="mermaid-svg" width="100%" xmlns="http://www.w3.org/2000/svg" style="max-width: 527.39990234375px;" viewBox="5 -12.39765739440918 527.39990234375 388.19073486328125" role="graphics-document document" aria-roledescription="mindmap" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style xmlns="http://www.w3.org/1999/xhtml" media="">
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css");</style>
+<g/>
+<g class="mindmap-edges">
+<path d="M 392.5043671113266,221.8162671347699 L 437.64567791957586,241.57055579969102 L482.78698872782513,261.32484446461217 " class="edge section-edge-0 edge-depth-0"/>
+<path d="M 207.2970608032307,236.480387280505 L 248.29773885209124,273.1033486653897 L289.2984169009518,309.7263100502744 " class="edge section-edge-1 edge-depth-2"/>
+<path d="M 191.051667002994,240.6091966714562 L 180.0735652115727,271.2564256827362 L169.09546342015142,301.90365469401627 " class="edge section-edge-1 edge-depth-2"/>
+<path d="M 182.87970785804185,219.41975619854594 L 137.7668535799878,195.31899676440756 L92.65399930193378,171.21823733026918 " class="edge section-edge-1 edge-depth-2"/>
+<path d="M 181.42457736910112,229.5434344826624 L 128.55502915255784,240.54394795797418 L75.68548093601456,251.54446143328602 " class="edge section-edge-1 edge-depth-2"/>
+<path d="M 268.69134494883275,156.56686445902633 L 237.80206624711286,186.32396357798066 L206.91278754539297,216.081062696935 " class="edge section-edge-1 edge-depth-1"/>
+<path d="M 265.9386415149592,139.73745048887415 L 221.56447509864108,118.71273683227102 L177.19030868232295,97.6880231756679 " class="edge section-edge-1 edge-depth-1"/>
+<path d="M 280.91541741263615,131.22757824543 L 284.4179723341555,94.43004254487627 L287.9205272556748,57.63250684432252 " class="edge section-edge-1 edge-depth-1"/>
+<path d="M 294.2523625071847,143.47812278050395 L 346.9914029017682,133.8940737531058 L399.73044329635167,124.31002472570763 " class="edge section-edge-1 edge-depth-1"/>
+<path d="M 366.48307965064816,207.18794328927405 L 329.12831818713335,180.98140092133232 L291.7735567236185,154.7748585533906 " class="edge section-edge-1 edge-depth-0"/>
+</g>
+<g class="mindmap-nodes">
+<g class="mindmap-node section--1 section-root" transform="translate(314.36412468515664, 196.90271598997265)" attr="apa-0)">
+<g transform="translate(64.3984375, 18.9)">
+<circle id="node-0" class="node-bkg node-circle" r="64.3984375"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(64.3984375, 5)">
+<g>
+<rect class="background"/>
+<a xlink:href="https://techscripsi.github.io/docusaurus/docs/diagrams"><text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+Documentation</tspan>
+</tspan>
+</text></a>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-0" transform="translate(470.6576999039951, 248.4383956094094)" attr="apa-1)">
+<g transform="translate(25.87109375, 18.9)">
+<circle id="node-1" class="node-bkg node-circle" r="25.87109375"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(25.87109375, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+GILT</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(253.41985543911005, 127.26008585269199)" attr="apa-2)">
+<g transform="translate(26.07421875, 18.9)">
+<circle id="node-2" class="node-bkg node-circle" r="26.07421875"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(26.07421875, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+type</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(163.38349580511567, 207.58784130326933)" attr="apa-3)">
+<g transform="translate(32.7265625, 18.9)">
+<circle id="node-3" class="node-bkg node-circle" r="32.7265625"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(32.7265625, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+guides</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(254.4112006490668, 283.21885755338894)" attr="apa-4)">
+<g transform="translate(46.07421875, 36.49999847412109)">
+<circle id="node-4" class="node-bkg node-circle" r="46.07421875"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(46.07421875, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+user</tspan>
+</tspan>
+<tspan class="text-outer-tspan" x="0" y="1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+admin</tspan>
+</tspan>
+<tspan class="text-outer-tspan" x="0" y="2.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+developer</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(119.66988461802976, 297.12501006220316)" attr="apa-5)">
+<g transform="translate(44.3671875, 18.9)">
+<circle id="node-5" class="node-bkg node-circle" r="44.3671875"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(44.3671875, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+migration</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(44.26349260485995, 145.25015222554578)" attr="apa-6)">
+<g transform="translate(35.16015625, 18.9)">
+<circle id="node-6" class="node-bkg node-circle" r="35.16015625"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(35.16015625, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+update</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(15, 235.70005461267908)" attr="apa-7)">
+<g transform="translate(46, 18.9)">
+<circle id="node-7" class="node-bkg node-circle" r="46"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(46, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+quickstart</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(123.43175100817211, 72.36538781185004)" attr="apa-8)">
+<g transform="translate(40.203125, 18.9)">
+<circle id="node-8" class="node-bkg node-circle" r="40.203125"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(40.203125, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+tutorials</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(244.2442142292009, 15)" attr="apa-9)">
+<g transform="translate(45.09765625, 27.699999237060545)">
+<circle id="node-9" class="node-bkg node-circle" r="45.09765625"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(45.09765625, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+API</tspan>
+</tspan>
+<tspan class="text-outer-tspan" x="0" y="1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+reference</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g class="mindmap-node section-1" transform="translate(363.78170036442634, 93.92806241645906)" attr="apa-10)">
+<g transform="translate(50.70703125, 27.699999237060545)">
+<circle id="node-10" class="node-bkg node-circle" r="50.70703125"/>
+</g>
+<g dy="1em" alignment-baseline="middle" dominant-baseline="middle" text-anchor="middle" transform="translate(50.70703125, 5)">
+<g>
+<rect class="background"/>
+<text y="-10.1">
+<tspan class="text-outer-tspan" x="0" y="-0.1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+knowledgle</tspan>
+</tspan>
+<tspan class="text-outer-tspan" x="0" y="1em" dy="1.1em">
+<tspan font-style="normal" class="text-inner-tspan" font-weight="normal">
+base</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+</g>
+</svg>

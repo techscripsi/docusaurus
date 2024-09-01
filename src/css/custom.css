@@ -151,3 +151,24 @@ text.actor {
   fill: #75B4FF;
   stroke: #0077FF;
 }
+
+
+.edge {
+  fill: purple;
+  stroke: purple;
+}
+
+.text-inner-tspan {
+  fill: green;
+  stroke: none;
+}
+
+.section--1 {
+  fill: yellow;
+  stroke: none;
+}
+
+.section--1:hover {
+  fill: blue;
+  stroke: none;
+}

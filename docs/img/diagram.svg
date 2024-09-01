@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg aria-roledescription="mindmap" role="graphics-document document" viewBox="10 500 630 390" style="max-width: 100%;" xmlns="http://www.w3.org/2000/svg" width="100%" id="graph-div" height="200%" xmlns:xlink="http://www.w3.org/1999/xlink">
+<style>
+#graph-div{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;fill:#333;}
+#graph-div .error-icon{fill:#552222;}
+#graph-div .error-text{fill:#552222;stroke:#552222;}
+#graph-div .edge-thickness-normal{stroke-width:1px;}
+#graph-div .edge-thickness-thick{stroke-width:3.5px;}
+#graph-div .edge-pattern-solid{stroke-dasharray:0;}
+#graph-div .edge-thickness-invisible{stroke-width:0;fill:none;}
+#graph-div .edge-pattern-dashed{stroke-dasharray:3;}
+#graph-div .edge-pattern-dotted{stroke-dasharray:2;}
+#graph-div .marker{fill:#333333;stroke:#333333;}
+#graph-div .marker.cross{stroke:#333333;}
+#graph-div svg{font-family:"trebuchet ms",verdana,arial,sans-serif;font-size:16px;}
+#graph-div p{margin:0;}
+#graph-div .edge{stroke-width:3;}
+#graph-div .section--1 rect,#graph-div .section--1 path,#graph-div .section--1 circle,#graph-div .section--1 polygon,#graph-div .section--1 path{fill:hsl(240, 100%, 76.2745098039%);}
+#graph-div .section--1 text{fill:#ffffff;}
+#graph-div .node-icon--1{font-size:40px;color:#ffffff;}
+#graph-div .section-edge--1{stroke:hsl(240, 100%, 76.2745098039%);}
+#graph-div .edge-depth--1{stroke-width:17;}
+#graph-div .section--1 line{stroke:hsl(60, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-0 rect,#graph-div .section-0 path,#graph-div .section-0 circle,#graph-div .section-0 polygon,#graph-div .section-0 path{fill:hsl(60, 100%, 73.5294117647%);}
+#graph-div .section-0 text{fill:black;}
+#graph-div .node-icon-0{font-size:40px;color:black;}
+#graph-div .section-edge-0{stroke:hsl(60, 100%, 73.5294117647%);}
+#graph-div .edge-depth-0{stroke-width:14;}
+#graph-div .section-0 line{stroke:hsl(240, 100%, 83.5294117647%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-1 rect,#graph-div .section-1 path,#graph-div .section-1 circle,#graph-div .section-1 polygon,#graph-div .section-1 path{fill:hsl(80, 100%, 76.2745098039%);}
+#graph-div .section-1 text{fill:black;}
+#graph-div .node-icon-1{font-size:40px;color:black;}
+#graph-div .section-edge-1{stroke:hsl(80, 100%, 76.2745098039%);}
+#graph-div .edge-depth-1{stroke-width:11;}
+#graph-div .section-1 line{stroke:hsl(260, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-2 rect,#graph-div .section-2 path,#graph-div .section-2 circle,#graph-div .section-2 polygon,#graph-div .section-2 path{fill:hsl(270, 100%, 76.2745098039%);}
+#graph-div .section-2 text{fill:#ffffff;}
+#graph-div .node-icon-2{font-size:40px;color:#ffffff;}
+#graph-div .section-edge-2{stroke:hsl(270, 100%, 76.2745098039%);}
+#graph-div .edge-depth-2{stroke-width:8;}
+#graph-div .section-2 line{stroke:hsl(90, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-3 rect,#graph-div .section-3 path,#graph-div .section-3 circle,#graph-div .section-3 polygon,#graph-div .section-3 path{fill:hsl(300, 100%, 76.2745098039%);}
+#graph-div .section-3 text{fill:black;}
+#graph-div .node-icon-3{font-size:40px;color:black;}
+#graph-div .section-edge-3{stroke:hsl(300, 100%, 76.2745098039%);}
+#graph-div .edge-depth-3{stroke-width:5;}
+#graph-div .section-3 line{stroke:hsl(120, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-4 rect,#graph-div .section-4 path,#graph-div .section-4 circle,#graph-div .section-4 polygon,#graph-div .section-4 path{fill:hsl(330, 100%, 76.2745098039%);}
+#graph-div .section-4 text{fill:black;}
+#graph-div .node-icon-4{font-size:40px;color:black;}
+#graph-div .section-edge-4{stroke:hsl(330, 100%, 76.2745098039%);}
+#graph-div .edge-depth-4{stroke-width:2;}
+#graph-div .section-4 line{stroke:hsl(150, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-5 rect,#graph-div .section-5 path,#graph-div .section-5 circle,#graph-div .section-5 polygon,#graph-div .section-5 path{fill:hsl(0, 100%, 76.2745098039%);}
+#graph-div .section-5 text{fill:black;}
+#graph-div .node-icon-5{font-size:40px;color:black;}
+#graph-div .section-edge-5{stroke:hsl(0, 100%, 76.2745098039%);}
+#graph-div .edge-depth-5{stroke-width:-1;}
+#graph-div .section-5 line{stroke:hsl(180, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-6 rect,#graph-div .section-6 path,#graph-div .section-6 circle,#graph-div .section-6 polygon,#graph-div .section-6 path{fill:hsl(30, 100%, 76.2745098039%);}
+#graph-div .section-6 text{fill:black;}
+#graph-div .node-icon-6{font-size:40px;color:black;}
+#graph-div .section-edge-6{stroke:hsl(30, 100%, 76.2745098039%);}
+#graph-div .edge-depth-6{stroke-width:-4;}
+#graph-div .section-6 line{stroke:hsl(210, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-7 rect,#graph-div .section-7 path,#graph-div .section-7 circle,#graph-div .section-7 polygon,#graph-div .section-7 path{fill:hsl(90, 100%, 76.2745098039%);}
+#graph-div .section-7 text{fill:black;}
+#graph-div .node-icon-7{font-size:40px;color:black;}
+#graph-div .section-edge-7{stroke:hsl(90, 100%, 76.2745098039%);}
+#graph-div .edge-depth-7{stroke-width:-7;}
+#graph-div .section-7 line{stroke:hsl(270, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-8 rect,#graph-div .section-8 path,#graph-div .section-8 circle,#graph-div .section-8 polygon,#graph-div .section-8 path{fill:hsl(150, 100%, 76.2745098039%);}
+#graph-div .section-8 text{fill:black;}
+#graph-div .node-icon-8{font-size:40px;color:black;}
+#graph-div .section-edge-8{stroke:hsl(150, 100%, 76.2745098039%);}
+#graph-div .edge-depth-8{stroke-width:-10;}
+#graph-div .section-8 line{stroke:hsl(330, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-9 rect,#graph-div .section-9 path,#graph-div .section-9 circle,#graph-div .section-9 polygon,#graph-div .section-9 path{fill:hsl(180, 100%, 76.2745098039%);}
+#graph-div .section-9 text{fill:black;}
+#graph-div .node-icon-9{font-size:40px;color:black;}
+#graph-div .section-edge-9{stroke:hsl(180, 100%, 76.2745098039%);}
+#graph-div .edge-depth-9{stroke-width:-13;}
+#graph-div .section-9 line{stroke:hsl(0, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-10 rect,#graph-div .section-10 path,#graph-div .section-10 circle,#graph-div .section-10 polygon,#graph-div .section-10 path{fill:hsl(210, 100%, 76.2745098039%);}
+#graph-div .section-10 text{fill:black;}
+#graph-div .node-icon-10{font-size:40px;color:black;}
+#graph-div .section-edge-10{stroke:hsl(210, 100%, 76.2745098039%);}
+#graph-div .edge-depth-10{stroke-width:-16;}
+#graph-div .section-10 line{stroke:hsl(30, 100%, 86.2745098039%);stroke-width:3;}
+#graph-div .disabled,#graph-div .disabled circle,#graph-div .disabled text{fill:lightgray;}
+#graph-div .disabled text{fill:#efefef;}
+#graph-div .section-root rect,#graph-div .section-root path,#graph-div .section-root circle,#graph-div .section-root polygon{fill:hsl(240, 100%, 46.2745098039%);}
+#graph-div .section-root text{fill:#ffffff;}
+#graph-div .icon-container{height:100%;display:flex;justify-content:center;align-items:center;}
+#graph-div .edge{fill:none;}
+#graph-div .mindmap-node-label{dy:1em;alignment-baseline:middle;text-anchor:middle;dominant-baseline:middle;text-align:center;}
+#graph-div :root{--mermaid-font-family:"trebuchet ms",verdana,arial,sans-serif;}</style>
+<g>
+</g>
+<g class="mindmap-edges">
+<path class="edge section-edge-0 edge-depth-0" d="M 456.2788804694002,116.47896028325268 L 517.6788830513323,121.89987268550513 L579.0788856332643,127.32078508775759">
+</path>
+<path class="edge section-edge-1 edge-depth-2" d="M 197.48439065937924,225.87316229475357 L 230.8539203017433,263.24152080211013 L264.22344994410736,300.60987930946663">
+</path>
+<path class="edge section-edge-1 edge-depth-2" d="M 178.9303777725031,227.00050206432408 L 158.45144804507856,256.4543243626219 L137.97251831765402,285.9081466609197">
+</path>
+<path class="edge section-edge-1 edge-depth-2" d="M 172.55553247552598,216.0494140013793 L 120.62166692617961,220.79362838379174 L68.68780137683324,225.5378427662042">
+</path>
+<path class="edge section-edge-1 edge-depth-2" d="M 175.75924227124372,205.34078920431193 L 142.43722190261133,178.80594335771286 L109.11520153397893,152.27109751111374">
+</path>
+<path class="edge section-edge-1 edge-depth-1" d="M 274.4518072727784,150.6265933603374 L 237.01103408908773,178.20745819122922 L199.57026090539705,205.78832302212103">
+</path>
+<path class="edge section-edge-1 edge-depth-1" d="M 274.15821254169356,133.24656190869533 L 236.30628913420207,107.28826107437774 L198.4543657267106,81.32996024006016">
+</path>
+<path class="edge section-edge-1 edge-depth-1" d="M 291.8484474258955,127.70508559489542 L 305.3336031313785,92.15254386043384 L318.8187588368615,56.60000212597225">
+</path>
+<path class="edge section-edge-1 edge-depth-1" d="M 299.31330161340384,149.57577579214535 L 347.2226549889872,178.97699748811024 L395.13200836457054,208.37821918407514">
+</path>
+<path class="edge section-edge-1 edge-depth-0" d="M 426.55317390574373,117.69716844057429 L 363.9328683168261,128.44492563479943 L301.31256272790847,139.19268282902456">
+</path>
+</g>
+<g class="mindmap-nodes">
+<g transform="translate(372.587002307836, 96.38476469314037)" class="mindmap-node section--1 section-root">
+<g transform="translate(68.75, 18.775)">
+<circle r="68.75" class="node-bkg node-circle" id="node-0">
+</circle>
+</g>
+<g transform="translate(68.75, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+Documentation</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(563.3957637948286, 109.86498067786988)" class="mindmap-node section-0">
+<g transform="translate(30.625, 18.775)">
+<circle r="30.625" class="node-bkg node-circle" id="node-1">
+</circle>
+</g>
+<g transform="translate(30.625, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+GILT</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(257.15373432581623, 122.95508657645848)" class="mindmap-node section-1">
+<g transform="translate(29.375, 18.775)">
+<circle r="29.375" class="node-bkg node-circle" id="node-2">
+</circle>
+</g>
+<g transform="translate(29.375, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+type</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(149.99333385235923, 195.90982980599995)" class="mindmap-node section-1">
+<g transform="translate(37.5, 18.775)">
+<circle r="37.5" class="node-bkg node-circle" id="node-3">
+</circle>
+</g>
+<g transform="translate(37.5, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+guides</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(141.70884394258792, 54.071435572297)" class="mindmap-node section-1">
+<g transform="translate(44.375, 18.775)">
+<circle r="44.375" class="node-bkg node-circle" id="node-8">
+</circle>
+</g>
+<g transform="translate(44.375, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+tutorials</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(275.38847193694073, 15)" class="mindmap-node section-1">
+<g transform="translate(48.75, 27.57500114440918)">
+<circle r="48.75" class="node-bkg node-circle" id="node-9">
+</circle>
+</g>
+<g transform="translate(48.75, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+API</tspan>
+</tspan>
+<tspan dy="1.1em" y="1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+reference</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(354.16657565215814, 188.6489072553528)" class="mindmap-node section-1">
+<g transform="translate(53.75, 27.57500114440918)">
+<circle r="53.75" class="node-bkg node-circle" id="node-10">
+</circle>
+</g>
+<g transform="translate(53.75, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+knowledgle</tspan>
+</tspan>
+<tspan dy="1.1em" y="1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+base</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(224.83950675112737, 275.42321332409915)" class="mindmap-node section-1">
+<g transform="translate(49.375, 36.37499847412109)">
+<circle r="49.375" class="node-bkg node-circle" id="node-4">
+</circle>
+</g>
+<g transform="translate(49.375, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+user</tspan>
+</tspan>
+<tspan dy="1.1em" y="1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+admin</tspan>
+</tspan>
+<tspan dy="1.1em" y="2.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+developer</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(80.0345622377979, 279.4488189192439)" class="mindmap-node section-1">
+<g transform="translate(49.375, 18.775)">
+<circle r="49.375" class="node-bkg node-circle" id="node-5">
+</circle>
+</g>
+<g transform="translate(49.375, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+migration</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(15, 208.12742696158352)" class="mindmap-node section-1">
+<g transform="translate(38.75, 18.775)">
+<circle r="38.75" class="node-bkg node-circle" id="node-6">
+</circle>
+</g>
+<g transform="translate(38.75, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+update</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+<g transform="translate(46.756109952863426, 124.15205690942571)" class="mindmap-node section-1">
+<g transform="translate(50.625, 18.775)">
+<circle r="50.625" class="node-bkg node-circle" id="node-7">
+</circle>
+</g>
+<g transform="translate(50.625, 5)" text-anchor="middle" dominant-baseline="middle" alignment-baseline="middle" dy="1em">
+<g>
+<rect style="stroke: none" class="background">
+</rect>
+<text style="" y="-10.1">
+<tspan dy="1.1em" y="-0.1em" x="0" class="text-outer-tspan">
+<tspan font-weight="normal" class="text-inner-tspan" font-style="normal">
+quickstart</tspan>
+</tspan>
+</text>
+</g>
+</g>
+</g>
+</g>
+</svg>
