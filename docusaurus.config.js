@@ -41,7 +41,6 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
-          docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
 /*
@@ -49,15 +48,20 @@ const config = {
             'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
 */
         },
-
         blog: {
           showReadingTime: false,
+          feedOptions: {
+            type: ['rss', 'atom'],
+            xslt: true,
+          },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-/*
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-*/
+          // editUrl:
+           // 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // Useful options to enforce blogging best practices
+          // onInlineTags: 'warn',
+          // onInlineAuthors: 'warn',
+          // onUntruncatedBlogPosts: 'warn',
         },
         theme: {
           customCss: './src/css/custom.css',
@@ -65,41 +69,6 @@ const config = {
       }),
     ],
   ],
-
-  plugins: [
-    [
-      "docusaurus-plugin-openapi-docs",
-      {
-        id: "openapi",
-        docsPluginId: "classic",
-        config: {
-          petstore: {
-            specPath: "examples/dbaas.json",
-            outputDir: "docs/petstore",
-            downloadUrl:
-              "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-template-openapi-docs/main/examples/petstore.yaml",
-            sidebarOptions: {
-              groupPathsBy: "tag",
-              categoryLinkSource: "tag",
-            },
-          },
-        },
-      },
-    ],
-  ],
-
-  trailingSlash: false,
-
-  markdown: {
-    mermaid: true,
-  },
-
-  themes: [
-    "docusaurus-theme-openapi-docs",
-    '@docusaurus/theme-mermaid'
-    ], // export theme components
-
-
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -109,7 +78,7 @@ const config = {
       navbar: {
 //        title: 'QPay',
         logo: {
-          alt: 'QPay Logo',
+          alt: 'QPay',
           src: 'img/logo-9BC834.svg',
         },
         items: [
@@ -117,18 +86,13 @@ const config = {
             type: 'docSidebar',
             sidebarId: 'start',
             position: 'left',
-            label: 'Start',
+            label: 'Get Started',
           },
-          {
-            label: "QPay API",
-            position: "left",
-            to: "/docs/payment-api",
-          },
-          {to: '/blog', label: 'Releases', position: 'left'},
+          {to: '/blog', label: 'Release Notes', position: 'left'},
 /*
           {
-            href: 'https://github.com/techscripsi/docusaurus',
-            label: 'Source',
+            href: 'https://github.com/facebook/docusaurus',
+            label: 'GitHub',
             position: 'right',
           },
 */
@@ -182,9 +146,6 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
-      },
-    mermaid: {
-      theme: {light: 'neutral', dark: 'dark'},
       },
     }),
 };
