@@ -88,7 +88,7 @@ const config = {
             position: 'left',
             label: 'Get Started',
           },
-          {to: '/blog', label: 'Release Notes', position: 'left'},
+          {to: '/blog', label: 'Releases', position: 'left'},
 /*
           {
             href: 'https://github.com/facebook/docusaurus',
