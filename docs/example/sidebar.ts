@@ -4,22 +4,16 @@ const sidebar: SidebarsConfig = {
   apisidebar: [
     {
       type: "doc",
-      id: "example/sample-application-flow-oauth-2-project",
+      id: "example/rustore-api",
     },
     {
       type: "category",
-      label: "UNTAGGED",
+      label: "Получение токена авторизации",
       items: [
         {
           type: "doc",
-          id: "example/server-example-operation",
-          label: "Server example operation",
-          className: "api-method get",
-        },
-        {
-          type: "doc",
-          id: "example/server-heartbeat-operation",
-          label: "Server heartbeat operation",
+          id: "example/auth",
+          label: "auth",
           className: "api-method get",
         },
       ],

@@ -1,41 +1,80 @@
 openapi: 3.0.0
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: 'https://virtserver.swaggerhub.com/TECHSCRIPSI/test/1.0.0'
+  - description: QPay API
+    url: https://public-api.rustore.ru/public
 info:
-  version: 1.0.0
-  title: Sample Application Flow OAuth2 Project
-  description: This is an example of using OAuth2 Application Flow in a specification to describe security to your API.
-security:
-  - application:
-      - read
-      - write
+  version: "1.0.0"
+  title: RuStore API
+  description: Автоматизируйте процессы обновлений и управления версиями через API
 paths:
-  /example:
+  /auth/:
     get:
-      summary: Server example operation
-      description: This is an example operation to show how security is applied to the call.
+      tags:
+        - Получение токена авторизации
+      description: Метод позволяет сгенерировать JWE-токен с помощью приватного ключа, полученного в системе RuStore Консоль. Также метод проводит проверку активности владельца приложения.
+      operationId: auth
+      parameters:
+        - in: query
+          required: true
+          name: keyId
+          description: Идентификатор ключа
+          schema:
+            type: string
+            example: 1275328
+        - in: query
+          required: true
+          name: timestamp
+          description: Время отправки запроса. Не должно отличаться от текущего серверного времени более, чем на 60 секунд.
+          schema:
+            type: string
+            example: 2022-07-08T13:24:41.8328711+03:00
+        - in: query
+          required: true
+          name: signature
+          description: RSA-подпись SHA-512 hash от строки, содержащей <code>timestamp</code> запроса. 
+          schema:
+            type: string
+            example: U4kh.......nFkbuw==
       responses:
         '200':
-          description: OK
-  /ping:
-    get:
-      summary: Server heartbeat operation
-      description: 'This operation shows how to override the global security defined above, as we want to open it up for all users.'
-      security: []
-      responses:
-        '200':
-          description: OK
-components:
-  schemas: {}
-  securitySchemes:
-    application:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: 'http://example.com/oauth/token'
-          scopes:
-            write: allows modifying resources
-            read: allows reading resources
-x-extension-1: null
+          description: Успешный ответ.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: string
+                    example: OK
+                  message:
+                    type: string
+                    example: null
+                  timestamp:
+                    type: string
+                    example: 2022-07-08T13:24:41.8328711+03:00
+                  body:
+                    type: object
+                    properties:
+                      jwe:
+                        type: integer
+                        format: string
+                        example: eyJjdHkiOiJK…sv16aBl8tTg.VkWuTw
+                      ttl:
+                        type: integer
+                        format: int
+                        example: 900
+        '400':
+          description: Ответ с ошибкой.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: string
+                    example: error
+                  message:
+                    type: string
+                    example: Range timestamp not valid
