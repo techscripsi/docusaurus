@@ -24,6 +24,8 @@ import Heading from "@theme/Heading";
 import OperationTabs from "@theme/OperationTabs";
 import TabItem from "@theme/TabItem";
 
+import Id from '/docs/__snippets__/id.mdx'
+
 <Heading
   as={"h1"}
   className={"openapi__heading"}
@@ -38,9 +40,9 @@ import TabItem from "@theme/TabItem";
   
 </MethodEndpoint>
 
-
-
 Метод позволяет сгенерировать JWE-токен с помощью приватного ключа, полученного в системе RuStore Консоль. Также метод проводит проверку активности владельца приложения.
+
+<Id />
 
 <Heading
   id={"request"}
@@ -112,7 +114,7 @@ import TabItem from "@theme/TabItem";
           required={true}
           schemaName={"string"}
           qualifierMessage={undefined}
-          schema={{"type":"string","x-stoplight":{"id":"ywwfs9x5a8c72"},"description":"RSA-подпись SHA-512 hash от строки, содержащей `timestamp` запроса. \r\n\r\nАлгоритм создания и проверки подписи: SHA512withRSA. \r\n\r\nНеобходимые действия для формирования signature: \r\n\r\n1. Cоздайте сообщение для подписи, конкатенируя идентификатор ключа `keyId` и текущую дату `timestamp`.\r\n  :::note ПРИМЕР\r\n  * `keyId`: `123`\r\n  * `timestamp`: `2024-06-18T11:49:08.290+03:00`\r\n  * Получившееся сообщение (итог конкатенации): `1232024-06-18T11:49:08.290+03:00`\r\n  :::\r\n1. Вычислите хэш сообщения из пункта выше с использованием алгоритма SHA-512, получите `9d864a0…………3d757f`.\r\n1. Полученный в [RuStore Консоль](https://console.rustore.ru/sign-in) закрытый ключ, который представлен в формате `Base64` декодируйте, чтобы получить приватный ключ RSA. \r\n1. Используйте его для создания цифровой подписи хэша из п.2.<\r\n1. Закодирйте подпись из п.3 в `Base64` для получения `signature`, получившийся итог `AkLM0pQM……….xw==` и есть параметр `signature`.","example":"AkLM0pQM……….xw=="}}
+          schema={{"type":"string","x-stoplight":{"id":"ywwfs9x5a8c72"},"description":"RSA-подпись SHA-512 hash от строки, содержащей <code>timestamp</code> запроса.<br /> Алгоритм создания и проверки подписи: SHA512withRSA.<br />Необходимые действия для формирования <code>signature</code>:<p /><ol><li>Cоздайте сообщение для подписи, конкатенируя идентификатор ключа <code>keyId</code> и текущую дату <code>timestamp</code>.</li><ul><table><tr><td><b>Пример</b><br /><li><code>keyId</code>: <code>123</code></li><li><code>timestamp</code>: <code>2024-06-18T11:49:08.290+03:00</code></li><li>Получившееся сообщение (итог конкатенации): <code>1232024-06-18T11:49:08.290+03:00</code></li></ul></tr></table></td><li>Вычислите хэш сообщения из пункта выше с использованием алгоритма SHA-512, получите  <code>9d864a0…………3d757f</code>.</li><li>Полученный в RuStore Консоль закрытый ключ, который представлен в формате Base64 декодируйте, чтобы получить закрытый ключ RSA.</li><li>Используйте его для создания цифровой подписи хэша из п.2.</li><li>Закодирйте подпись из п.3 в Base64 для получения <code>signature</code>, получившийся итог <code>AkLM0pQM……….xw==</code> и есть параметр <code>signature</code>.</li></ol>"}}
         >
           
         </SchemaItem>
@@ -177,7 +179,7 @@ import TabItem from "@theme/TabItem";
                         required={true}
                         schemaName={"string"}
                         qualifierMessage={undefined}
-                        schema={{"type":"string","example":"OK","description":"Другое описание"}}
+                        schema={{"type":"string","example":"OK","description":"Код ответа."}}
                       >
                         
                       </SchemaItem><SchemaItem
@@ -186,7 +188,7 @@ import TabItem from "@theme/TabItem";
                         required={false}
                         schemaName={"string"}
                         qualifierMessage={undefined}
-                        schema={{"type":"string","example":"null","description":"<table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>","nullable":true}}
+                        schema={{"type":"string","example":"null","description":"Расшифровка кода ответа в случае ошибки.","nullable":true}}
                       >
                         
                       </SchemaItem><SchemaItem
@@ -230,7 +232,7 @@ import TabItem from "@theme/TabItem";
                               required={true}
                               schemaName={"string"}
                               qualifierMessage={undefined}
-                              schema={{"type":"string","example":"eyJlbmMiOiJBM......nuuM227D_O1A"}}
+                              schema={{"type":"string","description":"Токен доступа к RuStore API (содержимое <code>payload</code>). Многоразового использования.","example":"eyJlbmMiOiJBM......nuuM227D_O1A"}}
                             >
                               
                             </SchemaItem><SchemaItem
@@ -239,7 +241,7 @@ import TabItem from "@theme/TabItem";
                               required={true}
                               schemaName={"integer"}
                               qualifierMessage={undefined}
-                              schema={{"type":"integer","example":900}}
+                              schema={{"type":"integer","description":"Срок жизни токена в секундах. Срок жизни составляет <code>900</code> секунд.","example":900}}
                             >
                               
                             </SchemaItem>
@@ -251,7 +253,7 @@ import TabItem from "@theme/TabItem";
                         required={true}
                         schemaName={"string"}
                         qualifierMessage={undefined}
-                        schema={{"type":"string","example":"2022-07-08T13:24:41.8328711+03:00"}}
+                        schema={{"type":"string","description":"Время ответа.","example":"2022-07-08T13:24:41.8328711+03:00"}}
                       >
                         
                       </SchemaItem>
@@ -333,7 +335,7 @@ import TabItem from "@theme/TabItem";
                         required={true}
                         schemaName={"string"}
                         qualifierMessage={undefined}
-                        schema={{"type":"string","example":"Range timestamp not valid","description":"<table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>"}}
+                        schema={{"type":"string","example":"Range timestamp not valid","description":"<table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.  ...</td></tr></table>"}}
                       >
                         
                       </SchemaItem>
