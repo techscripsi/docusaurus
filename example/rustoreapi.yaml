@@ -1,0 +1,119 @@
+openapi: 3.0.0
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: 'https://virtserver.swaggerhub.com/TECHSCRIPSI/RuStore/1.0.0'
+  - description: ''
+    url: 'https://public-api.rustore.ru'
+info:
+  version: 1.0.0
+  title: home-iot-api
+  description: Автоматизируйте процессы обновлений и управления версиями через API.
+paths:
+  /public/auth/:
+    post:
+      summary: Метод получения токена авторизации
+      tags: []
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: OK
+                    message: null
+                    body:
+                      jwe: eyJlbmMiOiJBM......nuuM227D_O1A
+                      ttl: 900
+                    timestamp: '2023-08-11T13:31:17.580+03:00'
+                required:
+                  - code
+                  - body
+                  - timestamp
+                properties:
+                  code:
+                    type: string
+                    example: OK
+                    description: Другое описание
+                  message:
+                    type: string
+                    example: 'null'
+                    description: <table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>
+                    nullable: true
+                  body:
+                    type: object
+                    required:
+                      - jwe
+                      - ttl
+                    properties:
+                      jwe:
+                        type: string
+                        example: eyJlbmMiOiJBM......nuuM227D_O1A
+                      ttl:
+                        type: integer
+                        example: 900
+                  timestamp:
+                    type: string
+                    example: '2022-07-08T13:24:41.8328711+03:00'
+        '400':
+          description: Неуспешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: '400'
+                    message: Range timestamp not valid
+                required:
+                  - code
+                  - message
+                properties:
+                  code:
+                    type: string
+                    example: error
+                    description: Код ответа.
+                  message:
+                    type: string
+                    example: Range timestamp not valid
+                    description: <table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>
+      operationId: get-auth
+      description: 'Метод позволяет сгенерировать JWE-токен с помощью приватного ключа, полученного в системе RuStore Консоль. Также метод проводит проверку активности владельца приложения.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - keyId
+                - timestamp
+                - signature
+              properties:
+                companyId:
+                  type: string
+                  x-stoplight:
+                    id: 2gsutwe5auimt
+                  description: '`id` компании.'
+                  example: '123'
+                  deprecated: true
+                keyId:
+                  type: string
+                  x-stoplight:
+                    id: c45jib4vzc15r
+                  description: '`id` ключа.'
+                  example: '20240926020918'
+                timestamp:
+                  type: string
+                  x-stoplight:
+                    id: cc79d1rd1g9no
+                  example: '2022-07-08T13:24:41.8328711+03:00'
+                  description: 'Время отправки запроса. Не должно отличаться от текущего серверного времени более, чем на 60 секунд.'
+                signature:
+                  type: string
+                  x-stoplight:
+                    id: ywwfs9x5a8c72
+                  description: "RSA-подпись SHA-512 hash от строки, содержащей `timestamp` запроса. \r\n\r\nАлгоритм создания и проверки подписи: SHA512withRSA. \r\n\r\nНеобходимые действия для формирования signature: \r\n\r\n1. Cоздайте сообщение для подписи, конкатенируя идентификатор ключа `keyId` и текущую дату `timestamp`.\r\n  :::note ПРИМЕР\r\n  * `keyId`: `123`\r\n  * `timestamp`: `2024-06-18T11:49:08.290+03:00`\r\n  * Получившееся сообщение (итог конкатенации): `1232024-06-18T11:49:08.290+03:00`\r\n  :::\r\n1. Вычислите хэш сообщения из пункта выше с использованием алгоритма SHA-512, получите `9d864a0…………3d757f`.\r\n1. Полученный в [RuStore Консоль](https://console.rustore.ru/sign-in) закрытый ключ, который представлен в формате `Base64` декодируйте, чтобы получить приватный ключ RSA. \r\n1. Используйте его для создания цифровой подписи хэша из п.2.<\r\n1. Закодирйте подпись из п.3 в `Base64` для получения `signature`, получившийся итог `AkLM0pQM……….xw==` и есть параметр `signature`."
+                  example: AkLM0pQM……….xw==
+    parameters: []

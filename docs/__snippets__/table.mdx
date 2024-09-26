@@ -1,0 +1,5 @@
+| `code` | `message` | Описание | Возможные действия |
+| --- | --- | --- | --- |
+| `400` | `Range timestamp not valid` | Параметр `timestamp` отличается более чем на 60 секунд. | Обновите `timestamp` и `signature` |
+| `400` | `Signature encode error` | Параметр `signature` сгенерирован некорректно | Необходимо заново сгенерировать параметр `signature`. |
+| `400` | `KeyId must not be null, please use this parameter for token generation` | Обязательно использование одного из параметров `keyId`. | Проверьте, что указан параметр `keyId`. |

@@ -75,8 +75,8 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "example/example.yaml",
-            outputDir: "docs/example",
+            specPath: "example/rustoreapi.yaml",
+            outputDir: "docs/rustoreapi",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",

@@ -1,0 +1,361 @@
+---
+id: get-auth
+title: "Метод получения токена авторизации"
+description: "Метод позволяет сгенерировать JWE-токен с помощью приватного ключа, полученного в системе RuStore Консоль. Также метод проводит проверку активности владельца приложения."
+sidebar_label: "Метод получения токена авторизации"
+hide_title: true
+hide_table_of_contents: true
+api: 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
+sidebar_class_name: "post api-method"
+info_path: docs/rustoreapi/home-iot-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Метод получения токена авторизации"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/public/auth/"}
+>
+  
+</MethodEndpoint>
+
+
+
+Метод позволяет сгенерировать JWE-токен с помощью приватного ключа, полученного в системе RuStore Консоль. Также метод проводит проверку активности владельца приложения.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"companyId"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","x-stoplight":{"id":"2gsutwe5auimt"},"description":"`id` компании.","example":"123","deprecated":true}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"keyId"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","x-stoplight":{"id":"c45jib4vzc15r"},"description":"`id` ключа.","example":"20240926020918"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"timestamp"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","x-stoplight":{"id":"cc79d1rd1g9no"},"example":"2022-07-08T13:24:41.8328711+03:00","description":"Время отправки запроса. Не должно отличаться от текущего серверного времени более, чем на 60 секунд."}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"signature"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","x-stoplight":{"id":"ywwfs9x5a8c72"},"description":"RSA-подпись SHA-512 hash от строки, содержащей `timestamp` запроса. \r\n\r\nАлгоритм создания и проверки подписи: SHA512withRSA. \r\n\r\nНеобходимые действия для формирования signature: \r\n\r\n1. Cоздайте сообщение для подписи, конкатенируя идентификатор ключа `keyId` и текущую дату `timestamp`.\r\n  :::note ПРИМЕР\r\n  * `keyId`: `123`\r\n  * `timestamp`: `2024-06-18T11:49:08.290+03:00`\r\n  * Получившееся сообщение (итог конкатенации): `1232024-06-18T11:49:08.290+03:00`\r\n  :::\r\n1. Вычислите хэш сообщения из пункта выше с использованием алгоритма SHA-512, получите `9d864a0…………3d757f`.\r\n1. Полученный в [RuStore Консоль](https://console.rustore.ru/sign-in) закрытый ключ, который представлен в формате `Base64` декодируйте, чтобы получить приватный ключ RSA. \r\n1. Используйте его для создания цифровой подписи хэша из п.2.<\r\n1. Закодирйте подпись из п.3 в `Base64` для получения `signature`, получившийся итог `AkLM0pQM……….xw==` и есть параметр `signature`.","example":"AkLM0pQM……….xw=="}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Успешный ответ
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"code"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","example":"OK","description":"Другое описание"}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={false}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","example":"null","description":"<table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>","nullable":true}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={true}
+                        className={"schemaItem"}
+                      >
+                        <details
+                          style={{}}
+                          className={"openapi-markdown__details"}
+                        >
+                          <summary
+                            style={{}}
+                          >
+                            <span
+                              className={"openapi-schema__container"}
+                            >
+                              <strong
+                                className={"openapi-schema__property"}
+                              >
+                                body
+                              </strong><span
+                                className={"openapi-schema__name"}
+                              >
+                                 object
+                              </span><span
+                                className={"openapi-schema__divider"}
+                              >
+                                
+                              </span><span
+                                className={"openapi-schema__required"}
+                              >
+                                required
+                              </span>
+                            </span>
+                          </summary><div
+                            style={{"marginLeft":"1rem"}}
+                          >
+                            <SchemaItem
+                              collapsible={false}
+                              name={"jwe"}
+                              required={true}
+                              schemaName={"string"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"string","example":"eyJlbmMiOiJBM......nuuM227D_O1A"}}
+                            >
+                              
+                            </SchemaItem><SchemaItem
+                              collapsible={false}
+                              name={"ttl"}
+                              required={true}
+                              schemaName={"integer"}
+                              qualifierMessage={undefined}
+                              schema={{"type":"integer","example":900}}
+                            >
+                              
+                            </SchemaItem>
+                          </div>
+                        </details>
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"timestamp"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","example":"2022-07-08T13:24:41.8328711+03:00"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"code\": \"OK\",\n  \"message\": \"null\",\n  \"body\": {\n    \"jwe\": \"eyJlbmMiOiJBM......nuuM227D_O1A\",\n    \"ttl\": 900\n  },\n  \"timestamp\": \"2022-07-08T13:24:41.8328711+03:00\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem><TabItem
+        label={"400"}
+        value={"400"}
+      >
+        <div>
+          
+          
+          Неуспешный ответ
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <SchemaItem
+                        collapsible={false}
+                        name={"code"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","example":"error","description":"Код ответа."}}
+                      >
+                        
+                      </SchemaItem><SchemaItem
+                        collapsible={false}
+                        name={"message"}
+                        required={true}
+                        schemaName={"string"}
+                        qualifierMessage={undefined}
+                        schema={{"type":"string","example":"Range timestamp not valid","description":"<table><tr><th><code>message</code></th><th>Описание</th><th>Возможные действия</th></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr><tr><td><code>Range timestamp not valid</code></td><td>Параметр <code>timestamp</code> отличается более чем на 60 секунд.</td><td>Обновите <code>timestamp<code> и <code>signature</code>.</td></tr></table>"}}
+                      >
+                        
+                      </SchemaItem>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{\n  \"code\": \"error\",\n  \"message\": \"Range timestamp not valid\"\n}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
