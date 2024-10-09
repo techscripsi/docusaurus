@@ -87,7 +87,7 @@ const config: Config = {
     ]
   ],
 
-  themes: ["docusaurus-theme-openapi-docs"], // export theme components
+  themes: [ "docusaurus-theme-openapi-docs", ], // export theme components
 
   themeConfig: {
     // Replace with your project's social card
@@ -103,9 +103,21 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'start',
           position: 'left',
-          label: 'Get Started',
+          label: 'Integration',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        {
+          type: 'docSidebar',
+          sidebarId: 'panel',
+          position: 'left',
+          label: 'Merchant Panel',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'api',
+          position: 'left',
+          label: 'API',
+        },
+        {to: '/blog', label: 'Releases', position: 'left'},
 /*
         {
           href: 'https://github.com/facebook/docusaurus',
