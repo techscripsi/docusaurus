@@ -7,6 +7,15 @@
 /* You can override the default Infima variables here. */
 /* 9BC834 это цвет, который выглядит норм в светлом и тёмном, вроде бы  */
 :root {
+  --ifm-color-primary: #9bc834;
+/*  --ifm-color-primary: #3e443c; */
+  --ifm-color-primary-dark: #383d36;
+  --ifm-color-primary-darker: #353a33;
+  --ifm-color-primary-darkest: #2b302a;
+  --ifm-color-primary-light: #444b42;
+  --ifm-color-primary-lighter: #474e45;
+  --ifm-color-primary-lightest: #51584e;
+/*
   --ifm-color-primary: #3578E5;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -16,6 +25,7 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+*/
 /*bootstrap - стили из CSS bootstrap */
 
   --bs-blue:#0d6efd;
