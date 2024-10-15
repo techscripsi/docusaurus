@@ -2,7 +2,7 @@ openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
     url: 'https://virtserver.swaggerhub.com/TECHSCRIPSI/RuStore/1.0.0'
-  - description: ''
+  - description: 'some'
     url: 'https://public-api.rustore.ru'
 info:
   version: 1.0.0
@@ -116,4 +116,52 @@ paths:
                     id: ywwfs9x5a8c72
                   description: "RSA-подпись SHA-512 hash от строки, содержащей `timestamp` запроса. \r\n\r\nАлгоритм создания и проверки подписи: SHA512withRSA. \r\n\r\nНеобходимые действия для формирования signature: \r\n\r\n1. Cоздайте сообщение для подписи, конкатенируя идентификатор ключа `keyId` и текущую дату `timestamp`.\r\n  :::note ПРИМЕР\r\n  * `keyId`: `123`\r\n  * `timestamp`: `2024-06-18T11:49:08.290+03:00`\r\n  * Получившееся сообщение (итог конкатенации): `1232024-06-18T11:49:08.290+03:00`\r\n  :::\r\n1. Вычислите хэш сообщения из пункта выше с использованием алгоритма SHA-512, получите `9d864a0…………3d757f`.\r\n1. Полученный в [RuStore Консоль](https://console.rustore.ru/sign-in) закрытый ключ, который представлен в формате `Base64` декодируйте, чтобы получить приватный ключ RSA. \r\n1. Используйте его для создания цифровой подписи хэша из п.2.<\r\n1. Закодирйте подпись из п.3 в `Base64` для получения `signature`, получившийся итог `AkLM0pQM……….xw==` и есть параметр `signature`."
                   example: AkLM0pQM……….xw==
-    parameters: []
+  /payment:
+    post:
+      summary: Payment Creation
+      description: РАЗВЁРНУТОЕ ОПИСАНИЕ РЕГИСТРАЦИИ ЗАКАЗА.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  format: int32
+                  description: 'Payment amount in minimum currency units.'
+                  example: '599'
+                currency:
+                  type: string
+                  description: 'ISO 639-1 currency code.'
+                  example: 'EUR'
+                method:
+                  type: string
+                  description: 'Supported payment method.'
+                  enum: 
+                    - card
+                    - mobile
+                  example: 'card'
+                language:
+                  type: string
+                  description: 'ISO 4217 language code.'
+                  example: 'en'
+              required:
+                - amount
+                - currency
+                - method
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  Example 1:
+                    code: OK
+                    message: null
+                    timestamp: '2023-08-11T13:31:17.580+03:00'
+                required:
+                  - code
+                  - timestamp

@@ -16,6 +16,12 @@ const sidebar: SidebarsConfig = {
           label: "Метод получения токена авторизации",
           className: "api-method post",
         },
+        {
+          type: "doc",
+          id: "rustoreapi/payment-creation",
+          label: "Payment Creation",
+          className: "api-method post",
+        },
       ],
     },
   ],

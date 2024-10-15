@@ -1,0 +1,204 @@
+---
+id: payment-creation
+title: "Payment Creation"
+description: "РАЗВЁРНУТОЕ ОПИСАНИЕ РЕГИСТРАЦИИ ЗАКАЗА."
+sidebar_label: "Payment Creation"
+hide_title: true
+hide_table_of_contents: true
+api: eJytVV1rG0cU/SvDfe1KWklNE++bawwxpdhYzpPQw2g1kSbZ2dnMh20hFmwF2kIeKlpCTCGpm0CfU4OIQ2PlL9z9R2Vm5WgrlbaU7otGd+899+OcOzuBAdOx4pnhMoUI8BJn+AJ/wHO8xJf4Bl/jK3xO8BX+jBf4C87wJV44wyU+xx+96bWP+RUv8ILgC5zhTx5iVocAFHtimTZfysEYognEMjUsNe5IsyzhMXVpG4+0yz0BHY+YoO5kxhmDCGT/EYsNBJApmTFlONM+Vkhboiz9eGrYkCkI4KFUgprS1G5BsNbeAR0LlhpSIhCeEsFTLqwgsVWKpfGY2JQb7Wpnp1RkiYO/s7UFeQC3LpXE2iieDjfS7HX2yRftrVpzBRvLAfsz6u6DQ4cqmBnJwT9jdmyWSWXYgGTLJspID5paAVEXYqoGEICQfZ4w6FWz+Vd5AAlNh5YO2b9r4vNW8y65DfmLHlgKeV7SzBUbuBqW5FTG9anHXp6X3jqTqS65bIWh+1lT4ZviHD/ivPgOb4pn+J7gopjiFc6LqQP+ryo6rS0r95l3yzNplsocONf9r3y1WvsJpTZJAjBcMG2oyCCCVthq18J7tWbzqNmO2s2oebd+5174WdiOwnBjFB60CuAHUOEcMqm9vKkZQQQNxYZcGy9kzdQxUxqi7vpwOid0OGTqvu2T7YM9sm2NJF/L+HHJoVUJRDAyJtNRo3HMlSmR6roMG9l+PZaicbS7c7+zc7h30NlrHNqOkYo1mvWwHkIerGfUUrAN6Mz2Ex7XaMbrymoXX1cW8l4AjojD1eLv3qpltbh+o6oL5ZehMpelkFdi9UoLgKcPpQNyoylrK2t2QzZekSMpWI1L4wrbkDTO8KqY4gI/4Ntiitf4Dq+Ls+Ipvi+mOCf4sTjDRfENzovz4rx4RnCBv+ENLvAKf8c53uC10+I1KZ5617cre/E98fo8K87dH/zgvL51BpzjO0dU3dXv+BbUyzSlglVupB3FvIzXa65cmv/35bxcD8NOTSNLKPcT9iRPlorswidF9gIYObFGXZhM+lSzByrJc2d+YpkaQ9TtBXBMFad9x0O3lwcwYnTAlJfwY+ZY3ilbqR25zM49sa6CjS12EiwjtuOYZeZvfXsV3Rzsd44ggP7yeyPKrVb0xH2L6AlEAAFIP1p/B3jbpKqzEtM9fwA4o8tv
+sidebar_class_name: "post api-method"
+info_path: docs/rustoreapi/home-iot-api
+custom_edit_url: null
+---
+
+import ApiTabs from "@theme/ApiTabs";
+import DiscriminatorTabs from "@theme/DiscriminatorTabs";
+import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
+import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
+import MimeTabs from "@theme/MimeTabs";
+import ParamsItem from "@theme/ParamsItem";
+import ResponseSamples from "@theme/ResponseSamples";
+import SchemaItem from "@theme/SchemaItem";
+import SchemaTabs from "@theme/SchemaTabs";
+import Heading from "@theme/Heading";
+import OperationTabs from "@theme/OperationTabs";
+import TabItem from "@theme/TabItem";
+
+<Heading
+  as={"h1"}
+  className={"openapi__heading"}
+  children={"Payment Creation"}
+>
+</Heading>
+
+<MethodEndpoint
+  method={"post"}
+  path={"/register"}
+>
+  
+</MethodEndpoint>
+
+
+
+РАЗВЁРНУТОЕ ОПИСАНИЕ РЕГИСТРАЦИИ ЗАКАЗА.
+
+<Heading
+  id={"request"}
+  as={"h2"}
+  className={"openapi-tabs__heading"}
+  children={"Request"}
+>
+</Heading>
+
+<MimeTabs
+  className={"openapi-tabs__mime"}
+>
+  <TabItem
+    label={"application/json"}
+    value={"application/json-schema"}
+  >
+    <details
+      style={{}}
+      className={"openapi-markdown__details mime"}
+      data-collapsed={false}
+      open={true}
+    >
+      <summary
+        style={{}}
+        className={"openapi-markdown__details-summary-mime"}
+      >
+        <h3
+          className={"openapi-markdown__details-summary-header-body"}
+        >
+          Body
+        </h3>
+      </summary><div
+        style={{"textAlign":"left","marginLeft":"1rem"}}
+      >
+        
+      </div><ul
+        style={{"marginLeft":"1rem"}}
+      >
+        <SchemaItem
+          collapsible={false}
+          name={"amount"}
+          required={true}
+          schemaName={"int32"}
+          qualifierMessage={undefined}
+          schema={{"type":"integer","format":"int32","description":"Payment amount in minimum currency units.","example":"599"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"currency"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"ISO 639-1 currency code.","example":"EUR"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"method"}
+          required={true}
+          schemaName={"string"}
+          qualifierMessage={"**Possible values:** [`card`, `mobile`]"}
+          schema={{"type":"string","description":"Supported payment method.","enum":["card","mobile"],"example":"card"}}
+        >
+          
+        </SchemaItem><SchemaItem
+          collapsible={false}
+          name={"language"}
+          required={false}
+          schemaName={"string"}
+          qualifierMessage={undefined}
+          schema={{"type":"string","description":"ISO 4217 language code.","example":"en"}}
+        >
+          
+        </SchemaItem>
+      </ul>
+    </details>
+  </TabItem>
+</MimeTabs><div>
+  <div>
+    <ApiTabs
+      label={undefined}
+      id={undefined}
+    >
+      <TabItem
+        label={"200"}
+        value={"200"}
+      >
+        <div>
+          
+          
+          Успешный ответ
+          
+          
+        </div><div>
+          <MimeTabs
+            className={"openapi-tabs__mime"}
+            schemaType={"response"}
+          >
+            <TabItem
+              label={"application/json"}
+              value={"application/json"}
+            >
+              <SchemaTabs
+                className={"openapi-tabs__schema"}
+              >
+                <TabItem
+                  label={"Schema"}
+                  value={"Schema"}
+                >
+                  <details
+                    style={{}}
+                    className={"openapi-markdown__details response"}
+                    data-collapsed={false}
+                    open={true}
+                  >
+                    <summary
+                      style={{}}
+                      className={"openapi-markdown__details-summary-response"}
+                    >
+                      <strong>
+                        Schema
+                      </strong>
+                    </summary><div
+                      style={{"textAlign":"left","marginLeft":"1rem"}}
+                    >
+                      
+                    </div><ul
+                      style={{"marginLeft":"1rem"}}
+                    >
+                      <div
+                        style={{"marginTop":".5rem","marginBottom":".5rem"}}
+                      >
+                        
+                        
+                        object
+                        
+                        
+                      </div>
+                    </ul>
+                  </details>
+                </TabItem><TabItem
+                  label={"Example (from schema)"}
+                  value={"Example (from schema)"}
+                >
+                  <ResponseSamples
+                    responseExample={"{}"}
+                    language={"json"}
+                  >
+                    
+                  </ResponseSamples>
+                </TabItem>
+              </SchemaTabs>
+            </TabItem>
+          </MimeTabs>
+        </div>
+      </TabItem>
+    </ApiTabs>
+  </div>
+</div>
+      
