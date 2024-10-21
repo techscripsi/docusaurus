@@ -75,8 +75,8 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "example/rustoreapi.yaml",
-            outputDir: "docs/rustoreapi",
+            specPath: "example/api.yaml",
+            outputDir: "docs/api",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
@@ -84,7 +84,19 @@ const config: Config = {
           } satisfies OpenApiPlugin.Options,
         }
       },
-    ]
+    ],
+
+        [
+            "docusaurus-plugin-remote-content",
+            {
+                // options here
+                name: "gitflick", // used by CLI, must be path safe
+                sourceBaseUrl: "https://raw.githubusercontent.com/techscripsi/docusaurus/refs/heads/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                outDir: "docs/remote", // the base directory to output to.
+                documents: ["README.md"], // the file names to download
+                noRuntimeDownloads: true,
+            },
+        ]
   ],
 
   themes: [ "docusaurus-theme-openapi-docs", ], // export theme components
@@ -107,7 +119,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'panel',
+          sidebarId: 'FAQ',
           position: 'left',
           label: 'Merchant Panel',
         },
@@ -116,6 +128,12 @@ const config: Config = {
           sidebarId: 'api',
           position: 'left',
           label: 'API',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'faq',
+          position: 'left',
+          label: 'FAQ',
         },
         {to: '/blog', label: 'Releases', position: 'left'},
 /*
