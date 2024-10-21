@@ -1,0 +1,8 @@
+{
+  "label": "Как настроить способы оплаты",
+  "position": 40,
+  "link": {
+    "type": "doc",
+    "id": "purchases-and-returns/payment-method"
+  }
+}

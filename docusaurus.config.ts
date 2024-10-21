@@ -85,18 +85,30 @@ const config: Config = {
         }
       },
     ],
-
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'users',
+        path: 'users',
+        routeBasePath: 'users',
+        sidebarPath: './users.ts',
+        // ... other options
+      },
+    ]
+/* плагин для включения удалённых файлов, пока не получается тянуть из github, gitflick
         [
             "docusaurus-plugin-remote-content",
             {
                 // options here
                 name: "gitflick", // used by CLI, must be path safe
-                sourceBaseUrl: "https://raw.githubusercontent.com/techscripsi/docusaurus/refs/heads/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
+                sourceBaseUrl: "https://github.com/techscripsi/docusaurus/blob/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
                 outDir: "docs/remote", // the base directory to output to.
-                documents: ["README.md"], // the file names to download
+                documents: ["ANOTHER.md"], // the file names to download
                 noRuntimeDownloads: true,
             },
         ]
+*/
+
   ],
 
   themes: [ "docusaurus-theme-openapi-docs", ], // export theme components
@@ -119,7 +131,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'FAQ',
+          sidebarId: 'faq',
           position: 'left',
           label: 'Merchant Panel',
         },
