@@ -119,7 +119,7 @@ paths:
   /payment:
     post:
       summary: Payment Creation
-      description: РАЗВЁРНУТОЕ ОПИСАНИЕ РЕГИСТРАЦИИ ЗАКАЗА.
+      description: Use this method to send a payment request to QPay.
       requestBody:
         content:
           application/json:
@@ -131,25 +131,53 @@ paths:
                   format: int32
                   description: 'Payment amount in minimum currency units.'
                   example: '599'
+                amountModifier:
+                  type: number
+                  format: float
+                  description: 'The <code>amount</code> parameter is multiplied by this value. You can use it to calculate quantities or discounts.'
+                  example: '0.9'
                 currency:
                   type: string
-                  description: 'ISO 639-1 currency code.'
+                  description: '<a href="https://en.wikipedia.org/wiki/ISO_4217">ISO 4217</a> currency code.'
                   example: 'EUR'
-                method:
+                description:
                   type: string
-                  description: 'Supported payment method.'
-                  enum: 
-                    - card
-                    - mobile
-                  example: 'card'
+                  description: 'Optional description.'
+                  example: 'Online order.'
                 language:
                   type: string
-                  description: 'ISO 4217 language code.'
+                  description: '<a href="https://localizely.com/iso-639-1-list/">ISO 639-1</a> language code.'
                   example: 'en'
+                toConfirm:
+                  type: boolean
+                  description: 'Is it a two-step payment:<ul><li><code>true</code> — payment confirmation required;</li><li><code>false</code> — confirmation not required.</li></ul>'
+                  example: true
+                confirm:
+                  type: object
+                  description: 'Payment confirmation options.'
+                  properties:
+                    auto:
+                      type: integer
+                      description: 'Defines an auto action that is taken after the specified period passes:<br /><ul><li>negative values (e.g. <code>-1</code>, <code>-2</code>, etc.) — the payment expires automatically after the specified period if no confirmation request is sent;</li><li><code>positive values (e.g. <code>1</code>, <code>2</code>, etc.)</code> — the payment is completed automatically if no confirmation request is sent within the specified period.</li><li><code>0</code> — the payment must be confirmed manually, otherwise the default QPay gateway settings are applied: the payment request expires in <code>7</code> <code>days</code></li></ul><br /><b>Default value</b>: <code>0</code>.'
+                      example: '48'
+                    period:
+                      type: string
+                      description: 'Time period after which the action defined by the <code>auto</code> parameter (complete, expire, QPay defaults) is taken. Legal values:<br /><ul><li><code>minutes</code>;<li><code>hours</code>;</li><li><code>days</code>.</li></ul><br /><b>Default value</b>: not defined.'
+                      example: 'hours'
+                recurring:
+                  type: object
+                  description: 'Recurring payment options.'
+                  properties:
+                    type:
+                      type: string
+                      description: 'Whether this payment initiates a series of recurring payments or a regular recurring payment. Legal values:<br /><ul><li><code>init</code> — initial payment that starts recurring payments;</li><li><code>regular</li> — a regular recurring payment</code>.</ul>'
+                    recurringId:
+                      type: string
+                      description: 'ID of a recurring payment scheme. If <code>type</code> is <code>init</code>, the request will return error as no ID is created yet.'
+                      example: '20241022050222'
               required:
                 - amount
                 - currency
-                - method
       responses:
         '200':
           description: Успешный ответ
@@ -166,46 +194,3 @@ paths:
                   - code
                   - timestamp
 
-  /status:
-    get:
-      summary: Payment Status
-      description: РАЗВЁРНУТОЕ ЗАПРОСА СОСТОЯНИЯ.
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                amount:
-                  type: integer
-                  format: int32
-                  description: 'Payment amount in minimum currency units.'
-                  example: '599'
-                currency:
-                  type: string
-                  description: 'ISO 639-1 currency code.'
-                  example: 'EUR'
-                method:
-                  type: string
-                  description: 'Supported payment method.'
-                  enum: 
-                    - card
-                    - mobile
-                  example: 'card'
-                language:
-                  type: string
-                  description: 'ISO 4217 language code.'
-                  example: 'en'
-              required:
-                - amount
-                - currency
-                - method
-      responses:
-        "200": # status code
-          description: A JSON array of user names
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-
-                  type: string

@@ -75,7 +75,7 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "example/api.yaml",
+            specPath: "example/api-docs.yaml",
             outputDir: "docs/api",
             sidebarOptions: {
               groupPathsBy: "tag",
@@ -91,7 +91,7 @@ const config: Config = {
         id: 'users',
         path: 'users',
         routeBasePath: 'users',
-        sidebarPath: './users.ts',
+        sidebarPath: './users/users.ts',
         // ... other options
       },
     ]
@@ -114,6 +114,13 @@ const config: Config = {
   themes: [ "docusaurus-theme-openapi-docs", ], // export theme components
 
   themeConfig: {
+/* неясно, работает или нет
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: false,
+      respectPrefersColorScheme: false,
+    },
+*/
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
@@ -137,7 +144,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'api',
+          sidebarId: 'apisidebar',
           position: 'left',
           label: 'API',
         },
@@ -148,6 +155,42 @@ const config: Config = {
           label: 'FAQ',
         },
         {to: '/blog', label: 'Releases', position: 'left'},
+
+  {
+    to: "/users/start", label: "New Instance",
+    when: { plugin: { name: "@docusaurus/plugin-content-docs", id: "users" } }
+  },
+
+        {
+          type: 'dropdown',
+          label: 'RU',
+          position: 'right',
+          items: [
+            {
+              type: 'doc',
+              label: 'RU',
+              docId: 'integration/diagrams/diagrams',
+            },
+            {
+              type: 'doc',
+              label: 'EN',
+              docId: 'integration/intro',
+            },
+            {
+              type: 'doc',
+              label: 'ZH',
+              docId: 'integration/intro',
+            },
+          ],
+        },
+/*
+        {
+          type: 'docSidebar',
+          sidebarId: 'users/users',
+          position: 'left',
+          label: 'New instance',
+        },
+*/
 /*
         {
           href: 'https://github.com/facebook/docusaurus',
