@@ -3,7 +3,7 @@ info:
   title: Rustore Public Api
   version: 1.0.0
 servers:
-  - url: /
+  - url: https://public-api.rustore.ru
 tags:
   - name: Public api RuStore
     description: '(Owner: Pantheon)'
