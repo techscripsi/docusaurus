@@ -60,7 +60,7 @@ paths:
                       example: 'hours'
                     value:
                       type: integer
-                      description: '.'
+                      description: 'Number of minutes, hours, or days after which the action set in <code>auto</code> (<code>complete</code> or <code>expire</code>) is taken.'
                       example: '12'
               required:
                 - amount
