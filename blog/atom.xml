@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="atom.xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://techscripsi.github.io/docusaurus/blog</id>
-    <title>QPay Blog</title>
+    <title>OmniCart Blog</title>
     <updated>2024-10-10T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://techscripsi.github.io/docusaurus/blog"/>
-    <subtitle>QPay Blog</subtitle>
+    <subtitle>OmniCart Blog</subtitle>
     <icon>https://techscripsi.github.io/docusaurus/img/favicon.svg</icon>
     <entry>
         <title type="html"><![CDATA[Initial release]]></title>
