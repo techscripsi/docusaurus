@@ -10,7 +10,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public api RuStore",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-api-ru-store",
       },
       items: [
@@ -59,7 +59,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/upload-apk",
-          label: "Загрузка APK",
+          label: "Загрузка APK-файла",
           className: "api-method post",
         },
         {
@@ -86,7 +86,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public api RuStore (Google-like api)",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-api-ru-store-google-like-api",
       },
       items: [
@@ -108,7 +108,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public api RuStore V3",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-api-ru-store-v-3",
       },
       items: [
@@ -124,7 +124,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public App Developers",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-app-developers",
       },
       items: [
@@ -152,7 +152,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public api RuStore 2",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-api-ru-store-2",
       },
       items: [
@@ -210,7 +210,7 @@ const sidebar: SidebarsConfig = {
       type: "category",
       label: "Public api RuStore (Smartpay format)",
       link: {
-        type: "generated-index",
+        type: "doc",
         id: "api/public-api-ru-store-smartpay-format",
       },
       items: [
@@ -299,7 +299,7 @@ const sidebar: SidebarsConfig = {
       label: "public-api",
       items: [
         {
-          type: "generated-index",
+          type: "doc",
           id: "api/get-subscription-acknowledgment",
           label: "Подтверждение получения подписки SANDBOX",
           className: "api-method post",

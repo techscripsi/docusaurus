@@ -6,7 +6,7 @@ import type * as OpenApiPlugin from "docusaurus-plugin-openapi-docs";
 import { myCustomApiMdGenerator } from "./customMdGenerators";
 
 const config: Config = {
-  title: 'QPay',
+  title: 'OmniCart',
   tagline: ' ',
   favicon: 'img/favicon.svg',
 
@@ -124,9 +124,9 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-//      title: 'My Site',
+//      title: 'OmniCart',
       logo: {
-        alt: 'QPay',
+        alt: 'OmniCart',
         src: 'img/logo-9BC834.svg',
       },
       items: [

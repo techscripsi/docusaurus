@@ -1,0 +1,3921 @@
+openapi: 3.0.1
+info:
+  title: Rustore Public Api
+  version: 1.0.0
+servers:
+  - url: https://public-api.rustore.ru
+tags:
+  - name: Public api RuStore
+    description: '(Owner: Pantheon)'
+  - name: Public api RuStore (Google-like api)
+    description: '(Owner: BigInt)'
+  - name: Public api RuStore V3
+    description: '(Owner: BigInt)'
+  - name: Public App Developers
+    description: '(Owner: Pantheon)'
+  - name: Public api RuStore 2
+    description: '(Owner: Pantheon)'
+  - name: Public api RuStore (Smartpay format)
+    description: '(Owner: BigInt)'
+paths:
+  /public/v1/application/{packageName}/developer/{devVkId}/role/{role}:
+    put:
+      tags:
+        - Public App Developers
+      summary: Добавление/Обновление роли пользователя разработчика к приложению
+      operationId: putDevToApp
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: devVkId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoApiAppDeveloper'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+    delete:
+      tags:
+        - Public App Developers
+      summary: Отзыв роли разработчика приложения
+      operationId: revokeAppDeveloperRole
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: devVkId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: role
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version:
+    get:
+      tags:
+        - Public api RuStore
+      summary: Получение версий приложения
+      operationId: getAppVersions
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: ids
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoPaginationContentDtoAppVersionDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+    post:
+      tags:
+        - Public api RuStore
+      summary: Создание черновика версии приложения
+      operationId: createVersion
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveDraftVersionRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoLong'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/publish:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Публикация версии
+      operationId: publishAppVersion
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/publish-settings:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Изменение настроек публикации версии
+      operationId: updatePublishSettings
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublishSettings'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/image/screenshot/{orientation}/{ordinal}:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Загрузка скриншота для приложения
+      operationId: uploadScreenshot
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: ordinal
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: orientation
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/image/icon:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Загрузка иконки для приложения
+      operationId: uploadIcon
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/commit:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Отправка на модерацию
+      operationId: sendToModeration
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: priorityUpdate
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/apk:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Загрузка APK-файла
+      operationId: uploadApk
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          description: Имя пакета приложения.
+          example: myApp
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          description: Версия приложения.
+          example: 2.1
+          schema:
+            type: integer
+            format: int64
+        - name: servicesType
+          in: query
+          required: false
+          description: Версия приложения.<ul><li><code>HMS</code> — для APK-файлов c Huawei Mobile Servises. </li><li><code>Unknown</code> — устанавливается по умолчанию, если поле не заполнено.</li></ul>
+          example: Unknown
+          enum: [HMS, Unknown]
+          schema:
+            type: string
+            default: Unknown
+        - name: isMainApk
+          in: query
+          required: false
+          description: Признак, который присваивается основному APK-файлу.<ul><li><code>true</code> — основной APK-файл. </li><li><code>false</code> — по умолчанию.</li></ul>
+          example: false
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Файл в виде двоичного кода.
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}/aab:
+    post:
+      tags:
+        - Public api RuStore
+      summary: Загрузка AAB
+      operationId: uploadAab
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/feedback:
+    get:
+      tags:
+        - Public api RuStore 2
+      summary: Получить список ответов разработчика на отзывы
+      operationId: getDevResponse
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+        - name: id
+          in: query
+          description: ID ответов разработчика на отзывы
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoListFeedbackResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+    post:
+      tags:
+        - Public api RuStore 2
+      summary: Написать ответ разработчика на отзыв
+      operationId: createDevResponse
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: query
+          description: ID отзыва пользователя
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackMessageDto'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoFeedbackIdDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/feedback/{feedbackId}:
+    get:
+      tags:
+        - Public api RuStore 2
+      summary: Получить ответ разработчика на отзыв
+      operationId: getDevResponse_1
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: feedbackId
+          in: path
+          description: ID ответа разработчика на отзывы
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoFeedbackResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+    post:
+      tags:
+        - Public api RuStore 2
+      summary: Изменить ответ разработчика на отзыв
+      operationId: editDevResponse
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: feedbackId
+          in: path
+          description: ID ответа разработчика на отзыв
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeedbackMessageDto'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoFeedbackIdDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+    delete:
+      tags:
+        - Public api RuStore 2
+      summary: Удалить ответ разработчика на отзыв
+      operationId: deleteDevResponse
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: feedbackId
+          in: path
+          description: ID ответа разработчика на отзыв
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/glike/subscription/{packageName}/{subscriptionId}/{purchaseToken}:acknowledge:
+    post:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Подтверждение получения подписки SANDBOX
+      operationId: getSubscriptionAcknowledgment
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/glike/subscription/{packageName}/{subscriptionId}/{purchaseToken}:acknowledge:
+    post:
+      tags:
+        - Public api RuStore (Google-like api)
+      summary: Подтвердить получение подписки из SmartPay по purchaseToken первого платежа
+      operationId: getSubscriptionAcknowledgment_1
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/auth:
+    post:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение токена для доступа к API
+      operationId: generateToken
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PublicTokenRequest'
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoPublicTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v3/subscription/{packageName}/{subscriptionId}/{subscriptionToken}:
+    get:
+      tags:
+        - Public api RuStore V3
+      summary: Получение данных подписки по ID платежа
+      operationId: getSubscription
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v2/purchase/{invoiceId}:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение информации по идентификатору счета
+      operationId: getInvoiceByInvoiceId
+      parameters:
+        - name: invoiceId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoInvoicePaymentDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application:
+    get:
+      tags:
+        - Public api RuStore
+      summary: Получение списка приложений разработчика
+      operationId: getUserApps
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserAppsRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoUserAppsDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/developer:
+    get:
+      tags:
+        - Public App Developers
+      summary: Получение информации о разработчиках приложения
+      operationId: getAppDevelopers
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+        - name: pageToken
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoRetrieveAppDevelopersResult'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/comment:
+    get:
+      tags:
+        - Public api RuStore 2
+      summary: Получить отзывы пользователей на приложение
+      operationId: getUserComment
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Фильтр по ID отзыва
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+              format: int64
+        - name: pageable
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/Pageable'
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoListUserCommentDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/comment/statistic:
+    get:
+      tags:
+        - Public api RuStore 2
+      summary: Рейтинг приложения
+      operationId: getRating
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoRatingWithDevDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/comment/export:
+    get:
+      tags:
+        - Public api RuStore 2
+      summary: Экспортировать отзывы пользователей в CSV файл
+      operationId: getUserCommentOnFile
+      parameters:
+        - name: packageName
+          in: path
+          description: Имя пакета
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          description: Дата создания/обновления отзыва с
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: to
+          in: query
+          description: Дата создания/обновления отзыва по
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/subscription/{purchaseToken}:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение информации о подписке по идентификатору покупки
+      operationId: getSubscription_1
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoSmartPaySubscriptionsResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/subscription/{purchaseToken}/state:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение статуса подписки по идентификатору покупки
+      operationId: getSubscriptionState
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoSubscriptionStatusResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/v3/subscription/{packageName}/{subscriptionId}/{subscriptionToken}:
+    get:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Получение данных подписки V3 SANDBOX
+      operationId: getSubscription_2
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/subscription/{purchaseToken}:
+    get:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Получение данных подписки SANDBOX
+      operationId: getSubscription_3
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoSmartPaySubscriptionsResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/subscription/{purchaseToken}/state:
+    get:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Получение статуса подписки SANDBOX
+      operationId: getSubscriptionState_1
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoSubscriptionStatusResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/purchase:
+    get:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Получение данных платежа SANDBOX с использованием invoiceId
+      operationId: getInvoiceById
+      parameters:
+        - name: invoiceId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoInvoiceInfoResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/sandbox/purchase/{purchaseToken}:
+    get:
+      tags:
+        - public-api
+        - Public api RuStore (Smartpay format)
+      summary: Получение данных платежа SANDBOX
+      operationId: getInvoice
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoInvoiceInfoResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/purchase:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение информации по платежу с использованием invoice id
+      operationId: getInvoiceById_1
+      parameters:
+        - name: invoiceId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoInvoiceInfoResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/purchase/{purchaseToken}:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение информации по платежу
+      operationId: getInvoice_1
+      parameters:
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoInvoiceInfoResponse'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/glike/subscription/{packageName}/{subscriptionId}/{purchaseToken}:
+    get:
+      tags:
+        - Public api RuStore (Google-like api)
+      summary: Получение данных подписки по ID платежа
+      operationId: getSubscription_4
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: subscriptionId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: purchaseToken
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SubscriptionResponseDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/applications/{applicationCode}/invoices:
+    get:
+      tags:
+        - Public api RuStore (Smartpay format)
+      summary: Получение списка счетов по приложению
+      operationId: getAppInvoices
+      parameters:
+        - name: applicationCode
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: invoiceStatuses
+          in: query
+          required: true
+          schema:
+            uniqueItems: true
+            type: array
+            items:
+              type: string
+              enum:
+                - created
+                - executed
+                - cancelled
+                - rejected
+                - expired
+                - paid
+                - confirmed
+                - reversed
+                - refunded
+                - consumed
+        - name: invoiceDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            minimum: 0
+            type: integer
+            format: int32
+            default: 0
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            maximum: 500
+            type: integer
+            format: int32
+            default: 20
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoPaginationContentDtoInvoicePaymentDto'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+  /public/v1/application/{packageName}/version/{versionId}:
+    delete:
+      tags:
+        - Public api RuStore
+      summary: Удаление версии черновика
+      operationId: deleteVersion
+      parameters:
+        - name: packageName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Success
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoVoid'
+        '400':
+          description: Bad Request
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '403':
+          description: Forbidden
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '404':
+          description: Not Found
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+        '405':
+          description: Method Not Allowed
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '415':
+          description: Unsupported Media Type
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDtoObject'
+        '500':
+          description: Internal Server Error
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DefaultResponseDto'
+      security:
+        - access-token: []
+components:
+  schemas:
+    DefaultResponseDtoObject:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+    DefaultResponseDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+    ApiAppDeveloper:
+      type: object
+      properties:
+        devVkId:
+          type: string
+        role:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+    DefaultResponseDtoApiAppDeveloper:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/ApiAppDeveloper'
+        timestamp:
+          type: string
+          format: date-time
+    SaveDraftVersionRequest:
+      type: object
+      properties:
+        appName:
+          type: string
+        appType:
+          type: string
+        categories:
+          type: array
+          items:
+            type: string
+        ageLegal:
+          type: string
+        shortDescription:
+          type: string
+        fullDescription:
+          type: string
+        whatsNew:
+          type: string
+        moderInfo:
+          type: string
+        priceValue:
+          type: integer
+          format: int64
+        publishType:
+          type: string
+        partialValue:
+          type: integer
+          format: int32
+        publishDateTime:
+          type: string
+          format: date-time
+        seoTagIds:
+          uniqueItems: true
+          type: array
+          items:
+            type: integer
+            format: int64
+    DefaultResponseDtoLong:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+          format: date-time
+    DefaultResponseDtoVoid:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+    PublishSettings:
+      type: object
+      properties:
+        publishType:
+          type: string
+        partialValue:
+          type: integer
+          format: int32
+        publishDateTime:
+          type: string
+          format: date-time
+    FeedbackMessageDto:
+      type: object
+      properties:
+        message:
+          type: string
+      description: Содержимое текста ответа на отзыв
+    DefaultResponseDtoFeedbackIdDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/FeedbackIdDto'
+        timestamp:
+          type: string
+          format: date-time
+    FeedbackIdDto:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+    PublicTokenRequest:
+      required:
+        - keyId
+        - signature
+        - timestamp
+      type: object
+      properties:
+        keyId:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+        signature:
+          type: string
+    DefaultResponseDtoPublicTokenResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/PublicTokenResponse'
+        timestamp:
+          type: string
+          format: date-time
+    PublicTokenResponse:
+      type: object
+      properties:
+        jwe:
+          type: string
+        ttl:
+          type: integer
+          format: int64
+    IntroductoryPriceInfo:
+      type: object
+      properties:
+        introductoryPriceCurrencyCode:
+          type: string
+        introductoryPriceAmountMicros:
+          type: string
+        introductoryPricePeriod:
+          type: string
+        introductoryPriceCycles:
+          type: string
+    SubscriptionResponseDto:
+      type: object
+      properties:
+        startTimeMillis:
+          type: string
+        expiryTimeMillis:
+          type: string
+        autoRenewing:
+          type: boolean
+        priceCurrencyCode:
+          type: string
+        priceAmountMicros:
+          type: string
+        countryCode:
+          type: string
+        paymentState:
+          type: integer
+          format: int32
+        cancelReason:
+          type: integer
+          format: int32
+        orderId:
+          type: string
+        acknowledgementState:
+          type: integer
+          format: int32
+        kind:
+          type: string
+        purchaseType:
+          type: integer
+          format: int32
+        introductoryPriceInfo:
+          $ref: '#/components/schemas/IntroductoryPriceInfo'
+    DefaultResponseDtoInvoicePaymentDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/InvoicePaymentDto'
+        timestamp:
+          type: string
+          format: date-time
+    InvoicePaymentDto:
+      type: object
+      properties:
+        invoiceId:
+          type: integer
+          description: Номер счёта
+          format: int64
+        invoiceDate:
+          type: string
+          description: Дата создания счёта (в MSK таймзоне)
+          format: date-time
+          example: '2024-10-24T14:31:33+03:00'
+        refundDate:
+          type: string
+          description: Дата возврата средств по счету (в MSK таймзоне)
+          format: date-time
+          example: '2024-10-24T14:31:33+03:00'
+        invoiceStatus:
+          type: string
+          description: Статус счёта
+          enum:
+            - created
+            - executed
+            - cancelled
+            - rejected
+            - expired
+            - paid
+            - confirmed
+            - reversed
+            - refunded
+            - consumed
+        developerPayload:
+          type: string
+          description: Дополнительная информация по покупке, переданная в SDK при создании покупки
+        applicationCode:
+          type: integer
+          description: Код приложения
+          format: int64
+        ownerCode:
+          type: integer
+          description: Код владельца приложения
+          format: int64
+        paymentInfo:
+          $ref: '#/components/schemas/PaymentInfoDto'
+        order:
+          $ref: '#/components/schemas/OrderDto'
+      description: Информация о счёте
+    OrderDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: Уникальный идентификатор заказа
+        orderNumber:
+          type: string
+          description: Номер заказа
+        visualName:
+          type: string
+          description: Наименование операции
+        amountCreate:
+          type: integer
+          description: Сумма заказа в минимальных единицах валюты (в копейках)
+          format: int64
+        amountCurrent:
+          type: integer
+          description: Сумма заказа с учетом скидок в минимальных единицах валюты (в копейках)
+          format: int64
+        currency:
+          type: string
+          description: Код валюты
+        itemCode:
+          type: string
+          description: Код продукта, указанный в консоли при создании продукта
+        description:
+          type: string
+          description: Описание заказа
+        language:
+          type: string
+          description: Язык описания
+      description: Информация о заказе
+    PaymentInfoDto:
+      type: object
+      properties:
+        paymentDate:
+          type: string
+          description: Дата и время оплаты счета (в MSK таймзоне)
+          format: date-time
+          example: '2024-10-24T14:31:33+03:00'
+        maskedPan:
+          type: string
+          description: Маскированный номер карты
+        paymentSystem:
+          type: string
+          description: Платежная система
+        paymentWay:
+          type: string
+          description: Способ оплаты
+        paymentWayCode:
+          type: string
+          description: Идентификатор способа оплаты
+        bankName:
+          type: string
+          description: Наименование банка-эмитента
+      description: Платежная информация
+    UserAppsRequest:
+      type: object
+      properties:
+        pagination:
+          type: boolean
+        appName:
+          type: string
+        appPackage:
+          type: string
+        continuationToken:
+          type: string
+        pageSize:
+          type: integer
+          format: int32
+        orderFields:
+          type: array
+          items:
+            type: string
+            enum:
+              - appId
+              - appName
+              - appStatus
+              - appVerUpdatedAt
+              - appCoins
+        sortDirections:
+          type: array
+          items:
+            type: string
+            enum:
+              - ASC
+              - DESC
+    DefaultResponseDtoUserAppsDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/UserAppsDto'
+        timestamp:
+          type: string
+          format: date-time
+    UserAppData:
+      type: object
+      properties:
+        appId:
+          type: integer
+          format: int64
+        packageName:
+          type: string
+        appName:
+          type: string
+        iconUrl:
+          type: string
+        appStatus:
+          type: string
+        versionName:
+          type: string
+        versionCode:
+          type: integer
+          format: int64
+        companyName:
+          type: string
+        shortDescription:
+          type: string
+        appVerUpdatedAt:
+          type: string
+        activePrice:
+          type: integer
+          format: int64
+        paid:
+          type: boolean
+        deviceType:
+          type: string
+        appCoins:
+          type: boolean
+        role:
+          type: string
+    UserAppsDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserAppData'
+        pageSize:
+          type: integer
+          format: int32
+        continuationToken:
+          type: string
+    AppVersionDto:
+      type: object
+      properties:
+        versionId:
+          type: integer
+          format: int64
+        appName:
+          type: string
+        appType:
+          type: string
+        versionName:
+          type: string
+        versionCode:
+          type: integer
+          format: int64
+        versionStatus:
+          type: string
+        publishType:
+          type: string
+        publishDateTime:
+          type: string
+          format: date-time
+        sendDateForModer:
+          type: string
+          format: date-time
+        partialValue:
+          type: integer
+          format: int32
+        whatsNew:
+          type: string
+        priceValue:
+          type: integer
+          format: int64
+        paid:
+          type: boolean
+    DefaultResponseDtoPaginationContentDtoAppVersionDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/PaginationContentDtoAppVersionDto'
+        timestamp:
+          type: string
+          format: date-time
+    PaginationContentDtoAppVersionDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppVersionDto'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    DefaultResponseDtoListFeedbackResponseDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/FeedbackResponseDto'
+        timestamp:
+          type: string
+          format: date-time
+    FeedbackResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        commentId:
+          type: string
+        text:
+          type: string
+        status:
+          type: string
+        date:
+          type: string
+          format: date-time
+    DefaultResponseDtoFeedbackResponseDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/FeedbackResponseDto'
+        timestamp:
+          type: string
+          format: date-time
+    DefaultResponseDtoRetrieveAppDevelopersResult:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/RetrieveAppDevelopersResult'
+        timestamp:
+          type: string
+          format: date-time
+    RetrieveAppDevelopersResult:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApiAppDeveloper'
+        pageToken:
+          type: string
+    DefaultResponseDtoListUserCommentDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserCommentDto'
+        timestamp:
+          type: string
+          format: date-time
+    UserCommentDto:
+      type: object
+      properties:
+        packageName:
+          type: string
+        appId:
+          type: integer
+          format: int64
+        commentId:
+          type: integer
+          format: int64
+        userName:
+          type: string
+        appRating:
+          type: integer
+          format: int32
+        commentStatus:
+          type: string
+        commentDate:
+          type: string
+          format: date-time
+        commentText:
+          type: string
+        likeCounter:
+          type: integer
+          format: int64
+        dislikeCounter:
+          type: integer
+          format: int64
+        updatedAt:
+          type: string
+          format: date-time
+        appVersionName:
+          type: string
+        edited:
+          type: boolean
+        updatedAtIso:
+          type: string
+          format: date-time
+        commentDateIso:
+          type: string
+          format: date-time
+    DefaultResponseDtoRatingWithDevDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/RatingWithDevDto'
+        timestamp:
+          type: string
+          format: date-time
+    RatingWithDevDto:
+      type: object
+      properties:
+        ratings:
+          $ref: '#/components/schemas/RatingsDto'
+        averageUserRating:
+          type: number
+          format: double
+        totalRatings:
+          type: integer
+          format: int64
+        totalResponses:
+          type: integer
+          format: int64
+        ratingsNoComments:
+          type: integer
+          format: int64
+    RatingsDto:
+      type: object
+      properties:
+        amountFive:
+          type: integer
+          format: int64
+        amountFour:
+          type: integer
+          format: int64
+        amountThree:
+          type: integer
+          format: int64
+        amountTwo:
+          type: integer
+          format: int64
+        amountOne:
+          type: integer
+          format: int64
+    DefaultResponseDtoSmartPaySubscriptionsResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/SmartPaySubscriptionsResponse'
+        timestamp:
+          type: string
+          format: date-time
+    SmartPaySubscriptionsResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        success:
+          type: boolean
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/SmartPaySubscriptionsResponseBody'
+    SmartPaySubscriptionsResponseBody:
+      type: object
+      properties:
+        serviceName:
+          type: string
+        subscriptionId:
+          type: integer
+          format: int32
+        addParameters:
+          type: string
+        productType:
+          type: string
+        productName:
+          type: string
+        productCode:
+          type: string
+        recurrent:
+          type: boolean
+        countOfDay:
+          type: integer
+          format: int32
+        periodType:
+          type: string
+        periodDuration:
+          type: integer
+          format: int32
+        nextPaymentDate:
+          type: string
+        price:
+          type: integer
+          format: int32
+        currency:
+          type: string
+        imageUrl:
+          type: string
+        state:
+          type: string
+        currentPeriod:
+          type: string
+          enum:
+            - PROMO
+            - START
+            - STANDARD
+            - GRACE
+            - HOLD
+        debtPaymentPeriod:
+          type: string
+        description:
+          type: string
+        tariffId:
+          type: integer
+          format: int32
+        periods:
+          type: array
+          items:
+            $ref: '#/components/schemas/SmartPayTariffPeriodDto'
+    SmartPayTariffPeriodDto:
+      type: object
+      properties:
+        periodName:
+          type: string
+        periodType:
+          type: string
+        periodDuration:
+          type: integer
+          format: int32
+        periodPrice:
+          type: integer
+          format: int32
+        nextPeriod:
+          type: string
+    DefaultResponseDtoSubscriptionStatusResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/SubscriptionStatusResponse'
+        timestamp:
+          type: string
+          format: date-time
+    SubscriptionStatusResponse:
+      type: object
+      properties:
+        is_active:
+          type: boolean
+    Address:
+      type: object
+      properties:
+        country:
+          type: string
+        city:
+          type: string
+        address:
+          type: string
+    BankInfo:
+      type: object
+      properties:
+        bank_name:
+          type: string
+        bank_country_code:
+          type: string
+        bank_country_name:
+          type: string
+        bank_image:
+          type: string
+    DefaultResponseDtoInvoiceInfoResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/InvoiceInfoResponse'
+        timestamp:
+          type: string
+          format: date-time
+    DeliveryInfo:
+      type: object
+      properties:
+        delivery_type:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        description:
+          type: string
+    DeviceInfo:
+      type: object
+      properties:
+        device_platform_type:
+          type: string
+        device_platform_version:
+          type: string
+        device_model:
+          type: string
+        device_manufacturer:
+          type: string
+        device_id:
+          type: string
+        surface_version:
+          type: string
+        surface:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        user_message:
+          type: string
+        error_description:
+          type: object
+        error_code:
+          type: integer
+          format: int32
+    InvoiceInfo:
+      type: object
+      properties:
+        delivery_info:
+          $ref: '#/components/schemas/DeliveryInfo'
+        invoice_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoiceParam'
+        purchaser:
+          $ref: '#/components/schemas/PurchaserInfo'
+        order:
+          $ref: '#/components/schemas/Order'
+    InvoiceInfoResponse:
+      type: object
+      properties:
+        invoice_id:
+          type: string
+        invoice_date:
+          type: string
+        invoice_status:
+          type: string
+        application_code:
+          type: string
+        application_name:
+          type: string
+        owner_code:
+          type: string
+        owner_name:
+          type: string
+        payment_info:
+          $ref: '#/components/schemas/PaymentInfo'
+        payment_methods:
+          $ref: '#/components/schemas/PaymentMethodsInfo'
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        invoice:
+          $ref: '#/components/schemas/InvoiceInfo'
+        image:
+          type: string
+    InvoiceParam:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    ItemParam:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    LoyaltyInfo:
+      type: object
+      properties:
+        service_code:
+          type: string
+        service_name:
+          type: string
+        change_rate:
+          type: integer
+          format: int64
+        payment_bonus:
+          type: integer
+          format: int64
+        award_bonus:
+          type: integer
+          format: int64
+        image:
+          type: string
+    MethodInfo:
+      type: object
+      properties:
+        method:
+          type: string
+        action:
+          type: string
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: string
+        order_number:
+          type: string
+        order_date:
+          type: string
+        service_id:
+          type: string
+        expiration_date:
+          type: string
+        tax_system:
+          type: integer
+          format: int64
+        trade_name:
+          type: string
+        visual_name:
+          type: string
+        org_name:
+          type: string
+        org_inn:
+          type: string
+        visual_amount:
+          type: string
+        order_bundle:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderBundle'
+        amount:
+          type: integer
+          format: int64
+        currency:
+          type: string
+        purpose:
+          type: string
+        description:
+          type: string
+        language:
+          type: string
+    OrderBundle:
+      type: object
+      properties:
+        position_id:
+          type: integer
+          format: int64
+        item_params:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemParam'
+        item_amount:
+          type: integer
+          format: int64
+        item_code:
+          type: string
+        item_price:
+          type: integer
+          format: int64
+        discount_type:
+          type: string
+        discount_value:
+          type: integer
+          format: int64
+        interest_type:
+          type: string
+        interest_value:
+          type: integer
+          format: int64
+        tax_type:
+          type: integer
+          format: int64
+        tax_sum:
+          type: integer
+          format: int64
+        name:
+          type: string
+        quantity:
+          $ref: '#/components/schemas/Quantity'
+        currency:
+          type: string
+        image:
+          type: string
+    PaymentInfo:
+      type: object
+      properties:
+        payment_date:
+          type: string
+        payment_id:
+          type: string
+        payment_params:
+          $ref: '#/components/schemas/PaymentParams'
+        loyalty_info:
+          $ref: '#/components/schemas/LoyaltyInfo'
+        card_id:
+          type: string
+        paysys_code:
+          type: string
+        masked_pan:
+          type: string
+        expiry_date:
+          type: string
+        payment_system:
+          type: string
+        payment_system_image:
+          type: string
+        paysys_image:
+          type: string
+        payment_way:
+          type: string
+        payment_way_code:
+          type: string
+        payment_way_logo:
+          type: string
+        bank_info:
+          $ref: '#/components/schemas/BankInfo'
+        device_info:
+          $ref: '#/components/schemas/DeviceInfo'
+        name:
+          type: string
+        cardholder:
+          type: string
+        image:
+          type: string
+        paysys:
+          type: string
+    PaymentMethodsInfo:
+      type: object
+      properties:
+        user_message:
+          type: string
+        methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/MethodInfo'
+    PaymentParams:
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+    PurchaserInfo:
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+        contact:
+          type: string
+    Quantity:
+      type: object
+      properties:
+        value:
+          type: integer
+          format: int64
+        measure:
+          type: string
+    DefaultResponseDtoPaginationContentDtoInvoicePaymentDto:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        body:
+          $ref: '#/components/schemas/PaginationContentDtoInvoicePaymentDto'
+        timestamp:
+          type: string
+          format: date-time
+    PaginationContentDtoInvoicePaymentDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvoicePaymentDto'
+        pageNumber:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int32
+        totalPages:
+          type: integer
+          format: int32
+  securitySchemes:
+    access-token:
+      type: apiKey
+      name: Public-Token
+      description: <a href="https://www.rustore.ru/help/work-with-rustore-api/api-authorization-token">Токен доступа к Public API Rustore</a>.
+      in: header

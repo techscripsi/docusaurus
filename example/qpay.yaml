@@ -1,18 +1,18 @@
 openapi: 3.0.0
 servers:
   - description: SwaggerHub API Auto Mocking
-    url: 'https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.0'
+    url: 'https://virtserver.swaggerhub.com/TECHSCRIPSI/OmniCart/1.0.0'
 info:
   version: 1.0.0
-  title: QPay API
-  description: QPay Payment Gateway
+  title: OmniCart API
+  description: OmniCart Payment Gateway
   contact:
     name: ''
 paths:
   /payment:
     post:
       summary: Payment Creation
-      description: Use this method to send a payment request to QPay.
+      description: Use this method to send a payment request to OmniCart.
       requestBody:
         content:
           application/json:
