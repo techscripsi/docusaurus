@@ -138,7 +138,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'faq',
+          sidebarId: 'panel',
           position: 'left',
           label: 'Merchant Panel',
         },
@@ -148,42 +148,17 @@ const config: Config = {
           position: 'left',
           label: 'API',
         },
-        {
-          type: 'docSidebar',
-          sidebarId: 'faq',
-          position: 'left',
-          label: 'FAQ',
-        },
         {to: '/blog', label: 'Releases', position: 'left'},
+
+/*
+
+THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
 
   {
     to: "/users/start", label: "New Instance",
     when: { plugin: { name: "@docusaurus/plugin-content-docs", id: "users" } }
   },
 
-        {
-          type: 'dropdown',
-          label: 'RU',
-          position: 'right',
-          items: [
-            {
-              type: 'doc',
-              label: 'RU',
-              docId: 'integration/diagrams/diagrams',
-            },
-            {
-              type: 'doc',
-              label: 'EN',
-              docId: 'integration/intro',
-            },
-            {
-              type: 'doc',
-              label: 'ZH',
-              docId: 'integration/intro',
-            },
-          ],
-        },
-/*
         {
           type: 'docSidebar',
           sidebarId: 'users/users',
