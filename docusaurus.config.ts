@@ -75,7 +75,7 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "example/api-docs.yaml",
+            specPath: "example/qpay.yml",
             outputDir: "docs/api",
             sidebarOptions: {
               groupPathsBy: "tag",
@@ -144,7 +144,7 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
-          sidebarId: 'apisidebar',
+          sidebarId: 'api',
           position: 'left',
           label: 'API',
         },

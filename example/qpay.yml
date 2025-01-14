@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: OmniCart API
+  version: 1.0.0
+  description: API description.
+components:
+  schemas:
+    tag:
+      type: string
+      description: "20250114070853"
+    amount:
+      type: integer
+      format: int32
+      examples: 
+        - 5998
+      description: Payment amount in minimum currency units.
+    currency:
+      type: string
+      examples:
+        - EUR
+      description: "[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
+    language:
+      type: string
+      examples:
+        - en
+      description: "[ISO 639-1](https://localizely.com/iso-639-1-list/) language code."
+    toConfirm:
+      type: boolean
+      description: 2-step payment
+    confirmAuto:
+      enum:
+        - expire
+        - complete
+      type: string
+      examples:
+        - expire
+      description: "20250114070859"
+    confirmValue:
+      type: integer
+      format: int32
+      description: "20250114070902"
+    confirmPeriod:
+      enum:
+        - minutes
+        - hours
+        - days
+        - weeks
+      type: string
+      examples:
+        - days
+      description: "20250114070900"
+    amountModifier:
+      type: number
+      format: float
+      examples:
+        - 0.9
+      description: "`amount` parameter is multiplied by this value. You can use it to
+        calculate quantities or discounts.'"
+      minimum: 0.01
+    subscriptionValue:
+      type: integer
+      format: int32
+      examples:
+        - 1
+      description: "20250114070923"
+    subscriptionPeriod:
+      enum:
+        - minutes
+        - hours
+        - days
+        - weeks
+        - months
+        - years
+      type: string
+      examples:
+        - months
+      description: "20250114070925"
+    confirm:
+      type: object
+      properties:
+        auto:
+          $ref: "#/components/schemas/confirmAuto"
+        period:
+          $ref: "#/components/schemas/confirmPeriod"
+        value:
+          $ref: "#/components/schemas/confirmValue"
+      required:
+        - auto
+        - period
+        - value
+      description: Блок подтверждения платежа
+    timerPeriod:
+      type: string
+      description: set period
+      examples:
+        - days
+      default: months
+      enum:
+        - minutes
+        - hours
+        - days
+        - weeks
+        - months
+        - years
+    timerValue:
+      type: number
+      examples:
+        - 2
+      description: ""
+    timerRepeat:
+      type: boolean
+      description: Whether to repeat purchase
+    direct:
+      type: boolean
+      description: direct payment
+    productId:
+      type: string
+      description: Product identifier.
+    timer:
+      type: object
+      properties:
+        period:
+          $ref: "#/components/schemas/timerPeriod"
+        value:
+          $ref: "#/components/schemas/timerValue"
+        repeat:
+          $ref: "#/components/schemas/timerRepeat"
+      required:
+        - period
+        - value
+        - repeat
+      description: set timer
+    setTimer:
+      type: boolean
+      description: set timer for order
+  responses:
+    Ok:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+      description: The request was successful, and the server has returned the
+        requested resource in the response body.
+  parameters:
+    confirm:
+      name: confirm
+      in: query
+      description: "20250114071656"
+      schema:
+        type: string
+      explode: true
+      style: form
+      allowReserved: false
+      allowEmptyValue: false
+paths:
+  /cart:
+    post:
+      summary: make payment
+      operationId: makePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  $ref: "#/components/schemas/language"
+                currency:
+                  $ref: "#/components/schemas/currency"
+                direct:
+                  $ref: "#/components/schemas/direct"
+                toConfirm:
+                  $ref: "#/components/schemas/toConfirm"
+                setTimer:
+                  $ref: "#/components/schemas/setTimer"
+      responses:
+        "200":
+          $ref: "#/components/responses/Ok"
