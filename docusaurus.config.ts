@@ -148,7 +148,7 @@ const config: Config = {
           position: 'left',
           label: 'API',
         },
-        {to: '/blog', label: 'Releases', position: 'left'},
+//        {to: '/blog', label: 'Releases', position: 'left'},
 
 /*
 

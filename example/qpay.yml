@@ -7,36 +7,42 @@ components:
   schemas:
     tag:
       type: string
-      description: "20250114070853"
+      description: your tag
     amount:
       type: integer
+      title: " "
       format: int32
-      examples: 
+      examples:
         - 5998
       description: Payment amount in minimum currency units.
     currency:
       type: string
+      title: " "
       examples:
         - EUR
       description: "[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
     language:
       type: string
+      title: " "
       examples:
         - en
       description: "[ISO 639-1](https://localizely.com/iso-639-1-list/) language code."
     toConfirm:
       type: boolean
+      title: " "
       description: 2-step payment
     confirmAuto:
       enum:
         - expire
         - complete
       type: string
+      title: " "
       examples:
         - expire
       description: "20250114070859"
     confirmValue:
       type: integer
+      title: " "
       format: int32
       description: "20250114070902"
     confirmPeriod:
@@ -46,11 +52,13 @@ components:
         - days
         - weeks
       type: string
+      title: " "
       examples:
         - days
       description: "20250114070900"
     amountModifier:
       type: number
+      title: " "
       format: float
       examples:
         - 0.9
@@ -59,6 +67,7 @@ components:
       minimum: 0.01
     subscriptionValue:
       type: integer
+      title: " "
       format: int32
       examples:
         - 1
@@ -72,11 +81,13 @@ components:
         - months
         - years
       type: string
+      title: " "
       examples:
         - months
       description: "20250114070925"
     confirm:
       type: object
+      title: " "
       properties:
         auto:
           $ref: "#/components/schemas/confirmAuto"
@@ -91,8 +102,9 @@ components:
       description: Блок подтверждения платежа
     timerPeriod:
       type: string
+      title: " "
       description: set period
-      examples:
+      exampls:
         - days
       default: months
       enum:
@@ -104,20 +116,21 @@ components:
         - years
     timerValue:
       type: number
+      title: " "
       examples:
         - 2
       description: ""
     timerRepeat:
       type: boolean
+      title: " "
       description: Whether to repeat purchase
-    direct:
-      type: boolean
-      description: direct payment
     productId:
       type: string
+      title: " "
       description: Product identifier.
     timer:
       type: object
+      title: " "
       properties:
         period:
           $ref: "#/components/schemas/timerPeriod"
@@ -132,7 +145,60 @@ components:
       description: set timer
     setTimer:
       type: boolean
+      title: " "
       description: set timer for order
+    quantity:
+      type: number
+      minimum: 0.01
+      format: float
+      examples:
+        - 1
+      description: "quantity of product"
+    amoutModifier:
+      type: number
+      minimum: 0.01
+      format: float
+      description: "multiply by this value"
+    item:
+      type: object
+      properties:
+        amount:
+          $ref: "#/components/schemas/amount"
+        productId:
+          $ref: "#/components/schemas/productId"
+        quantity:
+          $ref: "#/components/schemas/quantity"
+        toConfirm:
+          $ref: "#/components/schemas/toConfirm"
+        confirm:
+          $ref: "#/components/schemas/confirm"
+        setTimer:
+          $ref: "#/components/schemas/setTimer"
+        timer:
+          $ref: "#/components/schemas/timer"
+        tag:
+          $ref: "#/components/schemas/tag"
+        amountModifier:
+          $ref: "#/components/schemas/amountModifier"
+      required:
+        - amount
+        - productId
+        - quantity
+        - toConfirm
+        - confirm
+        - setTimer
+        - timer
+        - tag
+        - amountModifier
+      description: product item
+    cart:
+      type: array
+      items:
+        $ref: "#/components/schemas/item"
+      description: list of product
+    direct:
+      type: boolean
+      description: direct payment
   responses:
     Ok:
       content:
@@ -146,17 +212,6 @@ components:
                 type: object
       description: The request was successful, and the server has returned the
         requested resource in the response body.
-  parameters:
-    confirm:
-      name: confirm
-      in: query
-      description: "20250114071656"
-      schema:
-        type: string
-      explode: true
-      style: form
-      allowReserved: false
-      allowEmptyValue: false
 paths:
   /cart:
     post:
@@ -176,8 +231,14 @@ paths:
                   $ref: "#/components/schemas/direct"
                 toConfirm:
                   $ref: "#/components/schemas/toConfirm"
+                confirm:
+                  $ref: "#/components/schemas/confirm"
                 setTimer:
                   $ref: "#/components/schemas/setTimer"
+                timer:
+                  $ref: "#/components/schemas/timer"
+                cart:
+                  $ref: "#/components/schemas/cart"
       responses:
         "200":
           $ref: "#/components/responses/Ok"
