@@ -153,12 +153,14 @@ components:
       format: float
       examples:
         - 1
-      description: "quantity of product"
+      description: quantity of product
     amoutModifier:
       type: number
       minimum: 0.01
       format: float
-      description: "multiply by this value"
+      description: multiply by this value
+      examples:
+        - 1
     item:
       type: object
       properties:
@@ -194,8 +196,42 @@ components:
     cart:
       type: array
       items:
-        $ref: "#/components/schemas/item"
-      description: list of product
+        type: object
+        properties:
+          item:
+            type: object
+            properties:
+              amount:
+                $ref: "#/components/schemas/amount"
+              productId:
+                $ref: "#/components/schemas/productId"
+              quantity:
+                $ref: "#/components/schemas/quantity"
+              toConfirm:
+                $ref: "#/components/schemas/toConfirm"
+              confirm:
+                $ref: "#/components/schemas/confirm"
+              setTimer:
+                $ref: "#/components/schemas/setTimer"
+              timer:
+                $ref: "#/components/schemas/timer"
+              tag:
+                $ref: "#/components/schemas/tag"
+              amountModifier:
+                $ref: "#/components/schemas/amountModifier"
+            required:
+              - amount
+              - productId
+              - quantity
+              - toConfirm
+              - confirm
+              - setTimer
+              - timer
+              - tag
+              - amountModifier
+            description: product item and
+        required:
+          - item
     direct:
       type: boolean
       description: direct payment
