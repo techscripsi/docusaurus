@@ -1,49 +1,345 @@
-openapi: 3.1.0
+openapi: '3.0.3'
 info:
   title: OmniCart API
   version: 1.0.0
-  description: API description.
+  description: API DESCRIPTION HERE.
+servers:
+  - url: https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.0
+paths:
+  /modify:
+    patch:
+      summary: modify order
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      operationId: modify
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+  /status:
+    post:
+      summary: order status
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      operationId: status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - orderId
+              properties:
+                orderId:
+                  $ref: "#/components/schemas/orderId"
+                statusFilter:
+                  type: object
+                  description: statusFilter DESCRIPTION.
+                  title: " "
+                  properties:
+                    tags:
+                      type: array
+                      title: " "
+                      description: Your tags go here.
+                      example: ["tag1", "tag2", "tag3"]
+                    productIds:
+                      type: array
+                      title: " "
+                      description: Your productIds go here.
+                      example: ["productId1", "productId2", "productId3"]
+                    expirable:
+                      type: boolean
+                      title: " "
+                      description: Whether a timer is set for purchase. If not set, all orders will be returned
+                      example: false
+      security:
+        - ApiKey: []
+  /confirm:
+    post:
+      summary: confirm payment
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      operationId: confirm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: confirm DESCRIPTION HERE.
+              title: " "
+              required:
+                - orderId
+              properties:
+                orderId:
+                  $ref: "#/components/schemas/orderId"
+                statusFilter:
+                  type: object
+                  description: statusFilter DESCRIPTION.
+                  title: " "
+                  properties:
+                    tags:
+                      type: array
+                      title: " "
+                      description: Your tags go here.
+                      example: ["tag1", "tag2", "tag3"]
+                    productIds:
+                      type: array
+                      title: " "
+                      description: Your productIds go here.
+                      example: ["productId1", "productId2", "productId3"]
+                    expirable:
+                      type: boolean
+                      title: " "
+                      description: Whether a timer is set for purchase. If not set, all orders will be returned
+                      example: false
+      security:
+        - ApiKey: []
+  /cart:
+    post:
+      summary: make payment
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+      operationId: makePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                orderId:
+                  $ref: "#/components/schemas/orderId"
+                customerId:
+                  $ref: "#/components/schemas/customerId"
+                currency:
+                  $ref: "#/components/schemas/currency"
+                cart:
+                  $ref: "#/components/schemas/cart"
+                  description: Shoppign cartt.
+                scope:
+                  $ref: "#/components/schemas/scope"
+      parameters: []
+      security:
+        - ApiKey: []
 components:
   schemas:
+#primitivesGen
+    status:
+      type: string
+      title: " "
     tag:
       type: string
+      example:
+        - groceries
       description: your tag
+    confirmAuto:
+      enum:
+        - cancel
+        - complete
+      type: string
+      title: " "
+      example:
+        - complete
     amount:
       type: integer
       title: " "
       format: int32
-      examples:
-        - 5998
-      description: Payment amount in minimum currency units.
+      example:
+        - 99.99
+#primitivesReq
+#primitivesRes
+    codeRes:
+      type: integer
+      format: int32
+      title: " "
+    messageRes:
+      type: string
+      title: " "
+    dataRes:
+      type: object
+      title: " "
+    timestampRes:
+      type: string
+      format: date-time
+      title: " "
+#objectsGen
+#objectsReq
+#objectsRes
+    cart:
+      type: array
+      items:
+        type: object
+        required:
+          - item
+        properties:
+          item:
+            $ref: "#/components/schemas/item"
+    tags:
+      type: array
+      items:
+        type: object
+        properties:
+          tagName:
+            type: object
+            properties:
+              paymentFilter:
+                $ref: "#/components/schemas/paymentFilter"
+            description: These settings will be applied to the tag of your choice
+        description: Tags payment settins
+    item:
+      type: object
+      required:
+        - amount
+      properties:
+        tag:
+          $ref: "#/components/schemas/tag"
+        amount:
+          $ref: "#/components/schemas/amount"
+        quantity:
+          $ref: "#/components/schemas/quantity"
+        productId:
+          $ref: "#/components/schemas/productId"
+        paymentFilter:
+          $ref: "#/components/schemas/paymentFilter"
+      description: product item
+    scope:
+      type: object
+      properties:
+        cart:
+          $ref: "#/components/schemas/paymentFilter"
+        tags:
+          $ref: "#/components/schemas/tags"
+      description: payment settings
+    timer:
+      type: object
+      title: " "
+      properties:
+        value:
+          $ref: "#/components/schemas/timerValue"
+        period:
+          $ref: "#/components/schemas/timerPeriod"
+        triggerStatus:
+          $ref: "#/components/schemas/status"
+          description: Status that triggers the timer.
+          enum:
+            - paid
+            - rejected
+            - canceled
+            - confirmed
+            - refunded
+      description: Customers will not be able to purchase this product until the timer times out
+    confirm:
+      type: object
+      title: " "
+      properties:
+        auto:
+          $ref: "#/components/schemas/confirmAuto"
+        value:
+          $ref: "#/components/schemas/confirmValue"
+        period:
+          $ref: "#/components/schemas/confirmPeriod"
+      description: Confiramtion block
     currency:
       type: string
       title: " "
-      examples:
+      example:
         - EUR
       description: "[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
     language:
       type: string
       title: " "
-      examples:
+      example:
         - en
       description: "[ISO 639-1](https://localizely.com/iso-639-1-list/) language code."
+    quantity:
+      type: number
+      format: float
+      minimum: 0.01
+      example:
+        - 1
+      description: quantity of product
+    productId:
+      type: string
+      title: " "
+      example:
+        - lv-426
+      description: Product identifier.
     toConfirm:
       type: boolean
       title: " "
-      description: 2-step payment
-    confirmAuto:
+      description: Whether it's a two-step purchase.
+    paymentFilter:
+      type: object
+      properties:
+        toConfirm:
+          $ref: "#/components/schemas/toConfirm"
+        confirm:
+          $ref: "#/components/schemas/confirm"
+        enableTimer:
+          $ref: "#/components/schemas/enableTimer"
+        timer:
+          $ref: "#/components/schemas/timer"
+        amountModifier:
+          $ref: "#/components/schemas/amountModifier"
+      description: override box
+    timerValue:
+      type: number
+      title: " "
+      example:
+        - 2
+      description: Number of periods. `0` — infitite repeats. Effectively, this means
+        a one time purchase.
+    enableTimer:
+      type: boolean
+      title: " "
+      description: set timer for order
+    timerPeriod:
       enum:
-        - expire
-        - complete
+        - minutes
+        - hours
+        - days
+        - weeks
+        - months
       type: string
       title: " "
-      examples:
-        - expire
-      description: "20250114070859"
+      default: days
+      example:
+        - days
+      description: set period
     confirmValue:
       type: integer
       title: " "
       format: int32
+      example:
+        - 2
       description: "20250114070902"
     confirmPeriod:
       enum:
@@ -53,228 +349,120 @@ components:
         - weeks
       type: string
       title: " "
-      examples:
+      example:
         - days
       description: "20250114070900"
     amountModifier:
       type: number
       title: " "
       format: float
-      examples:
-        - 0.9
-      description: "`amount` parameter is multiplied by this value. You can use it to
-        calculate quantities or discounts.'"
       minimum: 0.01
-    subscriptionValue:
-      type: integer
-      title: " "
-      format: int32
-      examples:
-        - 1
-      description: "20250114070923"
-    subscriptionPeriod:
-      enum:
-        - minutes
-        - hours
-        - days
-        - weeks
-        - months
-        - years
+      example:
+        - 0.7
+      description: The `amount` parameter is multiplied by this value. You can use it
+        to calculate discounts.'
+    additionalParams:
+      type: object
+      description: Additional parameters you want to add to the order.
+    customerId:
+      type: string
+      description: Requried for expirable purchases.
+    orderId:
       type: string
       title: " "
-      examples:
-        - months
-      description: "20250114070925"
-    confirm:
-      type: object
-      title: " "
-      properties:
-        auto:
-          $ref: "#/components/schemas/confirmAuto"
-        period:
-          $ref: "#/components/schemas/confirmPeriod"
-        value:
-          $ref: "#/components/schemas/confirmValue"
-      required:
-        - auto
-        - period
-        - value
-      description: Блок подтверждения платежа
-    timerPeriod:
-      type: string
-      title: " "
-      description: set period
-      exampls:
-        - days
-      default: months
-      enum:
-        - minutes
-        - hours
-        - days
-        - weeks
-        - months
-        - years
-    timerValue:
-      type: number
-      title: " "
-      examples:
-        - 2
-      description: ""
-    timerRepeat:
-      type: boolean
-      title: " "
-      description: Whether to repeat purchase
-    productId:
-      type: string
-      title: " "
-      description: Product identifier.
-    timer:
-      type: object
-      title: " "
-      properties:
-        period:
-          $ref: "#/components/schemas/timerPeriod"
-        value:
-          $ref: "#/components/schemas/timerValue"
-        repeat:
-          $ref: "#/components/schemas/timerRepeat"
-      required:
-        - period
-        - value
-        - repeat
-      description: set timer
-    setTimer:
-      type: boolean
-      title: " "
-      description: set timer for order
-    quantity:
-      type: number
-      minimum: 0.01
-      format: float
-      examples:
-        - 1
-      description: quantity of product
-    amoutModifier:
-      type: number
-      minimum: 0.01
-      format: float
-      description: multiply by this value
-      examples:
-        - 1
-    item:
-      type: object
-      properties:
-        amount:
-          $ref: "#/components/schemas/amount"
-        productId:
-          $ref: "#/components/schemas/productId"
-        quantity:
-          $ref: "#/components/schemas/quantity"
-        toConfirm:
-          $ref: "#/components/schemas/toConfirm"
-        confirm:
-          $ref: "#/components/schemas/confirm"
-        setTimer:
-          $ref: "#/components/schemas/setTimer"
-        timer:
-          $ref: "#/components/schemas/timer"
-        tag:
-          $ref: "#/components/schemas/tag"
-        amountModifier:
-          $ref: "#/components/schemas/amountModifier"
-      required:
-        - amount
-        - productId
-        - quantity
-        - toConfirm
-        - confirm
-        - setTimer
-        - timer
-        - tag
-        - amountModifier
-      description: product item
-    cart:
-      type: array
-      items:
-        type: object
-        properties:
-          item:
-            type: object
-            properties:
-              amount:
-                $ref: "#/components/schemas/amount"
-              productId:
-                $ref: "#/components/schemas/productId"
-              quantity:
-                $ref: "#/components/schemas/quantity"
-              toConfirm:
-                $ref: "#/components/schemas/toConfirm"
-              confirm:
-                $ref: "#/components/schemas/confirm"
-              setTimer:
-                $ref: "#/components/schemas/setTimer"
-              timer:
-                $ref: "#/components/schemas/timer"
-              tag:
-                $ref: "#/components/schemas/tag"
-              amountModifier:
-                $ref: "#/components/schemas/amountModifier"
-            required:
-              - amount
-              - productId
-              - quantity
-              - toConfirm
-              - confirm
-              - setTimer
-              - timer
-              - tag
-              - amountModifier
-            description: product item and
-        required:
-          - item
-    direct:
-      type: boolean
-      description: direct payment
+      description: orderId must be unique
+      example:
+        - 6f891edb-1e1f-48bb-b042-2cb790a0f402
   responses:
-    Ok:
+    "200":
+      description: The request was successful.
       content:
         application/json:
           schema:
             type: object
             required:
               - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                $ref: "#/components/schemas/dataRes"
+                description: Response parameters.
+              code:
+                $ref: "#/components/schemas/codeRes"
+                description: Response code.
+              message:
+                $ref: "#/components/schemas/messageRes"
+                description: Response message.
+              timestamp:
+                $ref: "#/components/schemas/timestampRes"
+    "400":
+      description: Bad Request.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
             properties:
               data:
                 type: object
-      description: The request was successful, and the server has returned the
-        requested resource in the response body.
-paths:
-  /cart:
-    post:
-      summary: make payment
-      operationId: makePayment
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                language:
-                  $ref: "#/components/schemas/language"
-                currency:
-                  $ref: "#/components/schemas/currency"
-                direct:
-                  $ref: "#/components/schemas/direct"
-                toConfirm:
-                  $ref: "#/components/schemas/toConfirm"
-                confirm:
-                  $ref: "#/components/schemas/confirm"
-                setTimer:
-                  $ref: "#/components/schemas/setTimer"
-                timer:
-                  $ref: "#/components/schemas/timer"
-                cart:
-                  $ref: "#/components/schemas/cart"
-      responses:
-        "200":
-          $ref: "#/components/responses/Ok"
+              code:
+                type: number
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+    "401":
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                type: object
+              code:
+                type: number
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+    "500":
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                type: object
+              code:
+                type: number
+              message:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: "Key Auth: Requests contain a valid `API_KEY` in the request headers."
