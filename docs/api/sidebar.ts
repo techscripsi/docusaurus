@@ -12,6 +12,18 @@ const sidebar: SidebarsConfig = {
       items: [
         {
           type: "doc",
+          id: "api/refund",
+          label: "cancel order",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
+          id: "api/cancel",
+          label: "cancel order",
+          className: "api-method post",
+        },
+        {
+          type: "doc",
           id: "api/modify",
           label: "modify order",
           className: "api-method patch",
@@ -20,18 +32,18 @@ const sidebar: SidebarsConfig = {
           type: "doc",
           id: "api/status",
           label: "order status",
-          className: "api-method post",
+          className: "api-method get",
         },
         {
           type: "doc",
-          id: "api/confirm",
+          id: "api/capture",
           label: "confirm payment",
           className: "api-method post",
         },
         {
           type: "doc",
-          id: "api/make-payment",
-          label: "make payment",
+          id: "api/init",
+          label: "create payment order",
           className: "api-method post",
         },
       ],
