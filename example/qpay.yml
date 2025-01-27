@@ -6,18 +6,24 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.0
 paths:
-  /refund:
+  /refund/{cartId}:
     post:
-      summary: cancel order
+      summary: refund order
       responses:
         "200":
-          $ref: "#/components/responses/200"
+          $ref: "#/components/responses/200refund"
         "400":
           $ref: "#/components/responses/400"
         "401":
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+      parameters:
+      - name: cartId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/primitive_cartId"
       operationId: refund
       requestBody:
         content:
@@ -27,81 +33,43 @@ paths:
               description: refund DESCRIPTION HERE.
               title: " "
               required:
-                - orderId
-              properties:
-                orderId:
-                  $ref: "#/components/schemas/primitive_orderId"
-                statusFilter:
-                  type: object
-                  description: statusFilter DESCRIPTION.
-                  title: " "
-                  properties:
-                    tags:
-                      type: array
-                      title: " "
-                      description: Your tags go here.
-                      example: ["tag1", "tag2", "tag3"]
-                    productIds:
-                      type: array
-                      title: " "
-                      description: Your productIds go here.
-                      example: ["productId1", "productId2", "productId3"]
-                    timerEnabled:
-                      type: boolean
-                      title: " "
-                      description: Whether a timer is set for purchase. If not set, all orders will be returned
-                      example: false
-  /cancel:
+  /cancel/{cartId}:
     post:
       summary: cancel order
       responses:
         "200":
-          $ref: "#/components/responses/200"
+          $ref: "#/components/responses/200cancel"
         "400":
           $ref: "#/components/responses/400"
         "401":
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+      parameters:
+      - name: cartId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/primitive_cartId"
       operationId: cancel
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              description: confirm DESCRIPTION HERE.
+              description: cancel DESCRIPTION HERE.
               title: " "
-              required:
-                - orderId
               properties:
-                orderId:
-                  $ref: "#/components/schemas/primitive_orderId"
-                statusFilter:
-                  type: object
-                  description: statusFilter DESCRIPTION.
-                  title: " "
-                  properties:
-                    tags:
-                      type: array
-                      title: " "
-                      description: Your tags go here.
-                      example: ["tag1", "tag2", "tag3"]
-                    productIds:
-                      type: array
-                      title: " "
-                      description: Your productIds go here.
-                      example: ["productId1", "productId2", "productId3"]
-                    timerEnabled:
-                      type: boolean
-                      title: " "
-                      description: Whether a timer is set for purchase. If not set, all orders will be returned
-                      example: false
+                tags:
+                  $ref: "#/components/schemas/array_tags"
+                items:
+                  $ref: "#/components/schemas/array_items"
   /modify:
     patch:
       summary: modify order
       responses:
         "200":
-          $ref: "#/components/responses/200"
+          $ref: "#/components/responses/200modify"
         "400":
           $ref: "#/components/responses/400"
         "401":
@@ -114,6 +82,41 @@ paths:
           application/json:
             schema:
               type: object
+              properties:
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
+                customerId:
+                  $ref: "#/components/schemas/primitive_customerId"
+                modifyBox:
+                  type: object
+                  title: " "
+                  properties:
+                    scope:
+                      type: object
+                      title: " "
+                      properties:
+                        cart:
+                          $ref: "#/components/schemas/block_modifyAmountTimer_req"
+                        tags:
+                          type: array
+                          title: " "
+                          properties:
+                            tag:
+                              $ref: "#/components/schemas/block_modifyAmountTimer_req"
+                    items:
+                      type: array
+                      title: " "
+                      description: items in modify
+                      properties:
+                        itemId:
+                          type: object
+                          title: " "
+                          description: itemId in modify
+                          properties:
+                            modifyAmount:
+                              $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
+                            modifyTimer:
+                              $ref: "#/components/schemas/object_modifyTimer_modify_req"
   /status:
     get:
       summary: order status
@@ -133,10 +136,10 @@ paths:
             schema:
               type: object
               required:
-                - orderId
+                - cartId
               properties:
-                orderId:
-                  $ref: "#/components/schemas/primitive_orderId"
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
                 statusFilter:
                   type: object
                   description: statusFilter DESCRIPTION.
@@ -147,11 +150,11 @@ paths:
                       title: " "
                       description: Your tags go here.
                       example: ["tag1", "tag2", "tag3"]
-                    productIds:
+                    itemIds:
                       type: array
                       title: " "
-                      description: Your productIds go here.
-                      example: ["productId1", "productId2", "productId3"]
+                      description: Your itemIds go here.
+                      example: ["itemId1", "itemId2", "itemId3"]
                     timerEnabled:
                       type: boolean
                       title: " "
@@ -179,11 +182,11 @@ paths:
               type: object
               title: " "
               required:
-                - orderId
+                - cartId
               description: confirm DESCRIPTION HERE.
               properties:
-                orderId:
-                  $ref: "#/components/schemas/primitive_orderId"
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
                 statusFilter:
                   type: object
                   description: statusFilter DESCRIPTION.
@@ -194,11 +197,11 @@ paths:
                       title: " "
                       description: Your tags go here.
                       example: ["tag1", "tag2", "tag3"]
-                    productIds:
+                    itemIds:
                       type: array
                       title: " "
-                      description: Your productIds go here.
-                      example: ["productId1", "productId2", "productId3"]
+                      description: Your itemIds go here.
+                      example: ["itemId1", "itemId2", "itemId3"]
                     timerEnabled:
                       type: boolean
                       title: " "
@@ -225,8 +228,8 @@ paths:
             schema:
               type: object
               properties:
-                orderId:
-                  $ref: "#/components/schemas/primitive_orderId"
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
                 customerId:
                   $ref: "#/components/schemas/primitive_customerId"
                 currency:
@@ -241,6 +244,25 @@ paths:
         - ApiKey: []
 components:
   schemas:
+    primitive_timerTrigger:
+      type: string
+      title: " "
+      enum:
+        - initiated
+        - canceled
+        - rejected
+        - approved
+        - captured
+        - finalized
+        - refunded
+        - manual
+    primitive_timerManualAction:
+      type: string
+      title: " "
+      enum:
+        - start
+        - pause
+        - stop
     primitive_timerEnabled:
       type: boolean
       title: " "
@@ -271,6 +293,21 @@ components:
         - complete
       example:
         - complete
+    primitive_amountMode:
+      type: string
+      title: " "
+      enum:
+        - declared
+        - calculated
+      example: calculated
+    array_tags:
+      type: array
+      title: " "
+      example: ["tag1", "tag2", "tag3"]
+    array_items:
+      type: array
+      title: " "
+      example: ["item1", "item2", "item3"]
     primitive_amount:
       type: integer
       title: " "
@@ -324,12 +361,45 @@ components:
       type: object
       title: " "
       properties:
-        triggerStatus:
-          $ref: "#/components/schemas/primitive_paymentStatus_full"
+        triggerEvent:
+          $ref: "#/components/schemas/primitive_paymentStatus_empty"
+          enum:
+            - initiated
+            - canceled
+            - rejected
+            - approved
+            - captured
+            - finalized
+            - refunded
+            - manual
         timerStatus:
           $ref: "#/components/schemas/primitive_timerStatus"
         remainingSecs:
           $ref: "#/components/schemas/primitive_timerValue"
+    object_modifyAmount_modify_req:
+      type: object
+      title: " "
+      description: object_modifyAmount_modify_req description
+      properties:
+        amountMode:
+          $ref: "#/components/schemas/primitive_amountMode"
+        amountModifier:
+          $ref: "#/components/schemas/primitive_amountModifier"
+    object_modifyAmount_modify_item_req:
+      type: object
+      title: " "
+      description: object_modifyAmount_modify_item_req description
+      properties:
+        amount:
+          $ref: "#/components/schemas/primitive_amount"
+        amountMode:
+          $ref: "#/components/schemas/primitive_amountMode"
+        quantity:
+          $ref: "#/components/schemas/primitive_quantity"
+        tag: 
+          $ref: "#/components/schemas/primitive_tag"
+        amountModifier:
+          $ref: "#/components/schemas/primitive_amountModifier"
     object_amountInfo_status_res:
       type: object
       title: " "
@@ -406,7 +476,7 @@ components:
       properties:
         value:
           $ref: "#/components/schemas/primitive_timerValue"
-        triggerStatus:
+        triggerEvent:
           $ref: "#/components/schemas/primitive_paymentStatus_empty"
           description: Status that triggers the timer.
           enum:
@@ -433,7 +503,7 @@ components:
       title: " "
       example:
         - EUR
-      description: "[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code."
+      description: "[ISO 4217](https://www.iban.com/currency-codes) alphabetic currency code."
 #    primitive_language:
 #      type: string
 #      title: " "
@@ -449,16 +519,19 @@ components:
     primitive_itemId:
       type: string
       title: " "
-    primitive_amountMode:
-      type: string
-      title: " "
-      enum:
-        - declared
-        - calculated
     primitive_capture:
       type: boolean
       title: " "
       description: Whether it's a two phase purchase.  
+    block_modifyAmountTimer_req:
+      type: object
+      title: " "
+      description: block_modifyAmountTimer_req description
+      properties:
+        modifyAmount:
+          $ref: "#/components/schemas/object_modifyAmount_modify_req"
+        modifyTimer:
+          $ref: "#/components/schemas/object_modifyTimer_modify_req"
     object_totalAmounts_status_res:
       type: object
       properties:
@@ -468,6 +541,17 @@ components:
           $ref: "#/components/schemas/primitive_totalCaptured"
         refunded:
           $ref: "#/components/schemas/primitive_totalRefunded"
+    object_modifyTimer_modify_req:
+      type: object
+      title: " "
+      description: object_modifyTimer description
+      properties:
+        triggerEvent:
+          $ref: "#/components/schemas/primitive_timerTrigger"
+        manualAction:
+          $ref: "#/components/schemas/primitive_timerManualAction"
+        timerValue:
+          $ref: "#/components/schemas/primitive_timerValue"
     object_paymentFilter:
       type: object
       properties:
@@ -498,7 +582,7 @@ components:
       title: " "
       example:
         - 8d7d8181-b4bf-49bb-b732-d498d15dc5cc
-    primitive_orderId:
+    primitive_cartId:
       type: string
       title: " "
       example:
@@ -519,8 +603,8 @@ components:
                 $ref: "#/components/schemas/objectRes_data"
                 description: Response parameters.
                 properties:
-                  orderId:
-                    $ref: "#/components/schemas/primitive_orderId"
+                  cartId:
+                    $ref: "#/components/schemas/primitive_cartId"
                   customerId:
                     $ref: "#/components/schemas/primitive_customerId"
                   currency:
@@ -562,14 +646,92 @@ components:
           schema:
             type: object
             required:
-              - orderId
+              - cartId
               - code
               - message
               - timestamp
             properties:
-              orderId:
-                $ref: "#/components/schemas/primitive_orderId"
+              cartId:
+                $ref: "#/components/schemas/primitive_cartId"
                 description: Order identifier.
+              code:
+                $ref: "#/components/schemas/primitiveRes_code"
+                description: Response code.
+              message:
+                $ref: "#/components/schemas/primitiveRes_message"
+                description: Response message.
+              timestamp:
+                $ref: "#/components/schemas/primitiveRes_timestamp"
+    "200modify":
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                $ref: "#/components/schemas/objectRes_data"
+                description: Response parameters.
+                properties:
+                  modifiedAmounts:
+                    type: array
+                    title: " "
+                    example: ["itemId1", "itemId2", "itemId3"]
+                  modifiedTimers:
+                    type: array
+                    title: " "
+                    example: ["itemId1", "itemId2", "itemId3"]
+              code:
+                $ref: "#/components/schemas/primitiveRes_code"
+                description: Response code.
+              message:
+                $ref: "#/components/schemas/primitiveRes_message"
+                description: Response message.
+              timestamp:
+                $ref: "#/components/schemas/primitiveRes_timestamp"
+    "200cancel":
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                $ref: "#/components/schemas/objectRes_data"
+                description: Response parameters.
+              code:
+                $ref: "#/components/schemas/primitiveRes_code"
+                description: Response code.
+              message:
+                $ref: "#/components/schemas/primitiveRes_message"
+                description: Response message.
+              timestamp:
+                $ref: "#/components/schemas/primitiveRes_timestamp"
+    "200refund":
+      description: The request was successful.
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+              - code
+              - message
+              - timestamp
+            properties:
+              data:
+                $ref: "#/components/schemas/objectRes_data"
+                description: Response parameters.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
                 description: Response code.

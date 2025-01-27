@@ -1,0 +1,3 @@
+apis:
+  example/qpay.yml:
+    alias: omnicart-api
