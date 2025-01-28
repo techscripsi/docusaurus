@@ -13,7 +13,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/refund",
-          label: "cancel order",
+          label: "refund order",
           className: "api-method post",
         },
         {
@@ -31,13 +31,13 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/status",
-          label: "order status",
+          label: "cart status long description.",
           className: "api-method get",
         },
         {
           type: "doc",
           id: "api/capture",
-          label: "confirm payment",
+          label: "capture payment",
           className: "api-method post",
         },
         {

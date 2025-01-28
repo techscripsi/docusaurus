@@ -19,11 +19,11 @@ paths:
         "500":
           $ref: "#/components/responses/500"
       parameters:
-      - name: cartId
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/primitive_cartId"
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/primitive_cartId"
       operationId: refund
       requestBody:
         content:
@@ -32,7 +32,22 @@ paths:
               type: object
               description: refund DESCRIPTION HERE.
               title: " "
-              required:
+              properties:
+                statusFilter:
+                  type: object
+                  description: statusFilter DESCRIPTION.
+                  title: " "
+                  properties:
+                    tags:
+                      $ref: "#/components/schemas/array_tags"
+                      description: Your tags go here.
+                    itemIds:
+                      $ref: "#/components/schemas/array_items"
+                      description: Your itemIds go here.
+                    timerEnabled:
+                      $ref: "#/components/schemas/primitive_timerEnabled"
+                      description: Whether a timer is set for purchase. If not set, all orders will be returned
+                      example: false
   /cancel/{cartId}:
     post:
       summary: cancel order
@@ -46,11 +61,11 @@ paths:
         "500":
           $ref: "#/components/responses/500"
       parameters:
-      - name: cartId
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/primitive_cartId"
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/primitive_cartId"
       operationId: cancel
       requestBody:
         content:
@@ -117,9 +132,9 @@ paths:
                               $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
                             modifyTimer:
                               $ref: "#/components/schemas/object_modifyTimer_modify_req"
-  /status:
+  /status/{cartId}:
     get:
-      summary: order status
+      summary: cart status long description.
       responses:
         "200":
           $ref: "#/components/responses/200status"
@@ -130,41 +145,54 @@ paths:
         "500":
           $ref: "#/components/responses/500"
       operationId: status
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - cartId
-              properties:
-                cartId:
-                  $ref: "#/components/schemas/primitive_cartId"
-                statusFilter:
-                  type: object
-                  description: statusFilter DESCRIPTION.
-                  title: " "
-                  properties:
-                    tags:
-                      type: array
-                      title: " "
-                      description: Your tags go here.
-                      example: ["tag1", "tag2", "tag3"]
-                    itemIds:
-                      type: array
-                      title: " "
-                      description: Your itemIds go here.
-                      example: ["itemId1", "itemId2", "itemId3"]
-                    timerEnabled:
-                      type: boolean
-                      title: " "
-                      description: Whether a timer is set for purchase. If not set, all orders will be returned
-                      example: false
+      parameters:
+        - name: cartId
+          in: path
+          description: "cartId"
+          required: true
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: "list of tags"
+          schema:
+            type: array
+        - name: itemIds
+          in: query
+          description: "list of itemIds"
+          schema:
+            type: array
+        - name: timerEnabled
+          in: query
+          description: "is timer enabled"
+          schema:
+            type: boolean
+#      requestBody:
+#        content:
+#          application/json:
+#            schema:
+#              type: object
+#              properties:
+#                statusFilter:
+#                  type: object
+#                  description: statusFilter DESCRIPTION.
+#                  title: " "
+#                  properties:
+#                    tags:
+#                      $ref: "#/components/schemas/array_tags"
+#                      description: Your tags go here.
+#                    itemIds:
+#                      $ref: "#/components/schemas/array_items"
+#                      description: Your itemIds go here.
+#                    timerEnabled:
+#                      $ref: "#/components/schemas/primitive_timerEnabled"
+#                      description: Whether a timer is set for cart item. # If not set, all orders will be returned.
+#                     example: false
       security:
         - ApiKey: []
   /capture:
     post:
-      summary: confirm payment
+      summary: capture payment
       responses:
         "200":
           $ref: "#/components/responses/200"
@@ -183,7 +211,7 @@ paths:
               title: " "
               required:
                 - cartId
-              description: confirm DESCRIPTION HERE.
+              description: capture DESCRIPTION HERE.
               properties:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
@@ -830,5 +858,5 @@ components:
     ApiKey:
       type: apiKey
       in: header
-      name: API_KEY
+      name: Api-Access-Token
       description: "Key Auth: Requests contain a valid `API_KEY` in the request headers."

@@ -146,7 +146,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'api',
           position: 'left',
-          label: 'API',
+          label: 'API Specification',
         },
 //        {to: '/blog', label: 'Releases', position: 'left'},
 
