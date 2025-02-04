@@ -1172,7 +1172,7 @@ progress{
     }
 }
 */
-/*
+/* TEMP START */
 @media (min-width:768px){
     .col-md{
         flex:1 0 0%
@@ -1330,7 +1330,7 @@ progress{
         --bs-gutter-y:3rem
     }
 }
-*/
+/* TEMP END */
 @media (min-width:992px){
     .col-lg{
         flex:1 0 0%
