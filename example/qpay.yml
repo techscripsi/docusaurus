@@ -6,10 +6,15 @@ info:
 servers:
   - url: https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.0
 paths:
-  /refund/{cartId}:
+  /refund:
     post:
       summary: Refund
-      description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      description: |
+        Use this method to refund a previously created and approved cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+
+        Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will refund all specified items and will not return an error.
+        
+        If a cart is refunded partially, the remaining items in that cart can be refunded later.
       responses:
         "200":
           $ref: "#/components/responses/200_refund"
@@ -19,40 +24,31 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
-      parameters:
-        - name: cartId
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/schemas/primitive_cartId"
       operationId: 50refund
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              description: refund DESCRIPTION HERE.
               title: " "
+              required:
+                - cartId
               properties:
-                statusFilter:
-                  type: object
-                  description: statusFilter DESCRIPTION.
-                  title: " "
-                  properties:
-                    tags:
-                      $ref: "#/components/schemas/array_tags"
-                      description: Your tags go here.
-                    itemIds:
-                      $ref: "#/components/schemas/array_items"
-                      description: Your itemIds go here.
-                    timerEnabled:
-                      $ref: "#/components/schemas/primitive_timerEnabled"
-                      description: Whether a timer is set for purchase. If not set, all orders will be returned
-                      example: false
-  /cancel/{cartId}:
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
+                  description: |
+                    An existing `cartId`.
+                filterBox:
+                  $ref: "#/components/schemas/object_filterBox_req"
+  /cancel:
     post:
       summary: Cancel
-      description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      description: |
+        Use this method to cancel a previously created and approved cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+
+        Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will cancel all specified items and will not return an error.
+        
+        If you narrow the request scope using `tags`, `itemIds`, or `timerEnabled`, the remaining cart items will be pending for auto or manual action depending on your settings.
       responses:
         "200":
           $ref: "#/components/responses/200_cancel"
@@ -62,29 +58,27 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
-      parameters:
-        - name: cartId
-          in: path
-          required: true
-          schema:
-            $ref: "#/components/schemas/primitive_cartId"
       operationId: 20cancel
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              description: cancel DESCRIPTION HERE.
               title: " "
+              required:
+                - cartId
               properties:
-                tags:
-                  $ref: "#/components/schemas/array_tags"
-                items:
-                  $ref: "#/components/schemas/array_items"
+                cartId:
+                  $ref: "#/components/schemas/primitive_cartId"
+                  description: |
+                    An existing `cartId`.
+                filterBox:
+                  $ref: "#/components/schemas/object_filterBox_req"
   /modify:
     patch:
       summary: Modify
-      description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      description: |
+        Use this method to modify cart contents or settings. For example, you can change the `quantity` of an item, reduce its approved `amount`, or adjust timer settings.
       responses:
         "200":
           $ref: "#/components/responses/200_modify"
@@ -100,36 +94,52 @@ paths:
           application/json:
             schema:
               type: object
+              required:
+                - cartId
               properties:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
                 customerId:
                   $ref: "#/components/schemas/primitive_customerId"
+                  description: |
+                    Unique customer identifier generated on your side and passed with the cart.
                 modifyBox:
                   type: object
                   title: " "
+                  description: |
+                    A set of cart properties to modify.
                   properties:
                     scope:
                       type: object
                       title: " "
+                      description: |
+                        The request scope. You can apply changes to the whole cart, per tag, or per item. Child settings override parent ones. That means that the cart settings are overridden by the tag settings which are, in turn, overridden by settings per item.
                       properties:
                         cart:
                           $ref: "#/components/schemas/block_modifyAmountTimer_req"
+                          description: |
+                            A set of cart settings to modify. The cart settings are overridden by the `tags` or `items` settings.
                         tags:
                           type: array
                           title: " "
+                          description: |
+                            A set of tag settings to modify per tag. The `tags` settings override the `cart` setting and are overridden by the `items` settings.
                           properties:
                             tag:
                               $ref: "#/components/schemas/block_modifyAmountTimer_req"
+                              description: |
+                                Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag.
                     items:
                       type: array
                       title: " "
-                      description: items in modify
+                      description: |
+                        A set of settings to modify per item. The `items` settings override the `cart` setting and the `tags` settings.
                       properties:
                         itemId:
                           type: object
                           title: " "
-                          description: itemId in modify
+                          description: |
+                            Replace `itemId` with an actual `itemId` value passed with the cart to modify parameters of the corresponding item.
                           properties:
                             modifyAmount:
                               $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
@@ -139,7 +149,7 @@ paths:
     get:
       summary: Retrieve status 
       description: |
-        Use this method to retireve information for a previously created cart or specific items in that cart. You can use tags to narrow down search results.
+        Use this method to retrieve information for a previously created cart or specific items in that cart. You can narrow down the results using the `tags`, `itemId`, or `timerEnabled` fields.
       responses:
         "200":
           $ref: "#/components/responses/200_status"
@@ -153,11 +163,11 @@ paths:
       parameters:
         - name: cartId
           in: path
-          description: |
-            `cartId` used to initiate your cart.
           required: true
+          description: | 
+            `cartId` used to initiate your cart.
           schema:
-            type: string
+            $ref: "#/components/schemas/primitive_cartId_param_path"
         - name: tags
           in: query
           description: |
@@ -167,17 +177,17 @@ paths:
         - name: itemIds
           in: query
           description: |
-            You can retrieve specific item IDs.
+            An array of specific item IDs to retrieve.
           schema:
             type: array
         - name: timerEnabled
           in: query
           description: |
-            If this option is defined, the result will include items based on their timer status:
+            If this option is defined, the results will include **only** items with explicitly defined timer settings:
             
             `true` - only items with enabled timer will be returned
             
-            `false` - only item swithot timer will be returned
+            `false` - only item with timer will be returned
 
             If this option is not set, all items that meet other criteria will be returned.
           schema:
@@ -208,7 +218,12 @@ paths:
   /capture:
     post:
       summary: Capture
-      description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      description: |
+        Use this method to capture a previously created and approved cart or specific items in that cart. You can capture the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+
+        Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will cancel all specified items and will not return an error.
+        
+        If you narrow the request scope using `tags`, `itemIds`, or `timerEnabled`, the remaining cart items will be pending for auto or manual action depending on your settings.
       responses:
         "200":
           $ref: "#/components/responses/200_capture"
@@ -227,30 +242,13 @@ paths:
               title: " "
               required:
                 - cartId
-              description: capture DESCRIPTION HERE.
               properties:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
-                statusFilter:
-                  type: object
-                  description: statusFilter DESCRIPTION.
-                  title: " "
-                  properties:
-                    tags:
-                      type: array
-                      title: " "
-                      description: Your tags go here.
-                      example: ["tag1", "tag2", "tag3"]
-                    itemIds:
-                      type: array
-                      title: " "
-                      description: Your itemIds go here.
-                      example: ["itemId1", "itemId2", "itemId3"]
-                    timerEnabled:
-                      type: boolean
-                      title: " "
-                      description: Whether a timer is set for purchase. If not set, all orders will be returned
-                      example: false
+                  description: |
+                    An existing `cartId`.
+                filterBox:
+                  $ref: "#/components/schemas/object_filterBox_req"
       security:
         - ApiKey: []
   /init:
@@ -315,6 +313,15 @@ components:
     primitive_timerManualAction:
       type: string
       title: " "
+      description: |
+        Timer manual action, the following options are available:
+        
+        `start` - starts a pending or paused timer. Stopped or elapsed timer cannot be (re)started;
+        
+        `pause` - pauses an active timer. A paused timer can be restarted either manually or automatically when an item is in `timerTrigger` status;
+        
+        `stop` - stops timer. After the timer is stopped, it cannot be restarted.
+        LINK
       enum:
         - start
         - pause
@@ -347,6 +354,18 @@ components:
         - cancel
         - complete
       example: complete
+    primitive_amountMode_req:
+        type: string
+        title: " "
+        description: |
+          This parameter defines what amount will be used for payment. Available values:
+          
+          `declared` - for payment will be used the amount specified in the `amount` field of the item. Other fields (`quantity`, `amountModifier`) will be stored by OmniCart but will not affect the price. That is, in this case, the price is calculated on your side and passed to OmniCart as is.
+          
+          `calculated` - the amount in the `amount` field is provided per item. If you pass the `quantity` and/or `amountModifier` fields along with the `amount` value, OmniCart will calculate the final price based on the latter settings.
+        enum:
+          - declared
+          - calculated
     primitive_amountMode:
       type: string
       title: " "
@@ -369,14 +388,16 @@ components:
     primitiveRes_code_success:
       type: string
       title: " "
-      description: "Response code (see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+      description: |
+        "Response code (see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
       example: success
     primitiveRes_code:
       type: string
       title: " "
     primitiveRes_message:
       type: string
-      description: Response message "(see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+      description: |
+        Response message "(see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
       title: " "
     objectRes_data:
       type: object
@@ -384,27 +405,33 @@ components:
     primitive_totalInitiated:
       type: integer
       title: " "
-      description: Total initiated amount of the requested items in minimum currency units.
+      description: |
+        Total initiated amount of the requested items in minimum currency units.
     primitive_totalCaptured:
       type: integer
       title: " "
-      description: Total captured cart amount of the requested items amount in minimum currency units.
+      description: |
+        Total captured cart amount of the requested items amount in minimum currency units.
     primitive_totalRefunded:
       type: integer
       title: " "
-      description: Total finalized cart amount of the requested items amount in minimum currency units.
+      description: |
+        Total finalized cart amount of the requested items amount in minimum currency units.
     primitive_fullInitiatedAmount:
       type: integer
       title: " "
-      description: Full initiated amount for the item in minimum currency units.
+      description: |
+        Full initiated amount for the item in minimum currency units.
     primitive_fullCapturedAmount:
       type: integer
       title: " "
-      description: Full captured amount for the item in minimum currency units.
+      description: |
+        Full captured amount for the item in minimum currency units.
     primitive_fullRefundedAmount:
       type: integer
       title: " "
-      description: Full captured amount for the item in minimum currency units.
+      description: |
+        Full captured amount for the item in minimum currency units.
     object_paymentSnapshot_status_res:
       type: object
       title: " "
@@ -415,6 +442,20 @@ components:
           $ref: "#/components/schemas/primitive_quantity"
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
+    primitive_triggerEvent:
+      type: string
+      title: " "
+      description: |
+        Item payment status that triggers the timer. You can also select to start the timer manually. LINK
+      enum:
+        - initiated
+        - rejected
+        - approved
+        - canceled
+        - captured
+        - finalized
+        - refunded
+        - manual
     object_timerSnapshot_status_res:
       type: object
       title: " "
@@ -433,11 +474,14 @@ components:
         timerStatus:
           $ref: "#/components/schemas/primitive_timerStatus"
         remainingSecs:
-          $ref: "#/components/schemas/primitive_timerValue"
+          $ref: "#/components/schemas/primitive_timerValue"          
     object_modifyAmount_modify_req:
       type: object
       title: " "
-      description: object_modifyAmount_modify_req description
+      description: |
+        A set of parameters to modify amounts.
+
+        Captured amount must not exceed approved amount.
       properties:
         amountMode:
           $ref: "#/components/schemas/primitive_amountMode"
@@ -446,18 +490,64 @@ components:
     object_modifyAmount_modify_item_req:
       type: object
       title: " "
-      description: object_modifyAmount_modify_item_req description
+      description: |
+        A set of settings to modify the resulting amount. The resulting amount cannot exceed the approved amount. ADDLINK
       properties:
         amount:
           $ref: "#/components/schemas/primitive_amount"
+          description: |
+            Item amount in minimum currency units.
+            
+            `amountMode: declared` - the `amount` value passed to OmniCart is the total amount for this `itemId` in the cart. The `quantity` and `amountModifier` values are stored in OmniCart but ignored for final item price calculation.
+            
+            `amountMode: calculated` - the `amount` value is specified per item. The total amount is calculated on the OmniCart side based on the `quantity` and `amountModifier` values.
         amountMode:
-          $ref: "#/components/schemas/primitive_amountMode"
+          $ref: "#/components/schemas/primitive_amountMode_req"
         quantity:
           $ref: "#/components/schemas/primitive_quantity"
-        tag: 
+        tag:
           $ref: "#/components/schemas/primitive_tag"
+          description: |
+            asd 20250206104628
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
+          description: |
+            asd 20250206104650
+#    block_cartId_and_filterBox_req:
+#      type: object
+#      title: " "
+#      properties:
+#        cartId:
+#          $ref: "#/components/schemas/primitive_cartId"
+#          desctiption: |
+#            An existing `cartId`.
+#          schema:
+#            $ref: "#/components/schemas/object_filterBox_req"
+    object_filterBox_req:
+      type: object
+      title: " "
+      description: |
+        Block of settings to narrow down the request scope.
+      properties:
+        tags:
+          $ref: "#/components/schemas/array_tags"
+          description: |
+            List of tags used in a cart. All items marked with the specified tags will be affected by the request.
+        itemIds:
+          $ref: "#/components/schemas/array_items"
+          description: |
+            Specific `itemIds` passed that are part of a cart. All specified items will be affected by the request.
+        timerEnabled:
+          $ref: "#/components/schemas/primitive_timerEnabled"
+          description: |
+            If this option is set, **only** the items with explicitly defined timer setting be affected by the request:
+            
+            `true` - only items with enabled timer
+
+            `false` - only items with disabled timer.
+
+            If this option is not set, other criteria will be applied regardless of the timer setting.
+          example: false
     object_amountInfo_status_res:
       type: object
       title: " "
@@ -473,7 +563,8 @@ components:
       type: string
       title: " "
       format: date-time
-      description: "Date and time the request was received by the server."
+      description: | 
+        Date and time the request was received by the server.
       example: "2025-04-23T18:25:43.511Z"
     block_cart:
       type: array
@@ -525,13 +616,15 @@ components:
         amount:
           $ref: "#/components/schemas/primitive_amount"
           description: |
-            Item amount in minimum currecy units.
-            `amountMode: declared` - the `amount` value passed to OmniCart is the total amount for this `itemId` in the cart. The `quantity` and `amountModifier` values are stored in OminCart but ignored for final item price calculation.
+            Item amount in minimum currency units.
+            
+            `amountMode: declared` - the `amount` value passed to OmniCart is the total amount for this `itemId` in the cart. The `quantity` and `amountModifier` values are stored in OmniCart but ignored for final item price calculation.
+            
             `amountMode: calculated` - the `amount` value is specified per item. The total amount is calculated on the OmniCart side based on the `quantity` and `amountModifier` values.
         quantity:
           $ref: "#/components/schemas/primitive_quantity"
           description: |
-            Item quantity. Can be a floating point (for example, litres of milk). Depenging on the `amountMode` setting can be processed by OmniCart.
+            Item quantity. Can be a floating point (for example, litres of milk). Depending on the `amountMode` setting can be processed by OmniCart.
             `amountMode: declared` - the `quantity` value is ignored for the final price calculation and stored in OmniCart.
             `amountMode: calculated` -  the final price is calculated by multiplying `amount` by `quantity` on the OmniCart side.
         paymentFilter:
@@ -543,7 +636,7 @@ components:
         cart:
           $ref: "#/components/schemas/object_paymentFilter"
           description: |
-            Payment and timer settings applied to the whole cart. If you define tag settings, they will override the cart settings for items marked with the defined tags.
+            Payment and timer settings applied to the whole cart. If you define the tag settings, they will override the cart settings for items marked with the defined tags.
         tags:
           $ref: "#/components/schemas/object_tags"
           description: |
@@ -555,7 +648,7 @@ components:
         triggerEvent:
           $ref: "#/components/schemas/primitive_paymentStatus_empty"
           description: |
-            Item payment status that triggers the timer. You can also select to start the timer manually.
+            Item payment status that triggers the timer. You can also select to start the timer manually. LINK
           enum:
             - initiated
             - rejected
@@ -567,18 +660,26 @@ components:
             - manual
         value:
           $ref: "#/components/schemas/primitive_timerValue"
-          description: Amount of seconds after which the timer elapses.
+          description: |
+            Amount of seconds after which the timer elapses.
+            
+            If the timer is paused manually, the countdown is put on hold and can be continued.
+
+            If the timer is stopped manually, it cannot be restarted.
     object_captureSettings:
       type: object
       title: " "
       properties:
         autoAction:
           $ref: "#/components/schemas/primitive_autoCaptureAction"
-          description: Action that is taken after the time set in the `value` parameter elsapses.
+          description: |
+            Action that is taken after the time set in the `value` parameter elapses.
         value:
           $ref: "#/components/schemas/primitive_timerValue"
-          description: Number of seconds after which the action set in the `autoAction` parameter is taken.
+          description: |
+            Amount of seconds after which the action set in `autoAction` is taken.
           example: 172800
+          minimum: 600
       description: Capture settings.
     primitive_currency:
       type: string
@@ -596,7 +697,10 @@ components:
       title: " "
       format: float
       minimum: 0.01
-      description: primitive_quantity
+      description: | 
+        The quantity of an item. Can be whole numbers or decimals.
+        If `amountMode` is set to `calculated`, the `amount` value is multiplied by the `quantity` value on the OmniCart side.
+        If `amountMode` is set to declared, the `quantity` value is stored in OmniCart but does not affect the resulting item price.
     primitive_itemId:
       type: string
       title: " "
@@ -624,14 +728,15 @@ components:
     object_modifyTimer_modify_req:
       type: object
       title: " "
-      description: object_modifyTimer description
+      description: |
+        A set of timer parameters.
       properties:
         triggerEvent:
-          $ref: "#/components/schemas/primitive_timerTrigger"
+          $ref: "#/components/schemas/primitive_triggerEvent"
         manualAction:
           $ref: "#/components/schemas/primitive_timerManualAction"
         timerValue:
-          $ref: "#/components/schemas/primitive_timerValue"
+          $ref: "#/components/schemas/primitive_timerValue_req"
     object_paymentFilter:
       type: object
       title: " "
@@ -639,11 +744,7 @@ components:
         Set of payment and timer settings.
       properties:
         amountMode:
-          $ref: "#/components/schemas/primitive_amountMode"
-          description: |
-            This parameter defines what amoutn will be used for payment. Available values:
-            * `declared` - for payment will be used the amount specified in the `amount` field of the item. Other fields (`quantity`, `amountModifier`) will be stored by OmniCart but will not affect the price. That is, in this case, the price is calculated on your side and passed to OmniCart as is.
-            * `calculated` - the amount in the `amount` field is provided per item. If you pass the `quantity` and/or `amountModifier` fields along with the `amount` value, OmnicCart will calculate the final price based on the latter settings.
+          $ref: "#/components/schemas/primitive_amountMode_req"
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
           description: |
@@ -651,16 +752,30 @@ components:
         capture:
           $ref: "#/components/schemas/primitive_capture"
           description: |
-            Whether an item affected by this setting is a two phase purchase. If enabled, after a payment of the item is approved, it is put on hold on the customer's account and must be captured for an actual transaction to take place.
+            Whether it is required to capture a payment after it is approved (after the customer verified their payment) to complete a purchase.
+
+            `true` - after a cart is approved, manual capture is required (with enough permission, you can configure auto capture as well);
+
+            `false` - after a cart is approved, it is captured instantly.
         captureSettings:
           $ref: "#/components/schemas/object_captureSettings"
-          description: Defines capture settings. By default, an approved payment auto expires after 2 days without manual action.
+          description: Capture settings. By default, an approved payment is auto canceled after 2 days (2880 minutes) without manual action.
         enableTimer:
           $ref: "#/components/schemas/primitive_timerEnabled"
-          description: Enable a timer is on, OmniCart will not register another purchase with the `itemId` for which the timer was enabled.
+          description: |
+            Enable/disable timer:
+            
+            `true` - the timer is enabled, you can configure its settings
+
+            `false` - the timer is disabled.
         timer:
           $ref: "#/components/schemas/object_timerSettings"
-          desccription: Timer settings.
+          description: Timer settings.
+    primitive_timerValue_req:
+      type: integer
+      title: " "
+      description: |
+        Lets you redefine current remaining timer value in seconds. `0` value means that the timer is infinite - you can use it for one time purchases.
     primitive_timerValue:
       type: integer
       title: " "
@@ -670,8 +785,12 @@ components:
       format: float
       minimum: 0.01
       example: 0.7
-      description: The `amount` parameter is multiplied by this value. You can use it
-        to calculate discounts.
+      description: |
+        If `amountMode` is set to `calculated`, the `amountModifier` value acts as a multiplier for the total item `amount`. Here is an example.
+        
+        Consider an item that costs 100 EUR. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is `100% - 30% = 70%` of the original price).
+        
+        If `amountMode` is set to `declared`, the `amountModifier` value will be stored in OmniCart but will not affect the resulting item price. LINK
     primitive_customerId:
       type: string
       title: " "
@@ -682,6 +801,11 @@ components:
       example: 6f891edb-1e1f-48bb-b042-2cb790a0f402
       minimum: 9
       maximum: 36
+    primitive_cartId_param_path:
+        type: string
+        title: " "
+        minimum: 9
+        maximum: 36
   responses:
     "200_status":
       description: OK
