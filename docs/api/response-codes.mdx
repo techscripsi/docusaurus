@@ -1,0 +1,113 @@
+---
+sidebar_position: 100
+sidebar_label: Response Codes
+---
+
+# Response Codes and Messages
+
+
+they might sometimes overlap with HTTP codes but it is consistent
+
+```
+x   xx   xxx
+│   │     └─ specific error code
+│   └─ error category and subcategory
+│      ├─ 0 - related to authentication
+│      │  ├─ 00 - authentication successful
+│      │  └─ 01 - authentication failed
+│      ├─ 1 - data related
+│      │  ├─ 10 - no errors
+│      │  ├─ 11 - did not receive expected data
+│      │  ├─ 12 - the received data has wrong format
+│      │  ├─ 13 - the received data has invalid value
+│      │  ├─ 14 - conflict with existing data
+│      │  └─ 19 - other data related errors
+│      ├─ 2 - permissions
+│      │  ├─ 20 - no errors
+│      │  ├─ 21 - not allowed to pass this method
+│      │  ├─ 22 - not allowed to pass this object or parameter
+│      │  ├─ 23 - the passed value is out of the allowed range
+│      │  └─ 29 - other permission related errors
+│      └─ 9 - other cases
+└─ is the request successful
+   ├─ 0 - success
+   └─ 1 - failure
+```
+
+- 400 Bad Request
+- 405 Method Not Allowed
+- 409 Conflict
+
+| `121000` | `400` |  |  |
+
+## Initiate
+
+
+import Code from '/docs/__snippets__/api/response-codes/000000.mdx';
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+| `000000` | `201` |`Success` |  |
+| `000001` | `201` |`Success. Tag(s) [...] defined but not used` |  |
+| `000002` | `201` |`Success. Item(s) [...] contain undefined tags` |  |
+| `101000` | `401` | `Authentication failed` |
+| `111001` | `400` | `cartId cannot be empty` |  |
+| `111002` | `400` | `customerId cannot be empty if timer is enabled` | ТУТ, наверное, список items нужен | 
+| `112001` | `400` | `Property {property} has invalid format` |  |
+| `113000` | `400` | `Unknown currency` |  |
+| `114001` | `409` | `cartId already exists` |  |
+| `114002` | `409` | `customerId {customerId} is linked to itemId {itemId} with an active timer` |  |
+| `114003` | `409` | `{itemId} does not exist` |  |
+| `121000` | `405` | `Not allowed to pass this method` |
+| `122000` | `400` | `Insufficient permissions to pass {0}` | . capture captureSettings timer |  |
+| `123000` | `400` | `{captureSettings} value {value} is out of permitted range` |  |
+| `123001` | `400` | `{autoAction} value {value} is out of permitted range` |  |
+| `123002` | `400` | `{timer} value {value} is out of permitted range` |  |
+| `` |  |  |  |
+| `` |  |  |  |
+| `199000` | `500` | `General system error` |  |
+| N/A | `503` | N/A |  |
+
+## Retrieve Status
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+
+* <Code />
+   * <Code />
+
+<table>
+<tr>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+<Code />
+<Code />
+<Code />
+</table>
+
+## Cancel
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+|  |  |  |  |
+
+## Capture
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+|  |  |  |  |
+
+## Modify
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+|  |  |  |  |
+
+## Refund
+
+| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
+| :---: | :---: | :--- | :--- |
+|  |  |  |  |

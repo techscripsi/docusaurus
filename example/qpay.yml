@@ -24,6 +24,8 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 50refund
       requestBody:
         content:
@@ -58,6 +60,8 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 20cancel
       requestBody:
         content:
@@ -88,6 +92,8 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 40modify
       requestBody:
         content:
@@ -99,6 +105,8 @@ paths:
               properties:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
+                  description: |
+                    An existing `cartId`
                 customerId:
                   $ref: "#/components/schemas/primitive_customerId"
                   description: |
@@ -124,27 +132,31 @@ paths:
                           title: " "
                           description: |
                             A set of tag settings to modify per tag. The `tags` settings override the `cart` setting and are overridden by the `items` settings.
-                          properties:
-                            tag:
-                              $ref: "#/components/schemas/block_modifyAmountTimer_req"
-                              description: |
-                                Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag.
+                          items:
+                            type: object
+                            properties:
+                              tag:
+                                $ref: "#/components/schemas/block_modifyAmountTimer_req"
+                                description: |
+                                  Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag.
                     items:
                       type: array
                       title: " "
                       description: |
                         A set of settings to modify per item. The `items` settings override the `cart` setting and the `tags` settings.
-                      properties:
-                        itemId:
-                          type: object
-                          title: " "
-                          description: |
-                            Replace `itemId` with an actual `itemId` value passed with the cart to modify parameters of the corresponding item.
-                          properties:
-                            modifyAmount:
-                              $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
-                            modifyTimer:
-                              $ref: "#/components/schemas/object_modifyTimer_modify_req"
+                      items:
+                        type: object
+                        properties:
+                          itemId:
+                            type: object
+                            title: " "
+                            description: |
+                              Replace `itemId` with an actual `itemId` value passed with the cart to modify parameters of the corresponding item.
+                            properties:
+                              modifyAmount:
+                                $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
+                              modifyTimer:
+                                $ref: "#/components/schemas/object_modifyTimer_modify_req"
   /status/{cartId}:
     get:
       summary: Retrieve status 
@@ -159,6 +171,8 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 15status
       parameters:
         - name: cartId
@@ -233,6 +247,8 @@ paths:
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 30capture
       requestBody:
         content:
@@ -253,7 +269,7 @@ paths:
         - ApiKey: []
   /init:
     post:
-      summary: Initiate
+      summary: Initiate cart
       description: |
         Use this method to initiate a new cart. To do this, generate `cartId` (cart identifier) on your side and pass it to OmniCart along with other parameters.
       responses:
@@ -267,6 +283,8 @@ paths:
           $ref: "#/components/responses/404"
         "500":
           $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
       operationId: 10init
       requestBody:
         content:
@@ -376,7 +394,7 @@ components:
     array_tags:
       type: array
       title: " "
-      example: ["tag1", "tag2", "tag3"]
+      example: ["groceries", "discount", "digital"]
     array_items:
       type: array
       title: " "
@@ -389,7 +407,7 @@ components:
       type: string
       title: " "
       description: |
-        "Response code (see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+        Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes)).
       example: success
     primitiveRes_code:
       type: string
@@ -397,7 +415,7 @@ components:
     primitiveRes_message:
       type: string
       description: |
-        Response message "(see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+        Response message (see [Response codes and messages](/docusaurus/docs/api/response-codes)).
       title: " "
     objectRes_data:
       type: object
@@ -519,7 +537,7 @@ components:
 #      properties:
 #        cartId:
 #          $ref: "#/components/schemas/primitive_cartId"
-#          desctiption: |
+#          description: |
 #            An existing `cartId`.
 #          schema:
 #            $ref: "#/components/schemas/object_filterBox_req"
@@ -591,16 +609,16 @@ components:
       items:
         type: object
         properties:
-          tagName:
+          tag:
             type: object
             title: " "
             description: |
-              Replace `tagName` with a tag name defined in your merchant dashboard.
+              Replace `tag` with a tag name defined in your merchant dashboard.
             properties:
               paymentFilter:
                 $ref: "#/components/schemas/object_paymentFilter"
                 description: |
-                  Payment and timer settings applied to the tag specified as object name. Tag seettings override cart settings.
+                  Payment and timer settings applied to the tag specified as object name. Tag settings override cart settings.
     object_item_status_res:
       type: object
       title: " "
@@ -662,10 +680,6 @@ components:
           $ref: "#/components/schemas/primitive_timerValue"
           description: |
             Amount of seconds after which the timer elapses.
-            
-            If the timer is paused manually, the countdown is put on hold and can be continued.
-
-            If the timer is stopped manually, it cannot be restarted.
     object_captureSettings:
       type: object
       title: " "
@@ -788,7 +802,7 @@ components:
       description: |
         If `amountMode` is set to `calculated`, the `amountModifier` value acts as a multiplier for the total item `amount`. Here is an example.
         
-        Consider an item that costs 100 EUR. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is `100% - 30% = 70%` of the original price).
+        Consider an item that costs 100 EUR. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is 70% of the original price).
         
         If `amountMode` is set to `declared`, the `amountModifier` value will be stored in OmniCart but will not affect the resulting item price. LINK
     primitive_customerId:
@@ -871,13 +885,14 @@ components:
             properties:
               cartId:
                 $ref: "#/components/schemas/primitive_cartId"
-                desciption: |
+                description: |
                   Cart identifier generated on your side and passed to OmniCart on card registration.
               code:
                 $ref: "#/components/schemas/primitiveRes_code_success"
+                example: 011000
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: "Cart successfully created."
+                example: Cart successfully registered
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":
@@ -1120,36 +1135,20 @@ components:
                 type: number
                 title: " "
                 description: |
-                  Error code "(see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+                  Error code "(see [Response codes and messages](/docusaurus/docs/api/response-codes))."
                 example: auth_error
               message:
                 type: string
                 title: " "
                 description: |
-                  Error message "(see also [Response codes and messages](/docusaurus/docs/integration/error-codes))."
+                  Error message "(see [Response codes and messages](/docusaurus/docs/api/response-codes))."
                 example: Authentication error
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "500":
       description: Internal Server Error
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - data
-              - code
-              - message
-              - timestamp
-            properties:
-              data:
-                type: object
-              code:
-                type: number
-              message:
-                type: string
-              timestamp:
-                $ref: "#/components/schemas/primitiveRes_timestamp"
+    "503":
+      description: Service Unavailable
   securitySchemes:
     ApiKey:
       type: apiKey

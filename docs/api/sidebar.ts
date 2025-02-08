@@ -43,7 +43,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/10-init",
-          label: "Initiate",
+          label: "Initiate cart",
           className: "api-method post",
         },
       ],
