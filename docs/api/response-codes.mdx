@@ -12,18 +12,20 @@ they might sometimes overlap with HTTP codes but it is consistent
 x   xx   xxx
 │   │     └─ specific error code
 │   └─ error category and subcategory
-│      ├─ 0 - related to authentication
-│      │  ├─ 00 - authentication successful
-│      │  └─ 01 - authentication failed
-│      ├─ 1 - data related
-│      │  ├─ 10 - no errors
-│      │  ├─ 11 - did not receive expected data
-│      │  ├─ 12 - the received data has wrong format
-│      │  ├─ 13 - the received data has invalid value
-│      │  ├─ 14 - conflict with existing data
-│      │  └─ 19 - other data related errors
-│      ├─ 2 - permissions
-│      │  ├─ 20 - no errors
+│      ├─ 0 - no errors
+│      │  ├─ 00 - no special messages
+│      │  ├─ 01 - unused data accepted
+│      │  └─ 09 - other messages
+│      ├─ 1 - related to authentication
+│      │  ├─ 11 - authentication failed
+│      │  └─ 19 - other authentication related errors
+│      ├─ 2 - data related
+│      │  ├─ 21 - did not receive expected data
+│      │  ├─ 22 - the received data has wrong format
+│      │  ├─ 23 - the received data has invalid value
+│      │  ├─ 24 - conflict with existing data
+│      │  └─ 29 - other data related errors
+│      ├─ 3 - permissions
 │      │  ├─ 21 - not allowed to pass this method
 │      │  ├─ 22 - not allowed to pass this object or parameter
 │      │  ├─ 23 - the passed value is out of the allowed range
@@ -47,22 +49,22 @@ import Code from '/docs/__snippets__/api/response-codes/000000.mdx';
 
 | API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
 | :---: | :---: | :--- | :--- |
-| `000000` | `201` |`Success` |  |
-| `000001` | `201` |`Success. Tag(s) [...] defined but not used` |  |
-| `000002` | `201` |`Success. Item(s) [...] contain undefined tags` |  |
-| `101000` | `401` | `Authentication failed` |
-| `111001` | `400` | `cartId cannot be empty` |  |
-| `111002` | `400` | `customerId cannot be empty if timer is enabled` | ТУТ, наверное, список items нужен | 
-| `112001` | `400` | `Property {property} has invalid format` |  |
-| `113000` | `400` | `Unknown currency` |  |
-| `114001` | `409` | `cartId already exists` |  |
-| `114002` | `409` | `customerId {customerId} is linked to itemId {itemId} with an active timer` |  |
-| `114003` | `409` | `{itemId} does not exist` |  |
-| `121000` | `405` | `Not allowed to pass this method` |
-| `122000` | `400` | `Insufficient permissions to pass {0}` | . capture captureSettings timer |  |
-| `123000` | `400` | `{captureSettings} value {value} is out of permitted range` |  |
-| `123001` | `400` | `{autoAction} value {value} is out of permitted range` |  |
-| `123002` | `400` | `{timer} value {value} is out of permitted range` |  |
+| `000000` | `201` | <code>Success</code> |  |
+| `001001` | `201` |`Success. Tag(s) [...] defined but not used` |  |
+| `001002` | `201` |`Success. Item(s) [...] contain undefined tags` |  |
+| `111000` | `401` | `Authentication failed` |
+| `121001` | `400` | `cartId cannot be empty` |  |
+| `121002` | `400` | `customerId cannot be empty if timer is enabled` | ТУТ, наверное, список items нужен | 
+| `122001` | `400` | `Property {property} has invalid format` |  |
+| `123000` | `400` | `Unknown currency` |  |
+| `124001` | `409` | `cartId already exists` |  |
+| `124002` | `409` | `customerId {customerId} is linked to itemId {itemId} with an active timer` |  |
+| `124003` | `409` | `{itemId} does not exist` |  |
+| `131000` | `405` | `Not allowed to pass this method` |
+| `132000` | `400` | `Insufficient permissions to pass {0}` | . capture captureSettings timer |  |
+| `133000` | `400` | `{captureSettings} value {value} is out of permitted range` |  |
+| `133001` | `400` | `{autoAction} value {value} is out of permitted range` |  |
+| `133002` | `400` | `{timer} value {value} is out of permitted range` |  |
 | `` |  |  |  |
 | `` |  |  |  |
 | `199000` | `500` | `General system error` |  |
