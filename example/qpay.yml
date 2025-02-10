@@ -407,8 +407,6 @@ components:
     primitiveRes_code:
       type: string
       title: " "
-      description: |
-        Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
     primitiveRes_message:
       type: string
       description: |
@@ -867,9 +865,13 @@ components:
                                 $ref: "#/components/schemas/object_timerSnapshot_status_res"
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
                 example: "001004"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
                 example: Requested cart does not contain tag(s) [...]
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
@@ -891,9 +893,13 @@ components:
                   Cart identifier generated on your side and passed to OmniCart on card registration.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#init) for more details).
                 example: "000000"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#init) for more details).
                 example: Success
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
@@ -925,8 +931,12 @@ components:
                     example: ["itemId1", "itemId2", "itemId3"]
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#modify) for more details).
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#modify) for more details).
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_capture":
@@ -948,8 +958,12 @@ components:
                     description: Array of captured itemIds.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#capture) for more details).
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#capture) for more details).
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_cancel":
@@ -971,8 +985,12 @@ components:
                     description: Array of itemIds with canceled payment.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#cancel) for more details).
               message:
                 $ref: "#/components/schemas/primitiveRes_message"                
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#cancel) for more details).
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_refund":
@@ -995,8 +1013,12 @@ components:
                     description: Array of refunded itemIds.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#refund) for more details).
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+                description: |
+                  Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#refund) for more details).
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200":
