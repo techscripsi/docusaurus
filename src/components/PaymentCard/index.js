@@ -31,7 +31,7 @@ import Toast from 'react-bootstrap/Toast';
 function PaymentCard() {
   return (
     <>
-      <Card style={{ width: '50%' }}>
+      <Card style={{ width: '100%' }}>
         <div style={{ marginRight: '2em' }}>
           <div className="card-body">
             <ButtonToolbar>
@@ -39,7 +39,7 @@ function PaymentCard() {
             </ButtonToolbar>
             <p className="card-text">
               <Form.Group controlId="CardNumber" className="mb-3">
-                <Form.Label>Card Number</Form.Label>
+                <Form.Label>CARD NUMBER</Form.Label>
                 <Form.Control type="text" />
               </Form.Group>
             </p>
@@ -48,17 +48,20 @@ function PaymentCard() {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <div style={{ width: '48%' }}>
                     <Form.Label>CARDHOLDER NAME</Form.Label>
-                    <Form.Control type="text" placeholder="Name" />
+                    <Form.Control type="text" />
                   </div>
                   <div style={{ width: '48%' }}>
+                    <Form.Label>CVC</Form.Label>
                     <Form.Control type="text" />
                   </div>
                 </div>
               </Form.Group>
             </p>
-            <ButtonGroup>
-              <Button>Pay</Button>
-            </ButtonGroup>
+            <div align="center">
+                        <ButtonGroup style={{ width: '100%' }}>
+                            <Button >Pay</Button>
+                        </ButtonGroup>
+            </div>
           </div>
         </div>
       </Card>

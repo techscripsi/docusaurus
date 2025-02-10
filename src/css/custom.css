@@ -11466,3 +11466,13 @@ margin-top: 0;
     radial-gradient(100% 148.07% at 0% 0%, #fff500 0%, #51d500 100%);
   background-blend-mode: screen, color-dodge, overlay, difference, normal;
 }
+
+/* 20250211003011 */
+
+.colmain {
+    margin-left: 0; /* Убираем отступ слева */
+    padding-left: 0; /* Убираем внутренний отступ слева */
+    width: 50%; /* Устанавливаем ширину колонки (можно изменить по необходимости) */
+    box-sizing: border-box; /* Учитываем отступы и границы в ширине */
+}
+

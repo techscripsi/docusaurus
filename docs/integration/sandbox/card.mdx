@@ -6,7 +6,18 @@ sidebar_position: 110
 
 ## PaymentCard
 
-<PaymentCard />
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+    <div width="center">
+      <PaymentCard />
+    </div>
+  </Column>
+</Columns>
 
 ## ColorPickerExample
 
@@ -14,140 +25,158 @@ sidebar_position: 110
 
 ## Form
 
-<!-- Credit card form -->
-<section>
-  <div class="row">
-    <div class="col-md-8 mb-4">
-      <div class="card mb-4">
-        <div class="card-header py-3">
-          <h5 class="mb-0">Payment details</h5>
-        </div>
-        <div class="card-body">
-          <form>
-            <!-- 2 column grid layout with text inputs for the first and last names -->
-            <!-- Text input -->
-            <div data-mdb-input-init class="form-outline mb-4">
-              <input type="text" id="form6Example3" class="form-control" />
-              <label class="form-label" for="form6Example3">CARDHODER NAME</label>
-            </div>
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-            <!-- Text input -->
-            <div data-mdb-input-init class="form-outline mb-4">
-              <input type="text" id="form6Example4" class="form-control" />
-              <label class="form-label" for="form6Example4">CARD NUMBER</label>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+    <!-- Credit card form -->
+    <section>
+      <div class="row">
+        <div class="col-md-8 mb-4">
+          <div class="card mb-4">
+            <div class="card-header py-3">
+              <h5 class="mb-0">Payment details</h5>
             </div>
-            <div class="row mb-4">
-              <div class="col">
-                <div data-mdb-input-init class="form-outline">
-                  <input type="text" id="form6Example1" class="form-control" />
-                  <label class="form-label" for="form6Example1">VALID THRU</label>
+            <div class="card-body">
+              <form>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <!-- Text input -->
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="form6Example3" class="form-control" />
+                  <label class="form-label" for="form6Example3">CARDHODER NAME</label>
                 </div>
-              </div>
-              <div class="col">
-                <div data-mdb-input-init class="form-outline">
-                  <input type="text" id="form6Example2" class="form-control" />
-                  <label class="form-label" for="form6Example2">SECURITY CODE</label>
-                </div>
-              </div>
-            </div>
 
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="checkoutForm1" />
-              <label class="form-check-label" for="checkoutForm1">
-                Save card data
-              </label>
+                <!-- Text input -->
+                <div data-mdb-input-init class="form-outline mb-4">
+                  <input type="text" id="form6Example4" class="form-control" />
+                  <label class="form-label" for="form6Example4">CARD NUMBER</label>
+                </div>
+                <div class="row mb-4">
+                  <div class="col">
+                    <div data-mdb-input-init class="form-outline">
+                      <input type="text" id="form6Example4" class="form-control" />
+                      <label class="form-label" for="form6Example4">VALID THRU</label>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div data-mdb-input-init class="form-outline">
+                      <input type="text" id="form6Example2" class="form-control" />
+                      <label class="form-label" for="form6Example2">SECURITY CODE</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="checkoutForm1" />
+                  <label class="form-check-label" for="checkoutForm1">
+                    Save card data
+                  </label>
+                </div>
+                <div align="center">
+                  <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">
+                    Comfirm payment
+                  </button>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
+                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                    <span id="payment-button-amount">Pay $100.00</span>
+    <span id="payment-button-sending" style={{ display: 'none' }}>Sending…</span>
+                                </button>
+                            </div>
+                </div>
+              </form>
             </div>
-            <div align="center">
-              <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">
-                Comfirm payment
-              </button>
-                        <div>
-                            <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
-                                <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                <span id="payment-button-amount">Pay $100.00</span>
-<span id="payment-button-sending" style={{ display: 'none' }}>Sending…</span>
-                            </button>
-                        </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- Credit card form -->
+    </section>
+    <!-- Credit card form -->
+  </Column>
+</Columns>
 
 ## another example
 
-<div class="container py-3">
-    <div class="row">
-        <div class="col-12 col-sm-8 col-md-6 mx-auto">
-            <div id="pay-invoice" class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h2 class="text-center">Pay Invoice</h2>
-                    </div>
-                    <hr />
-                    <form action="" method="post" novalidate="novalidate">
-                        <input type="hidden" id="x_first_name" name="x_first_name" value="" />
-                        <input type="hidden" id="x_last_name" name="x_last_name" value="" />
-                        <input type="hidden" id="x_card_num" name="x_card_num" value="" />
-                        <input type="hidden" id="x_exp_date" name="x_exp_date" value="" />
-                        <div class="form-group text-center">
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
-                                <li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
-                                <li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
-                                <li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
-                            </ul>
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+    <div class="container py-3">
+        <div class="row">
+            <div class="col-12 col-sm-8 col-md-6 mx-auto">
+                <div id="pay-invoice" class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2 class="text-center">Pay Invoice</h2>
                         </div>
-                        <div class="form-group">
-                            <label>Payment amount</label>
-                            <h2>$100.00</h2>
-                        </div>
-                        <div class="form-group has-success">
-                            <label for="cc-name" class="control-label">Name on card</label>
-                            <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name-error" placeholder="John Smith" />
-                            <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="cc-number" class="control-label">Card number</label>
-                            <input id="cc-number" name="cc-number" type="text" class="form-control cc-number identified visa" value="" data-val="true" data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number" autocomplete="cc-number" placeholder="xxxx-xxxx-xxxx-xxxx" />
-                            <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="cc-exp" class="control-label">Expiration</label>
-                                    <input id="cc-exp" name="cc-exp" type="text" class="form-control cc-exp" value="" data-val="true" data-val-required="Please enter the card expiration" data-val-cc-exp="Please enter a valid month and year" placeholder="MM / YY" autocomplete="cc-exp" />
-                                    <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
-                                </div>
+                        <hr />
+                        <form action="" method="post" novalidate="novalidate">
+                            <input type="hidden" id="x_first_name" name="x_first_name" value="" />
+                            <input type="hidden" id="x_last_name" name="x_last_name" value="" />
+                            <input type="hidden" id="x_card_num" name="x_card_num" value="" />
+                            <input type="hidden" id="x_exp_date" name="x_exp_date" value="" />
+                            <div class="form-group text-center">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
+                                </ul>
                             </div>
-                            <div class="col">
-                                <label for="x_card_code" class="control-label">Security code</label>
-                                <div class="input-group">
-                                    <input id="x_card_code" name="x_card_code" type="text" class="form-control cc-cvc" value="" data-val="true" data-val-required="Please enter the security code" data-val-cc-cvc="Please enter a valid security code" autocomplete="off" placeholder="xxx" />
-                                    <div class="input-group-addon">
-                                        <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code" 
-                                        data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>"
-                                        data-trigger="hover"></span>
+                            <div class="form-group">
+                                <label>Payment amount</label>
+                                <h2>$100.00</h2>
+                            </div>
+                            <div class="form-group has-success">
+                                <label for="cc-name" class="control-label">Name on card</label>
+                                <input id="cc-name" name="cc-name" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card" autocomplete="cc-name" aria-required="true" aria-invalid="false" aria-describedby="cc-name-error" placeholder="John Smith" />
+                                <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="cc-number" class="control-label">Card number</label>
+                                <input id="cc-number" name="cc-number" type="text" class="form-control cc-number identified visa" value="" data-val="true" data-val-required="Please enter the card number" data-val-cc-number="Please enter a valid card number" autocomplete="cc-number" placeholder="xxxx-xxxx-xxxx-xxxx" />
+                                <span class="help-block" data-valmsg-for="cc-number" data-valmsg-replace="true"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="cc-exp" class="control-label">Expiration</label>
+                                        <input id="cc-exp" name="cc-exp" type="text" class="form-control cc-exp" value="" data-val="true" data-val-required="Please enter the card expiration" data-val-cc-exp="Please enter a valid month and year" placeholder="MM / YY" autocomplete="cc-exp" />
+                                        <span class="help-block" data-valmsg-for="cc-exp" data-valmsg-replace="true"></span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <label for="x_card_code" class="control-label">Security code</label>
+                                    <div class="input-group">
+                                        <input id="x_card_code" name="x_card_code" type="text" class="form-control cc-cvc" value="" data-val="true" data-val-required="Please enter the security code" data-val-cc-cvc="Please enter a valid security code" autocomplete="off" placeholder="xxx" />
+                                        <div class="input-group-addon">
+                                            <span class="fa fa-question-circle fa-lg" data-toggle="popover" data-container="body" data-html="true" data-title="Security Code" 
+                                            data-content="<div class='text-center one-card'>The 3 digit code on back of the card..<div class='visa-mc-cvc-preview'></div></div>"
+                                            data-trigger="hover"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div>
-                            <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
-                                <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                <span id="payment-button-amount">Pay $100.00</span>
-<!--                                <span id="payment-button-sending" style="display:none;">Sending…</span>  -->
-                            </button>
-                        </div>
-                    </form>
+                            <div>
+                                <button id="payment-button" type="submit" class="btn btn-lg btn-success btn-block">
+                                    <i class="fa fa-lock fa-lg"></i>&nbsp;
+                                    <span id="payment-button-amount">Pay $100.00</span>
+    <!--                                <span id="payment-button-sending" style="display:none;">Sending…</span>  -->
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+  </Column>
+</Columns>
 
 ## 20250205194921
 
