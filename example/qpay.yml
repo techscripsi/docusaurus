@@ -25,7 +25,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 50refund
       requestBody:
         content:
@@ -61,7 +61,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 20cancel
       requestBody:
         content:
@@ -93,7 +93,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 40modify
       requestBody:
         content:
@@ -107,16 +107,16 @@ paths:
                   $ref: "#/components/schemas/primitive_cartId"
                   description: |
                     An existing `cartId`
-                customerId:
-                  $ref: "#/components/schemas/primitive_customerId"
-                  description: |
-                    Unique customer identifier generated on your side and passed with the cart.
                 modifyBox:
                   type: object
                   title: " "
                   description: |
                     A set of cart properties to modify.
                   properties:
+                    customerId:
+                      $ref: "#/components/schemas/primitive_customerId"
+                      description: |
+                        Unique customer identifier generated on your side and passed with the cart.
                     scope:
                       type: object
                       title: " "
@@ -166,13 +166,13 @@ paths:
         "200":
           $ref: "#/components/responses/200_status"
         "400":
-          $ref: "#/components/responses/400"
+          $ref: "#/components/responses/400_status"
         "401":
           $ref: "#/components/responses/401"
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 15status
       parameters:
         - name: cartId
@@ -248,7 +248,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 30capture
       requestBody:
         content:
@@ -284,7 +284,7 @@ paths:
         "500":
           $ref: "#/components/responses/500"
         "503":
-          $ref: "#/components/responses/503"
+          description: Service Unavailable
       operationId: 10init
       requestBody:
         content:
@@ -321,11 +321,11 @@ components:
       title: " "
       enum:
         - initiated
-        - canceled
         - rejected
+        - canceled
         - approved
         - captured
-        - finalized
+        - completed
         - refunded
         - manual
     primitive_timerManualAction:
@@ -352,11 +352,12 @@ components:
       title: " "
       enum:
         - initiated
-        - canceled
         - rejected
+        - canceled
         - approved
         - captured
-        - finalized
+        - processing
+        - completed
         - refunded
     primitive_paymentStatus_empty:
       type: string
@@ -403,19 +404,15 @@ components:
       type: integer
       title: " "
       example: 9999
-    primitiveRes_code_success:
-      type: string
-      title: " "
-      description: |
-        Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes)).
-      example: success
     primitiveRes_code:
       type: string
       title: " "
+      description: |
+        Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
     primitiveRes_message:
       type: string
       description: |
-        Response message (see [Response codes and messages](/docusaurus/docs/api/response-codes)).
+        Response message (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
       title: " "
     objectRes_data:
       type: object
@@ -429,12 +426,12 @@ components:
       type: integer
       title: " "
       description: |
-        Total captured cart amount of the requested items amount in minimum currency units.
+        Total captured amount of the requested items amount in minimum currency units.
     primitive_totalRefunded:
       type: integer
       title: " "
       description: |
-        Total finalized cart amount of the requested items amount in minimum currency units.
+        Total completed amount of the requested items amount in minimum currency units.
     primitive_fullInitiatedAmount:
       type: integer
       title: " "
@@ -463,17 +460,20 @@ components:
     primitive_triggerEvent:
       type: string
       title: " "
+      nullable: true
       description: |
-        Item payment status that triggers the timer. You can also select to start the timer manually. LINK
+        Item payment status that triggers the timer.
+        
+        If you pass the `null` value, will have to be started manually.
+        LINK
       enum:
         - initiated
         - rejected
         - approved
         - canceled
         - captured
-        - finalized
+        - completed
         - refunded
-        - manual
     object_timerSnapshot_status_res:
       type: object
       title: " "
@@ -486,7 +486,7 @@ components:
             - rejected
             - approved
             - captured
-            - finalized
+            - completed
             - refunded
             - manual
         timerStatus:
@@ -569,7 +569,8 @@ components:
     object_amountInfo_status_res:
       type: object
       title: " "
-      description: object_amountInfo_status_res.
+      description: |
+        object_amountInfo_status_res.
       properties:
         initiated:
           $ref: "#/components/schemas/primitive_fullInitiatedAmount"
@@ -673,7 +674,7 @@ components:
             - approved
             - canceled
             - captured
-            - finalized
+            - completed
             - refunded
             - manual
         value:
@@ -866,9 +867,10 @@ components:
                                 $ref: "#/components/schemas/object_timerSnapshot_status_res"
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
+                example: "001004"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Items statuses successfully retrieved
+                example: Requested cart does not contain tag(s) [...]
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "201_init":
@@ -888,11 +890,11 @@ components:
                 description: |
                   Cart identifier generated on your side and passed to OmniCart on card registration.
               code:
-                $ref: "#/components/schemas/primitiveRes_code_success"
-                example: 011000
+                $ref: "#/components/schemas/primitiveRes_code"
+                example: "000000"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Cart successfully registered
+                example: Success
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":
@@ -925,7 +927,6 @@ components:
                 $ref: "#/components/schemas/primitiveRes_code"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Items successfully modified
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_capture":
@@ -947,16 +948,8 @@ components:
                     description: Array of captured itemIds.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
-                description: |
-                  Possible values:
-                  * `items_captured` - selected items captured
-                  * `cart_captured` - cart captured
-                enum:
-                  - items_captured
-                  - cart_captured
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Items successfully captured
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_cancel":
@@ -977,13 +970,9 @@ components:
                     $ref: "#/components/schemas/array_items"
                     description: Array of itemIds with canceled payment.
               code:
-                $ref: "#/components/schemas/primitiveRes_code_success"
-                enum:
-                  - cart_captured
-                  - items_captured
+                $ref: "#/components/schemas/primitiveRes_code"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"                
-                example: Items successfully canceled
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_refund":
@@ -1006,16 +995,8 @@ components:
                     description: Array of refunded itemIds.
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
-                description: |
-                  Possible values:
-                  * `items_refunded` - selected items refunded
-                  * `cart_refunded` - cart refunded
-                enum:
-                  - items_refunded
-                  - cart_refunded
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Items successfullry refunded
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200":
@@ -1038,26 +1019,6 @@ components:
                 $ref: "#/components/schemas/primitiveRes_message"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
-    "404_init":
-      description: Not Found
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - data
-              - code
-              - message
-              - timestamp
-            properties:
-              data:
-                type: object
-              code:
-                type: number
-              message:
-                type: string
-              timestamp:
-                $ref: "#/components/schemas/primitiveRes_timestamp"
     "404":
       description: Not Found
       content:
@@ -1065,17 +1026,16 @@ components:
           schema:
             type: object
             required:
-              - data
               - code
               - message
               - timestamp
             properties:
-              data:
-                type: object
               code:
-                type: number
+                $ref: "#/components/schemas/primitiveRes_code"
+                example: 199001
               message:
-                type: string
+                $ref: "#/components/schemas/primitiveRes_message"
+                example: Endpoint not found
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "400_init":
@@ -1085,19 +1045,16 @@ components:
           schema:
             type: object
             required:
-              - data
               - code
               - message
               - timestamp
             properties:
-              data:
-                type: object
               code:
                 $ref: "#/components/schemas/primitiveRes_code"
-                example: invalid_value
+                example: 123000
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
-                example: Invalid cartId value
+                example: Unknown currency
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "400":
@@ -1107,17 +1064,33 @@ components:
           schema:
             type: object
             required:
-              - data
               - code
               - message
               - timestamp
             properties:
-              data:
-                type: object
               code:
-                type: number
+                $ref: "#/components/schemas/primitiveRes_code"
               message:
-                type: string
+                $ref: "#/components/schemas/primitiveRes_message"
+              timestamp:
+                $ref: "#/components/schemas/primitiveRes_timestamp"
+    "400_status":
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+              - timestamp
+            properties:
+              code:
+                $ref: "#/components/schemas/primitiveRes_code"
+                example: 121001
+              message:
+                $ref: "#/components/schemas/primitiveRes_message"
+                example: cartId cannot be empty
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "401":
@@ -1132,23 +1105,40 @@ components:
               - timestamp
             properties:
               code:
-                type: number
-                title: " "
-                description: |
-                  Error code "(see [Response codes and messages](/docusaurus/docs/api/response-codes))."
-                example: auth_error
+                $ref: "#/components/schemas/primitiveRes_code"
+                example: 111000
               message:
-                type: string
-                title: " "
-                description: |
-                  Error message "(see [Response codes and messages](/docusaurus/docs/api/response-codes))."
+                $ref: "#/components/schemas/primitiveRes_message"
                 example: Authentication error
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "500":
       description: Internal Server Error
-    "503":
-      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - message
+              - timestamp
+            properties:
+              code:
+                type: number
+                title: " "
+                description: |
+                  Error code (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
+                example: 199000
+              message:
+                type: string
+                title: " "
+                description: |
+                  Error message (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
+                example: General system error
+              timestamp:
+                $ref: "#/components/schemas/primitiveRes_timestamp"
+#      "503":
+#        description: Service Unavailable
   securitySchemes:
     ApiKey:
       type: apiKey

@@ -3,113 +3,263 @@ sidebar_position: 100
 sidebar_label: Response Codes
 ---
 
+import Code000000 from '/docs/__snippets__/api/response-codes/000000.mdx';
+import Code001001 from '/docs/__snippets__/api/response-codes/001001.mdx';
+import Code001002 from '/docs/__snippets__/api/response-codes/001002.mdx';
+import Code001003 from '/docs/__snippets__/api/response-codes/001003.mdx';
+import Code001004 from '/docs/__snippets__/api/response-codes/001004.mdx';
+import Code001005 from '/docs/__snippets__/api/response-codes/001005.mdx';
+import Code001006 from '/docs/__snippets__/api/response-codes/001006.mdx';
+import Code001007 from '/docs/__snippets__/api/response-codes/001007.mdx';
+import Code001008 from '/docs/__snippets__/api/response-codes/001008.mdx';
+import Code001009 from '/docs/__snippets__/api/response-codes/001009.mdx';
+import Code001010 from '/docs/__snippets__/api/response-codes/001010.mdx';
+import Code101001 from '/docs/__snippets__/api/response-codes/101001.mdx';
+import Code101002 from '/docs/__snippets__/api/response-codes/101002.mdx';
+import Code101003 from '/docs/__snippets__/api/response-codes/101003.mdx';
+import Code101004 from '/docs/__snippets__/api/response-codes/101004.mdx';
+import Code101005 from '/docs/__snippets__/api/response-codes/101005.mdx';
+import Code101006 from '/docs/__snippets__/api/response-codes/101006.mdx';
+import Code101007 from '/docs/__snippets__/api/response-codes/101007.mdx';
+import Code101008 from '/docs/__snippets__/api/response-codes/101008.mdx';
+import Code101009 from '/docs/__snippets__/api/response-codes/101009.mdx';
+import Code101010 from '/docs/__snippets__/api/response-codes/101010.mdx';
+import Code111000 from '/docs/__snippets__/api/response-codes/111000.mdx';
+import Code121001 from '/docs/__snippets__/api/response-codes/121001.mdx';
+import Code121002 from '/docs/__snippets__/api/response-codes/121002.mdx';
+import Code122001 from '/docs/__snippets__/api/response-codes/122001.mdx';
+import Code122002 from '/docs/__snippets__/api/response-codes/122002.mdx';
+import Code123000 from '/docs/__snippets__/api/response-codes/123000.mdx';
+import Code123001 from '/docs/__snippets__/api/response-codes/123001.mdx';
+import Code123002 from '/docs/__snippets__/api/response-codes/123002.mdx';
+import Code123003 from '/docs/__snippets__/api/response-codes/123003.mdx';
+import Code124001 from '/docs/__snippets__/api/response-codes/124001.mdx';
+import Code124002 from '/docs/__snippets__/api/response-codes/124002.mdx';
+import Code124003 from '/docs/__snippets__/api/response-codes/124003.mdx';
+import Code124004 from '/docs/__snippets__/api/response-codes/124004.mdx';
+import Code124005 from '/docs/__snippets__/api/response-codes/124005.mdx';
+import Code124006 from '/docs/__snippets__/api/response-codes/124006.mdx';
+import Code124007 from '/docs/__snippets__/api/response-codes/124007.mdx';
+import Code124008 from '/docs/__snippets__/api/response-codes/124008.mdx';
+import Code124009 from '/docs/__snippets__/api/response-codes/124009.mdx';
+import Code124010 from '/docs/__snippets__/api/response-codes/124010.mdx';
+import Code124011 from '/docs/__snippets__/api/response-codes/124011.mdx';
+import Code124012 from '/docs/__snippets__/api/response-codes/124012.mdx';
+import Code124013 from '/docs/__snippets__/api/response-codes/124013.mdx';
+import Code124014 from '/docs/__snippets__/api/response-codes/124014.mdx';
+import Code124015 from '/docs/__snippets__/api/response-codes/124015.mdx';
+import Code124016 from '/docs/__snippets__/api/response-codes/124016.mdx';
+import Code131000 from '/docs/__snippets__/api/response-codes/131000.mdx';
+import Code132000 from '/docs/__snippets__/api/response-codes/132000.mdx';
+import Code132001 from '/docs/__snippets__/api/response-codes/132001.mdx';
+import Code132002 from '/docs/__snippets__/api/response-codes/132002.mdx';
+import Code132003 from '/docs/__snippets__/api/response-codes/132003.mdx';
+import Code133000 from '/docs/__snippets__/api/response-codes/133000.mdx';
+import Code133004 from '/docs/__snippets__/api/response-codes/133004.mdx';
+import Code133005 from '/docs/__snippets__/api/response-codes/133005.mdx';
+import Code199000 from '/docs/__snippets__/api/response-codes/199000.mdx';
+import Code199001 from '/docs/__snippets__/api/response-codes/199001.mdx';
+import Code503 from '/docs/__snippets__/api/response-codes/503-na.mdx';
+
 # Response Codes and Messages
 
+consists of 6 digits...
 
-they might sometimes overlap with HTTP codes but it is consistent
+http code for stopper error...
+
+no http code for error because it's not error and not a stopper...
+
 
 ```
 x   xx   xxx
 │   │     └─ specific error code
 │   └─ error category and subcategory
-│      ├─ 0 - no errors
+│      ├─ 0 - not an error
 │      │  ├─ 00 - no special messages
-│      │  ├─ 01 - unused data accepted
-│      │  └─ 09 - other messages
-│      ├─ 1 - related to authentication
+│      │  └─ 01 - info message
+│      ├─ 1 - authentication errors
 │      │  ├─ 11 - authentication failed
 │      │  └─ 19 - other authentication related errors
-│      ├─ 2 - data related
+│      ├─ 2 - data related errors
 │      │  ├─ 21 - did not receive expected data
 │      │  ├─ 22 - the received data has wrong format
 │      │  ├─ 23 - the received data has invalid value
 │      │  ├─ 24 - conflict with existing data
 │      │  └─ 29 - other data related errors
-│      ├─ 3 - permissions
-│      │  ├─ 21 - not allowed to pass this method
-│      │  ├─ 22 - not allowed to pass this object or parameter
-│      │  ├─ 23 - the passed value is out of the allowed range
-│      │  └─ 29 - other permission related errors
-│      └─ 9 - other cases
-└─ is the request successful
-   ├─ 0 - success
-   └─ 1 - failure
+│      ├─ 3 - permissions related errors
+│      │  ├─ 31 - not allowed to pass this method
+│      │  ├─ 32 - not allowed to pass this object or parameter
+│      │  ├─ 33 - the passed value is out of the allowed range
+│      │  └─ 39 - other permission related errors
+│      └─ 9 - other errors
+└─ whether a request failed
+   ├─ 0 - request is successful
+   └─ 1 - request failed
 ```
 
-- 400 Bad Request
-- 405 Method Not Allowed
-- 409 Conflict
+## Initiate cart
 
-| `121000` | `400` |  |  |
+<table>
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="201" />
+    <Code001001 name="201" />
+    <Code001002 name="201" />
+    <Code101001 />
+    <Code101002 />
+    <Code111000 />
+    <Code121001 />
+    <Code121002 />
+    <Code122001 />
+    <Code122002 />
+    <Code123000 />
+    <Code123002 />
+    <Code123003 />
+    <Code124001 />
+    <Code124002 />
+    <Code124003 />
+    <Code124016 />
+    <Code131000 />
+    <Code132000 />
+    <Code132001 />
+    <Code132002 />
+    <Code132003 />
+    <Code133000 />
+    <Code133004 />
+    <Code133005 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
+</table>
 
-## Initiate
-
-
-import Code from '/docs/__snippets__/api/response-codes/000000.mdx';
-
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-| `000000` | `201` | <code>Success</code> |  |
-| `001001` | `201` |`Success. Tag(s) [...] defined but not used` |  |
-| `001002` | `201` |`Success. Item(s) [...] contain undefined tags` |  |
-| `111000` | `401` | `Authentication failed` |
-| `121001` | `400` | `cartId cannot be empty` |  |
-| `121002` | `400` | `customerId cannot be empty if timer is enabled` | ТУТ, наверное, список items нужен | 
-| `122001` | `400` | `Property {property} has invalid format` |  |
-| `123000` | `400` | `Unknown currency` |  |
-| `124001` | `409` | `cartId already exists` |  |
-| `124002` | `409` | `customerId {customerId} is linked to itemId {itemId} with an active timer` |  |
-| `124003` | `409` | `{itemId} does not exist` |  |
-| `131000` | `405` | `Not allowed to pass this method` |
-| `132000` | `400` | `Insufficient permissions to pass {0}` | . capture captureSettings timer |  |
-| `133000` | `400` | `{captureSettings} value {value} is out of permitted range` |  |
-| `133001` | `400` | `{autoAction} value {value} is out of permitted range` |  |
-| `133002` | `400` | `{timer} value {value} is out of permitted range` |  |
-| `` |  |  |  |
-| `` |  |  |  |
-| `199000` | `500` | `General system error` |  |
-| N/A | `503` | N/A |  |
 
 ## Retrieve Status
 
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-
-* <Code />
-   * <Code />
-
 <table>
-<tr>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-</tr>
-<Code />
-<Code />
-<Code />
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="200" />
+    <Code001003 />
+    <Code001004 />
+    <Code001005 />
+    <Code001006 />
+    <Code001007 />
+    <Code111000 />
+    <Code121001 />
+    <Code122001 />
+    <Code131000 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
 </table>
 
 ## Cancel
 
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-|  |  |  |  |
+что делать, если нет тега или itemId - это ошибка или нет (наверное, нет)
+добавить ошибку, что невозможна отмена из такого-то статуса
+
+<table>
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="200" />
+    <Code111000 />
+    <Code121001 />
+    <Code122001 />
+    <Code131000 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
+</table>
 
 ## Capture
 
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-|  |  |  |  |
+<table>
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="200" />
+    <Code111000 />
+    <Code121001 />
+    <Code122001 />
+    <Code131000 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
+</table>
 
 ## Modify
 
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-|  |  |  |  |
+<table>
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="200" />
+    <Code111000 />
+    <Code121001 />
+    <Code122001 />
+    <Code131000 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
+</table>
 
 ## Refund
 
-| API&nbsp;Code | HTTP&nbsp;Code | API&nbsp;Message | Description |
-| :---: | :---: | :--- | :--- |
-|  |  |  |  |
+<table>
+  <thead>
+    <tr>
+      <th>API&nbsp;Code</th>
+      <th>HTTP&nbsp;Code</th>
+      <th>API&nbsp;Message</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <Code000000 name="200" />
+    <Code111000 />
+    <Code121001 />
+    <Code122001 />
+    <Code131000 />
+    <Code199000 />
+    <Code199001 />
+    <Code503 />
+  </tbody>
+</table>
