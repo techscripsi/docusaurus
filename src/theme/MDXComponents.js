@@ -32,6 +32,8 @@
   import Stack from 'react-bootstrap/Stack';
   import Table from 'react-bootstrap/Table';
   import Toast from 'react-bootstrap/Toast';
+  import Columns from '@site/src/components/Columns';
+  import Column from '@site/src/components/Column';
 
   export default {
     // Reusing the default mapping
@@ -41,4 +43,6 @@
     Container,
     Col,
     Row,
+    Columns,
+    Column,
   };
