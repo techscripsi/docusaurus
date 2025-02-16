@@ -3,3 +3,26 @@ sidebar_position: 110
 ---
 
 # Start
+
+XYZ
+
+<Mermaid
+  value={`graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;`}
+/>
+
+
+<Mermaid
+  value={`sankey-beta
+    Initiated,Approved,100
+    Approved,Captured,80
+    Approved,Paritally Canceled,20
+    Paritally Canceled,Captured,0
+    Captured,Finalized,70
+    Finalized,Partially Refunded,30
+    Partially Refunded,Canceled,40
+    `}
+/>

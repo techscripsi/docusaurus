@@ -32,6 +32,11 @@ const config: Config = {
     locales: ['en'],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+
+
   presets: [
     [
       'classic',
@@ -111,9 +116,15 @@ const config: Config = {
 
   ],
 
-  themes: [ "docusaurus-theme-openapi-docs", ], // export theme components
+  themes: [ "docusaurus-theme-openapi-docs",
+          '@docusaurus/theme-mermaid',
+          ], // export theme components
 
   themeConfig: {
+
+    mermaid: {
+      theme: {light: 'forest', dark: 'dark'},
+    },
 /* неясно, работает или нет
     colorMode: {
       defaultMode: 'dark',
@@ -223,6 +234,30 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      magicComments: [
+        // Remember to extend the default highlight class name as well!
+//        {
+//          className: 'theme-code-block-highlighted-line',
+//          line: 'highlight-next-line',
+//          block: {start: 'highlight-start', end: 'highlight-end'},
+//        },
+        {
+          className: 'code-block-overridden-line',
+          line: 'overridden',
+        },
+        {
+          className: 'code-block-deleted-line',
+          line: 'deleted',
+        },
+        {
+          className: 'code-block-added-line',
+          line: 'added',
+        },
+        {
+          className: 'code-block-info-line',
+          line: 'info',
+        },
+      ],
     },
   } satisfies Preset.ThemeConfig,
 };

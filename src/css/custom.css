@@ -6,27 +6,60 @@
  */
 
 /* You can override the default Infima variables here. */
-/* 9BC834 это цвет, который выглядит норм в светлом и тёмном, вроде бы  */
+/* 9BC834 this color */
 :root {
+
+/* my custom colors
   --ifm-color-primary: #9bc834;
-/*  --ifm-color-primary: #3e443c; */
+  --ifm-color-primary: #3e443c;
   --ifm-color-primary-dark: #383d36;
   --ifm-color-primary-darker: #353a33;
   --ifm-color-primary-darkest: #2b302a;
   --ifm-color-primary-light: #444b42;
   --ifm-color-primary-lighter: #474e45;
   --ifm-color-primary-lightest: #51584e;
-/*
-  --ifm-color-primary: #3578E5;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+*/
+  --ifm-color-primary: #5d5e2b;
+  --ifm-color-primary-dark: #545527;
+  --ifm-color-primary-darker: #4f5025;
+  --ifm-color-primary-darkest: #41421e;
+  --ifm-color-primary-light: #66672f;
+  --ifm-color-primary-lighter: #6b6c31;
+  --ifm-color-primary-lightest: #797a38;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
-*/
+  
+  .code-block-overridden-line {
+    background-color: hsla(66, 91%, 70%, 0.125);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #e5ff0080;
+  }
+
+  .code-block-deleted-line {
+    background-color: hsla(0, 91%, 70%, 0.125);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #ff000080;
+  }
+
+  .code-block-added-line {
+    background-color: hsla(138, 91%, 70%, 0.125);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #00ff4c80;
+  }
+
+  .code-block-info-line {
+    background-color: hsla(236, 91%, 70%, 0.125);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+    border-left: 3px solid #1900ff80;
+  }
 
 /*bootstrap - стили из CSS bootstrap */
 
@@ -152,15 +185,17 @@
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #9bc834;
-  --ifm-color-primary-dark: #8bb42f;
-  --ifm-color-primary-darker: #84aa2c;
-  --ifm-color-primary-darkest: #6d8c24;
-  --ifm-color-primary-light: #a5cf46;
-  --ifm-color-primary-lighter: #aad250;
-  --ifm-color-primary-lightest: #b9d96e;
+  --ifm-color-primary: #bec125;
+  --ifm-color-primary-dark: #abae21;
+  --ifm-color-primary-darker: #a2a41f;
+  --ifm-color-primary-darkest: #85871a;
+  --ifm-color-primary-light: #d1d429;
+  --ifm-color-primary-lighter: #d4d831;
+  --ifm-color-primary-lightest: #dadd4e;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
-/*bootstrap стили из CSS bootstrap */
+  
+  /* bootstrap стили из CSS bootstrap
+  
   --bs-body-color:#dee2e6;
   --bs-body-color-rgb:222,226,230;
   --bs-body-bg:#212529;
@@ -213,6 +248,7 @@
   --bs-form-valid-border-color:#75b798;
   --bs-form-invalid-color:#ea868f;
   --bs-form-invalid-border-color:#ea868f
+ */ 
 }
 
 .rect01 {
@@ -11470,9 +11506,14 @@ margin-top: 0;
 /* 20250211003011 */
 
 .colmain {
-    margin-left: 0; /* Убираем отступ слева */
-    padding-left: 0; /* Убираем внутренний отступ слева */
+    margin-left: 0;
+    padding-left: 0;
+    margin-right: 0;
+    padding-right: 10px;
     width: 50%; /* Устанавливаем ширину колонки (можно изменить по необходимости) */
     box-sizing: border-box; /* Учитываем отступы и границы в ширине */
 }
 
+.clusters {
+  fill: green;
+}

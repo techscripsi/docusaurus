@@ -42,6 +42,8 @@ paths:
                     An existing `cartId`.
                 filterBox:
                   $ref: "#/components/schemas/object_filterBox_req"
+                debug:
+                  $ref: "#/components/schemas/primitive_debug"
   /cancel:
     post:
       summary: Cancel
@@ -78,6 +80,8 @@ paths:
                     An existing `cartId`.
                 filterBox:
                   $ref: "#/components/schemas/object_filterBox_req"
+                debug:
+                  $ref: "#/components/schemas/primitive_debug"
   /modify:
     patch:
       summary: Modify
@@ -138,7 +142,9 @@ paths:
                               tag:
                                 $ref: "#/components/schemas/block_modifyAmountTimer_req"
                                 description: |
-                                  Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag.
+                                  Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag
+                    debug:
+                      $ref: "#/components/schemas/primitive_debug"
                     items:
                       type: array
                       title: " "
@@ -157,6 +163,8 @@ paths:
                                 $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
                               modifyTimer:
                                 $ref: "#/components/schemas/object_modifyTimer_modify_req"
+                debug:
+                  $ref: "#/components/schemas/primitive_debug"
   /status/{cartId}:
     get:
       summary: Retrieve status 
@@ -206,6 +214,16 @@ paths:
             If this option is not set, all items that meet other criteria will be returned.
           schema:
             type: boolean
+        - name: debug
+          in: query
+          description: |
+            If this option is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
+            
+            It this option is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
+            
+            See [Response codes and messages](/docusaurus/docs/api/response-codes) for more details.
+          schema:
+            $ref: "#/components/schemas/primitive_debug"
 #      requestBody:
 #        content:
 #          application/json:
@@ -265,6 +283,8 @@ paths:
                     An existing `cartId`.
                 filterBox:
                   $ref: "#/components/schemas/object_filterBox_req"
+                debug:
+                  $ref: "#/components/schemas/primitive_debug"
       security:
         - ApiKey: []
   /init:
@@ -311,6 +331,10 @@ paths:
                 cart:
                   $ref: "#/components/schemas/block_cart"
                   description: Cart contents.
+                invoice:
+                  $ref: "#/components/schemas/object_invoice"
+                debug:
+                    $ref: "#/components/schemas/primitive_debug"
       parameters: []
       security:
         - ApiKey: []
@@ -385,6 +409,52 @@ components:
         enum:
           - declared
           - calculated
+    object_invoice:
+      type: object
+      title: " "
+      description: |
+        This object contains data necessary to deliver your invoice to the customer.
+      properties:
+        deliveryOption:
+          $ref: "#/components/schemas/primitive_deliveryOption"
+        value:
+          $ref: "#/components/schemas/primitive_deliveryOptionValue"
+    primitive_debug:
+      type: boolean
+      title: " "
+      description: |
+        If this option is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
+        
+        It this option is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
+        
+        See [Response codes and messages](/docusaurus/docs/api/response-codes) for more details.
+      default: false
+      example: false
+    primitive_deliveryOption:
+      type: string
+      title: " "
+      description: |
+        Invoice delivery option.
+      enum:
+        - redirect
+        - email
+        - sms
+        - push
+      example: redirect
+    primitive_deliveryOptionValue:
+      type: string
+      title: " "
+      description: |
+        Value for the invoice delivery option depending on `deliveryOption`.
+        
+        `redirect` - HTTP redirect to the payment page
+        
+        `email` - email address
+        
+        `sms` - mobile number
+        
+        `push` - push token
+      example: https://test.com/payment
     primitive_amountMode:
       type: string
       title: " "
@@ -618,6 +688,22 @@ components:
                 $ref: "#/components/schemas/object_paymentFilter"
                 description: |
                   Payment and timer settings applied to the tag specified as object name. Tag settings override cart settings.
+    array_debug:
+      type: array
+      title: " "
+      items:
+        type: object
+        required:
+          - code
+          - message
+        properties:
+          code:
+            $ref: "#/components/schemas/primitiveRes_code"
+            description: |
+              Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
+          message: 
+            $ref: "#/components/schemas/primitiveRes_message"
+
     object_item_status_res:
       type: object
       title: " "
@@ -901,6 +987,10 @@ components:
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#init) for more details).
                 example: Success
+              debug:
+                $ref: "#/components/schemas/array_debug"
+                description: |
+                  An array of the request related codes and their corresponding messages. ADDLINK
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":

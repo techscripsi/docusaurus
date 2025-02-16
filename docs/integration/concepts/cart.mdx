@@ -1,8 +1,233 @@
 ---
+sidebar_position: 10
 ---
 
-# Cart
+# Basic Concepts
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## Items in Carts
 
-Любая покупка - это тележка в супермаркете, даже если это единичаня покупка, даже если это подписка.
+OmniCart is designed to accept multiple items in a payment request by default so you can think of each payment request as a shopping cart, even if it contains a single item.
+
+<Columns>
+  <Column>
+    The code to the right is an example of a simple request with only the required properties for the [initiate cart](/docs/api/10-init) request.
+    
+    Each cart must have a unique `cartId` that is generated on your side. The `currency` property is mandatory and applied to the whole cart. 
+    
+    The `milk` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/integration/concepts/amounts) section for more information on handling amounts).
+
+  </Column>
+  <Column>
+```js
+{
+  "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+  "currency": "EUR",
+  "cart": [
+    {
+      "milk": {
+        "amount": 9.99,
+      }
+    }
+  ]
+}
+```
+  </Column>
+</Columns>
+
+:::info
+All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/docs/panel/ADDLINK) to be available for purchase as each cart initiation request must contain at least one existing item identifier.
+:::
+
+<Columns>
+  <Column>
+    An item is not necessarily an actual consumable product. It can be, for example, a donation, a one time purchase (such as a premium tier), or a temporary access to your resource (e.g., a year subscription).
+
+    A cart may contain items of any type.
+
+    In the example to the right the `cart` array contains several item identifiers: `donation`, `milk`, and `premiumAccess`. This code implies these item identifiers were previously [registered in the Merchant Panel](/docs/panel/ADDLINK).
+
+  </Column>
+  <Column>
+    ```js
+      "cart": [
+        {
+          "donation": {
+            "amount": 49.95,
+            },
+          "milk": {
+            "amount": 3.45,
+            },
+          "premiumAccess": {
+            "amount": 135.99,
+            }
+          }
+      ]
+    ```
+
+  </Column>
+</Columns>
+
+## Tags
+
+<Columns>
+  <Column>
+    You can mark cart items with tags to group these items, batch apply payment or timer settings (batch settings are explained in the [section below](#overrides)), or for any other reason you may have. 
+
+    An item can be assigned only one tag.
+
+    OmniCart accepts all tags provided they have a valid format. If you really want it, you can use a different tag or set of tags for each [initiate cart](/docs/api/10-init) request. Since tags are generated on your side, you are in charge of their consistency.
+
+    In the request snippet to the right, the `milk` and `tomatoes` items are assigned the `groceries` tag. The `premiumPlan` item is marked with the `subscription` tag and the `crow-bar` doesn't have a tag at all.
+    
+    After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/integration/concepts/payment-lifecycle) for more information on item statuses).
+    
+    Tags also can be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/integration/concepts/modify) section.
+  </Column>
+  <Column>
+    ```js
+        "cart": [
+          {
+            "milk": {
+    //added
+              "tag": "groceries"
+              "amount": 999,
+            }
+          },
+          {
+            "tomatoes": {
+    //added
+              "tag": "groceries"
+              "amount": 290,
+            }
+          },
+          {
+            "crow-bar": {
+              "amount": 1998,
+            }
+          },
+          {
+            "premiumPlan": {
+    //added
+              "tag": "subscription"
+              "amount": 974,
+            }
+          },
+        ]
+    ```
+  </Column>
+</Columns>
+
+
+## Batch Settings and Overrides {#overrides}
+
+Так что если вы передаёте только одну товарную позицию, вы можете задать её параметры как на уровне карты, так на уровне тега (не забудьте только отметить itemId этим тегом), так и на уровне самой itemId.
+
+Дочерние настройки переопределяют родительские. Например, вы настроили параметры платежа или таймера на уровне тележки. Вы также можете переопределить эти настройки на уровне произвольного тега или тегов и пометить этими тегами группы товарных позиций по своему принципу.
+
+Если по каким-то причинам вы хотите переопределить отдельную товарную позицию или позиции, вы можете переопределить эти настройки непосредственно для неё, отправив соответствующие данные в настройке. Вообще, вы можете сделать это разными способами, вы можете настроить отдельный тег для одной или нескольких товарных позиций или же вы можете указать эти настройки непосредственно для товарной позиции. Если вы пометили настроенным тегом товарную позицию, но хотите переодпределить некоторые настройки или определить не настроенную ранее, вы можете пометить тегом эту товарную позицию, но переопределуть ту одну или несколько настроек, которую вы хотите переопределить.
+
+## Overriding rules
+
+## Examples
+
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+    ```js title="Legend"
+      //undefined
+      // added
+      //newly defined
+      // overridden
+      //overridden by a child setting
+    ```
+    <Tabs>
+    <TabItem value="Cart">
+      ```js
+        "scope": {
+          "cart": {
+            "amountMode": null,
+            "amountModifier": null,
+            "capture": null,
+            "captureSettings": {
+              "autoAction": null,
+              "value": null
+            },
+            "enableTimer": null,
+            "timer": {
+              "triggerEvent": null,
+              "value": null
+            }
+          },
+      ```
+    </TabItem>
+    <TabItem value="Tag">
+      ```js
+        "groceries": {
+          "paymentFilter": {
+    // added
+            "amountMode": "declared",
+    // added
+            "amountModifier": 0.7,
+    // added
+            "capture": true,
+    // added
+            "captureSettings": {
+    // added
+              "autoAction": "complete",
+    // added
+              "value": 172800
+    // added
+            },
+    // added
+            "enableTimer": true,
+    // added
+            "timer": {
+    // added
+              "triggerEvent": "initiated",
+    // added
+              "value": 0
+            }
+          }
+        }
+  ```
+    </TabItem>
+    <TabItem value="Item">
+      ```js
+        "milk": { //some code...
+          "paymentFilter": { 
+    // overridden
+            "amountMode": "calculated",
+    // overridden
+            "amountModifier": 0.45,
+    // added
+            "capture": true,
+    // added
+            "captureSettings": {
+    // overridden
+              "autoAction": "cancel",
+    // added
+              "value": 172800
+    // added
+            },
+    // added
+            "enableTimer": true,
+    // added
+            "timer": {
+    // added
+              "triggerEvent": "initiated",
+    // added
+              "value": 0
+            }
+          }
+        }
+      ```
+    </TabItem>
+    </Tabs>
+  </Column>
+</Columns>

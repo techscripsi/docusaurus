@@ -2,5 +2,13 @@
 <td>`101009`</td>
 <td>N/A</td>
 <td>`Timer already stopped, item(s): [...]`</td>
-<td>ADD</td>
+<td>
+
+The request contains an instruction to stop a timer for an item or items whose timer is already in the `stopped` or `expired` state. The timer status will remain unchanged. This is not an error. However, this message may accompany a failed request.
+
+:::note
+`stopped` or `expired` timers cannot be restarted.
+:::
+
+</td>
 </tr>

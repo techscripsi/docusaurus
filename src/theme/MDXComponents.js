@@ -34,6 +34,13 @@
   import Toast from 'react-bootstrap/Toast';
   import Columns from '@site/src/components/Columns';
   import Column from '@site/src/components/Column';
+//  import PaymentForm from '@site/src/components/PaymentForm';
+
+  import Mermaid from '@theme/Mermaid';
+  import Tabs from '@theme/Tabs';
+  import TabItem from '@theme/TabItem';
+  import DocCardList from '@theme/DocCardList';
+
 
   export default {
     // Reusing the default mapping
@@ -45,4 +52,10 @@
     Row,
     Columns,
     Column,
+//    PaymentForm,
+    Mermaid,
+    Tabs,
+    TabItem,
+    DocCardList,
   };
+  

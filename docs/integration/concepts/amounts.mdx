@@ -1,6 +1,71 @@
 ---
+sidebar_position: 20
 ---
 
 # Amounts
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  `amountMode` is a settings that you can set on a tag level or per `itemId`. It defines how . Она определяет конечную цену itemId в корзине. 
+
+  declared - платёжный шлюз принимает значение amount для этого `itemId` как конечное. Остальные данные платёжный шлюз сохраняет, но они не участвуют в расчёте.
+  calculated - в amount для itemId указывается стоимость за 1 единицу измерения товара. Если это штуки, как бутылка молока, то количество штук. Если это нецелое число, например, литры молока, то указывается дробное значение, и платёжный шлюз просчитывает конечную стоимость товарной позиции на своей стороне, после чего выставляет счёт клиенту. Окончательные суммы можно узнать в запросе status.
+
+  Для высчитывание конечной стоимости используется свойство quantity. Например, если это 3 бутылки молока, то следует передать значение 3, а если это пол-литра пива, то 0.5 (либо 500, если вы считаете в миллилитрах, units of measure, порядок величины).
+
+  Также есть параметр amoutnModifier, который также является дополительным множителем значения amount. Вы можете использовать этот параметр, например, чтобы применить скидку ко всей козрзине, группе товаров или к отдельным товарным позициям.
+
+  таблица, на каком уровне можно применять
+
+  * Если amountMode не задан, то платёжный шлюз считает, что используется declared.
+
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+  ```js title="Amount calculated on the OmniCart side"
+      "itemId": {
+  // highlight-start
+        "amount": 9999,
+        "quantity": 0,
+        "paymentFilter": {
+          "amountMode": "declared",
+          "amountModifier": 0.7,
+  // highlight-end
+          "capture": true,
+          "captureSettings": {
+            "autoAction": "complete",
+            "value": 172800
+          },
+  ```
+  </Column>
+</Columns>
+
+<Columns>
+  <Column>
+  ```js title="Amount explicitly declared"
+    "scope": {
+      "cart": {
+  // highlight-start
+        "amountMode": "declared",
+        "amountModifier": 0.7,
+  // highlight-end
+        "capture": true,
+        "captureSettings": {
+          "autoAction": "complete",
+          "value": 172800
+        },
+  ```
+  </Column>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+</Columns>
+
+<Columns>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+  <Column>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </Column>
+</Columns>

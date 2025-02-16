@@ -2,5 +2,15 @@
 <td>`101008`</td>
 <td>N/A</td>
 <td>`Timer already started, item(s): [...]`</td>
-<td>ADD</td>
+<td>
+
+The request contains an instruction to start a timer for an item or items whose timer is already in the `started` state. The timer status will remain unchanged. This is not an error. However, this message may accompany a failed request.
+
+:::note
+`started` timers can expire, also, they can be `paused` or `stopped` for good.
+:::
+
+ADDLINK
+
+</td>
 </tr>
