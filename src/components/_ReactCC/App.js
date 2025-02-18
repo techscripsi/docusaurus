@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "react-credit-cards-2";
+import Card from "react-credit-cards";
 
 import SupportedCards from "./Cards";
 
@@ -9,6 +9,8 @@ import {
   formatExpirationDate,
   formatFormData
 } from "./utils";
+
+import "react-credit-cards/es/styles-compiled.css";
 
 export default class App extends React.Component {
   state = {
@@ -141,7 +143,7 @@ export default class App extends React.Component {
           <hr style={{ margin: "60px 0 30px" }} />
           <div className="App-badges">
             <a
-              href="https://github.com/amarofashion/react-credit-cards-2"
+              href="https://github.com/amarofashion/react-credit-cards"
               className="github__btn"
             >
               <img

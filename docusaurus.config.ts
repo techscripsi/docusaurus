@@ -123,7 +123,7 @@ const config: Config = {
   themeConfig: {
 
     mermaid: {
-      theme: {light: 'forest', dark: 'dark'},
+      theme: {light: 'base', dark: 'base'},
     },
 /* неясно, работает или нет
     colorMode: {
@@ -235,12 +235,12 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
       magicComments: [
-        // Remember to extend the default highlight class name as well!
-//        {
-//          className: 'theme-code-block-highlighted-line',
-//          line: 'highlight-next-line',
-//          block: {start: 'highlight-start', end: 'highlight-end'},
-//        },
+//    Remember to extend the default highlight class name as well!
+        {
+          className: 'theme-code-block-highlighted-line',
+          line: 'highlight-next-line',
+          block: {start: 'highlight-start', end: 'highlight-end'},
+        },
         {
           className: 'code-block-overridden-line',
           line: 'overridden',

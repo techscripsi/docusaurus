@@ -34,7 +34,7 @@
     display: block;
     margin: 0 calc(-1 * var(--ifm-pre-padding));
     padding: 0 var(--ifm-pre-padding);
-    border-left: 3px solid #e5ff0080;
+/*    border-left: 3px solid #e5ff0080; */
   }
 
   .code-block-deleted-line {
@@ -42,7 +42,15 @@
     display: block;
     margin: 0 calc(-1 * var(--ifm-pre-padding));
     padding: 0 var(--ifm-pre-padding);
-    border-left: 3px solid #ff000080;
+/*    border-left: 3px solid #ff000080; */
+  }
+
+  .code-block-inherited-line {
+    background-color: hsla(303, 91%, 70%, 0.125);
+    display: block;
+    margin: 0 calc(-1 * var(--ifm-pre-padding));
+    padding: 0 var(--ifm-pre-padding);
+/*    border-left: 3px solid #86006980; */
   }
 
   .code-block-added-line {
@@ -50,7 +58,7 @@
     display: block;
     margin: 0 calc(-1 * var(--ifm-pre-padding));
     padding: 0 var(--ifm-pre-padding);
-    border-left: 3px solid #00ff4c80;
+/*    border-left: 3px solid #00ff4c80; */
   }
 
   .code-block-info-line {
@@ -58,7 +66,7 @@
     display: block;
     margin: 0 calc(-1 * var(--ifm-pre-padding));
     padding: 0 var(--ifm-pre-padding);
-    border-left: 3px solid #1900ff80;
+/*    border-left: 3px solid #1900ff80; */
   }
 
 /*bootstrap - стили из CSS bootstrap */
@@ -4607,7 +4615,8 @@ textarea.form-control-lg{
     border:var(--bs-alert-border);
     border-radius:var(--bs-alert-border-radius)
 }
-
+*/
+/*
 .alert-heading{
     color:inherit
 }
@@ -11514,6 +11523,4 @@ margin-top: 0;
     box-sizing: border-box; /* Учитываем отступы и границы в ширине */
 }
 
-.clusters {
-  fill: green;
-}
+/* Mermaid base*/

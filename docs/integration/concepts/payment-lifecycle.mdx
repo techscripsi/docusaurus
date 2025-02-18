@@ -4,7 +4,7 @@ sidebar_position: 30
 
 import Statuses from './img/payment_statuses.svg';
 
-# Payment Life Cycle
+# Items Life Cycle
 
 * What is stored on the merchant's side
 * What is stored on the OmniCart side
@@ -14,7 +14,7 @@ import Statuses from './img/payment_statuses.svg';
 ## Graphs
 
 ### SVG
-
+  
 <Statuses />
 
 ### Mermaid
@@ -23,11 +23,11 @@ import Statuses from './img/payment_statuses.svg';
   value={`
     flowchart TB
         initiated --> rejected
-        initiated --> approved
+        initiated --> approved@{ shape: notch-rect}
         initiated --> expired
         approved --> canceled
-        approved -- 1-step --> completed
-        approved -- 2-step --> captured
+        approved -- 1-step --> completed@{ shape: notch-rect}
+        approved -- 2-step --> captured@{ shape: notch-rect}
         captured --> completed
         completed -- optional --> refunded
   `}

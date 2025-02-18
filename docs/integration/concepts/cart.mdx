@@ -2,19 +2,19 @@
 sidebar_position: 10
 ---
 
-# Basic Concepts
+# Carts, Tags, and Items
+
+OmniCart is designed to accept multiple items in a payment request by default so you can think of each payment request as a shopping cart, even if it contains a single item. Items in a cart can be marked with tags.
 
 ## Items in Carts
 
-OmniCart is designed to accept multiple items in a payment request by default so you can think of each payment request as a shopping cart, even if it contains a single item.
-
 <Columns>
   <Column>
-    The code to the right is an example of a simple request with only the required properties for the [initiate cart](/docs/api/10-init) request.
+    The code to the right is an example of a simple request with only the mandatory properties for the [initiate cart](/docs/api/10-init) request.
     
-    Each cart must have a unique `cartId` that is generated on your side. The `currency` property is mandatory and applied to the whole cart. 
+    Each cart must have a unique `cartId` that is generated on your side. The `currency` property is mandatory and applied to the entire cart. 
     
-    The `milk` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/integration/concepts/amounts) section for more information on handling amounts).
+    The `pegasus` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/integration/concepts/amounts) section for more information on handling amounts).
 
   </Column>
   <Column>
@@ -24,8 +24,8 @@ OmniCart is designed to accept multiple items in a payment request by default so
   "currency": "EUR",
   "cart": [
     {
-      "milk": {
-        "amount": 9.99,
+      "pegasus": {
+        "amount": 250,
       }
     }
   ]
@@ -34,7 +34,7 @@ OmniCart is designed to accept multiple items in a payment request by default so
   </Column>
 </Columns>
 
-:::info
+:::info Please, note
 All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/docs/panel/ADDLINK) to be available for purchase as each cart initiation request must contain at least one existing item identifier.
 :::
 
@@ -67,6 +67,7 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
   </Column>
 </Columns>
 
+
 ## Tags
 
 <Columns>
@@ -77,38 +78,38 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
 
     OmniCart accepts all tags provided they have a valid format. If you really want it, you can use a different tag or set of tags for each [initiate cart](/docs/api/10-init) request. Since tags are generated on your side, you are in charge of their consistency.
 
-    In the request snippet to the right, the `milk` and `tomatoes` items are assigned the `groceries` tag. The `premiumPlan` item is marked with the `subscription` tag and the `crow-bar` doesn't have a tag at all.
+    In the request snippet to the right, the `mage` and `naga` items are assigned the `tower` tag. The `beholder` item is marked with the `dungeon` tag and the `nomad` item doesn't have a tag at all.
     
     After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/integration/concepts/payment-lifecycle) for more information on item statuses).
     
-    Tags also can be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/integration/concepts/modify) section.
+    Tags can also be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/integration/concepts/modify) section of this documentation.
   </Column>
   <Column>
     ```js
         "cart": [
           {
-            "milk": {
+            "mage": {
     //added
-              "tag": "groceries"
+              "tag": "tower"
               "amount": 999,
             }
           },
           {
-            "tomatoes": {
+            "naga": {
     //added
-              "tag": "groceries"
+              "tag": "tower"
               "amount": 290,
             }
           },
           {
-            "crow-bar": {
+            "nomad": {
               "amount": 1998,
             }
           },
           {
-            "premiumPlan": {
+            "beholder": {
     //added
-              "tag": "subscription"
+              "tag": "dungeon"
               "amount": 974,
             }
           },
@@ -120,40 +121,38 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
 
 ## Batch Settings and Overrides {#overrides}
 
-Так что если вы передаёте только одну товарную позицию, вы можете задать её параметры как на уровне карты, так на уровне тега (не забудьте только отметить itemId этим тегом), так и на уровне самой itemId.
-
-Дочерние настройки переопределяют родительские. Например, вы настроили параметры платежа или таймера на уровне тележки. Вы также можете переопределить эти настройки на уровне произвольного тега или тегов и пометить этими тегами группы товарных позиций по своему принципу.
-
-Если по каким-то причинам вы хотите переопределить отдельную товарную позицию или позиции, вы можете переопределить эти настройки непосредственно для неё, отправив соответствующие данные в настройке. Вообще, вы можете сделать это разными способами, вы можете настроить отдельный тег для одной или нескольких товарных позиций или же вы можете указать эти настройки непосредственно для товарной позиции. Если вы пометили настроенным тегом товарную позицию, но хотите переодпределить некоторые настройки или определить не настроенную ранее, вы можете пометить тегом эту товарную позицию, но переопределуть ту одну или несколько настроек, которую вы хотите переопределить.
-
-## Overriding rules
-
-## Examples
-
 <Columns>
   <Column>
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  OmniCart allows you to batch apply certain payment settings and timer settings to items in a cart. These settings can be applied to the entire cart or by tag. The tag settings override the cart settings. The settings of a specific item, in turn, override all parent settings, even if this item is marked with a defined tag. Think of it as of nested structure or hierarchical inheritance, cart being the top level.
   
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  :::note
+  An item may or may not be assigned a tag. If an item is not assigned a tag, its settings still override the cart settings.
+  :::
   
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Take a look at the code examples to the right. Cart level settings define only the `amountMode` and `capture` properties.
+  
+  Tag settings inherit `amountMode`, override the `capture` property, and define additional capture settings.
+  
+  Item settings override the parent `amountMode` and `autoAction` properties and add the `amountModifier` property for that specific item. Other settings are inherited.
   </Column>
   <Column>
     ```js title="Legend"
       //undefined
       // added
       //newly defined
+      // info
+      //inherited from parent
       // overridden
-      //overridden by a child setting
+      //overridden by child
     ```
     <Tabs>
     <TabItem value="Cart">
       ```js
-        "scope": {
-          "cart": {
-            "amountMode": null,
+      //added
+            "amountMode": "declared",
             "amountModifier": null,
-            "capture": null,
+      //added
+            "capture": false,
             "captureSettings": {
               "autoAction": null,
               "value": null
@@ -163,71 +162,59 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
               "triggerEvent": null,
               "value": null
             }
-          },
       ```
     </TabItem>
     <TabItem value="Tag">
       ```js
-        "groceries": {
-          "paymentFilter": {
-    // added
+    // info
             "amountMode": "declared",
-    // added
-            "amountModifier": 0.7,
-    // added
+            "amountModifier": null,
+    // overridden
             "capture": true,
     // added
             "captureSettings": {
     // added
-              "autoAction": "complete",
-    // added
-              "value": 172800
-    // added
-            },
-    // added
-            "enableTimer": true,
-    // added
-            "timer": {
-    // added
-              "triggerEvent": "initiated",
-    // added
-              "value": 0
-            }
-          }
-        }
-  ```
-    </TabItem>
-    <TabItem value="Item">
-      ```js
-        "milk": { //some code...
-          "paymentFilter": { 
-    // overridden
-            "amountMode": "calculated",
-    // overridden
-            "amountModifier": 0.45,
-    // added
-            "capture": true,
-    // added
-            "captureSettings": {
-    // overridden
               "autoAction": "cancel",
     // added
               "value": 172800
     // added
             },
-    // added
-            "enableTimer": true,
-    // added
+            "enableTimer": null,
             "timer": {
-    // added
-              "triggerEvent": "initiated",
-    // added
-              "value": 0
+              "triggerEvent": null,
+              "value": null
             }
-          }
-        }
+  ```
+    </TabItem>
+    <TabItem value="Item">
+      ```js
+    // overridden
+            "amountMode": "calculated",
+    // added
+            "amountModifier": 0.7,
+    // info
+            "capture": true,
+    // info
+            "captureSettings": {
+    // overridden
+              "autoAction": "complete",
+    // info
+              "value": 172800
+    // info
+            },
+            "enableTimer": null,
+            "timer": {
+              "triggerEvent": null,
+              "value": null
+            }
       ```
     </TabItem>
     </Tabs>
   </Column>
 </Columns>
+
+:::info Please, note
+In an actual request you can define as many tags as you want or assign them to items without defining.
+* If you define a tag and do not assign it to any item, the [initiate cart](/docs/api/10-init) request will be accepted by OmniCart despite the fact that the defined tag has no practical effect on the request result.
+* Similarly, if you assign an item with a tag that is not defined, it is not considered an error.
+:::

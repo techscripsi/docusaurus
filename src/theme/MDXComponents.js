@@ -2,7 +2,6 @@
   // Importing the original mapper + our components according to the Docusaurus doc
   import MDXComponents from '@theme-original/MDXComponents';
   import ColorPickerExample from '@site/src/components/ColorPickerExample';
-  import PaymentCard from '@site/src/components/PaymentCard';
 
   import Badge from 'react-bootstrap/Badge';
   import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -34,7 +33,8 @@
   import Toast from 'react-bootstrap/Toast';
   import Columns from '@site/src/components/Columns';
   import Column from '@site/src/components/Column';
-//  import PaymentForm from '@site/src/components/PaymentForm';
+
+//  import ReactCC from '@site/src/components/ReactCC';
 
   import Mermaid from '@theme/Mermaid';
   import Tabs from '@theme/Tabs';
@@ -46,16 +46,15 @@
     // Reusing the default mapping
     ...MDXComponents,
     ColorPickerExample,
-    PaymentCard,
     Container,
     Col,
     Row,
     Columns,
     Column,
-//    PaymentForm,
     Mermaid,
     Tabs,
     TabItem,
     DocCardList,
+//    ReactCC,
   };
   

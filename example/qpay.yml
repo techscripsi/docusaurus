@@ -941,7 +941,7 @@ components:
                             properties:
                               paymentStatus:
                                 $ref: "#/components/schemas/primitive_paymentStatus_full"
-                              fullAmounts:
+                              itemAmounts:
                                 $ref: "#/components/schemas/object_amountInfo_status_res"
                               tag:
                                 $ref: "#/components/schemas/primitive_tag"
