@@ -4,36 +4,44 @@ sidebar_position: 20
 
 # Amounts
 
-A total cart amount is not passed by a single property. Instead, amounts are specified per item identifier. This allows flexible control over the items life cycle (see the [Items Life Cycle](/docs/integration/concepts/payment-lifecycle) section for more details).
-
-## `amountMode`
-
-<!--
-* Если amountMode не задан, то платёжный шлюз считает, что используется declared. ???
+<!-- FIXME
+method to request
 -->
 
-The `amountMode` property defines how OmniCart will treat the value passed in the item `amount` property. It can be defined on the cart, tag, and item level. The available options for this property are `declared` and `calculated`.
+A total cart amount is not passed to OmniCart by a single property. Instead, amounts are specified per item identifier. This allows flexible control over the payment life cycle.
 
-You can set this property using the [init](/docs/api/10-init) or [modify](/docs/api/40-modify) method (see the [Modifying Items](/docs/integration/concepts/modify) section for more information on the `modify` method).
+During the payment life cycle amounts can be canceled or refunded fully and partially.
 
-<Columns>
-  <Column>
-    ### `declared`
+:::note
+See the [Payment Life Cycle](/docs/integration/concepts/payment-lifecycle) section for more information on the items payment life cycle.
+:::
+
+## `init` and `modify` requests {#amountmode}
+
+The `amount` property is passed with the [`init`](/docs/api/10-init) or [`modify`](/docs/api/40-modify) request. The optional `amountMode` property defines how OmniCart will treat the value passed in the item `amount` property. The available options for `amountMode` are `declared` and `calculated`. `amountMode` can be defined on the cart, tag, and item level.
+
+:::note
+By default, `amountMode` is `declared`.
+:::
+
+<div class="columns">
+  <div class="column">
+    ### `"amountMode": "declared"`
     If `amountMode` is set to `declared`, the value of the `amount` property is included in the invoice exactly as it was received form from by OmniCart. The additional `quantity` and `amuntModifier`  properties are saved in OmniCart but have no effect on the final item price.
-    ### `calculated`
+    ### `"amountMode": "calculated"`
     If `amountMode` is set to `calculated`, the `amount` value is the price per unit of goods (actual items, liters, minutes, etc.). The final price is a product of the `amount`, `quantity`, and `amountModifier` values.
     * `quantity` - number or volume of goods. Can be a whole number or a decimal fracture. For example, you can sell mana in bottles or in liters.
     * `amountModifer` - additional `amount` multiplier. You can use it to apply discounts or for any purpose you see fit.
     :::tip
     Technically, `quantity` and `amountModifer` are just `amount` multipliers. However, `quantity` can be defined only on the item level while `amountModifer` can be defined on the cart, tag, and item level.
     :::
-  </Column>
-  <Column>
+  </div>
+  <div class="column">
     ```js title="Legend"
-      // info
+      //info
       //properties that affect the final item price
     ```
-    <Tabs>
+    <Tabs groupId="amountMode">
       <TabItem value="declared">
         ```js
           "gems": {
@@ -72,39 +80,31 @@ You can set this property using the [init](/docs/api/10-init) or [modify](/docs/
       :::
       </TabItem>
     </Tabs>
-  </Column>
-</Columns>
+  </div>
+</div>
 
-## `totalAmounts` and `itemAmounts`
+## `status` request {#status}
 
-`totalAmounts` and `itemAmounts` are objects that are returned in successful responses to the [status](/docs/api/15-status) method.
+### `totalAmounts` and `itemAmounts` objects {#totalamounts-itemamounts}
 
+`totalAmounts` and `itemAmounts` are objects that are returned in successful responses to the [status](/docs/api/15-status) method. 
 :::note
 See the [Payment Life Cycle](/docs/integration/concepts/payment-lifecycle) section for more information on payment statuses.
 :::
 
-* The `totalAmounts` object contains information on the total amounts per statuses for the entire request scope. That means that if you, for example, filter your [status](/docs/api/15-status) request by a tag, the `totalAmounts` object will contain the total amounts of all cart items marked with that tag.
-* The `itemAmounts` object contains information on the amounts per statuses of specific items. If a cart contains a single item, the `totalAmounts` values are equal to the `itemAmounts` values.
+The `totalAmounts` and `itemAmounts` objects have same sets of properties. The difference is as follows.
 
-<!--
-See the [Items Life Cycle](/docs/integration/concepts/payment-lifecycle) section for more information on payment statuses.
--->
+The `totalAmounts` object contains information on the total amounts per certain statuses for the entire request scope at the time of request. That means that if you, for example, filter your [status](/docs/api/15-status) request by a tag, the `totalAmounts` object will contain the total amounts of all cart items marked with that tag. The [status](/docs/api/15-status) request returns only one `totalAmounts` object.
 
-<!--
-Статусы учитываются скорее по товарным позициям, чем по корзине, подробнее см. жизненный цикл товарных позиций [Payment Life Cycle](/docs/integration/concepts/payment-lifecycle). 
--->
+The `itemAmounts` objects are part of item objects and contain information on the amounts per certain statuses of specific items at the time of the request. There are as many `itemAmounts` objects as there are items in the [status](/docs/api/15-status) scope. If a [status](/docs/api/15-status) request returns a single item, the `itemAmounts` values are equal to the `totalAmounts` values.
 
-<Columns>
-  <Column>
-    * `initiated` - the amount that was registered with the [`init`](/docs/api/10-init) method. This amount cannot be changed regardless of the payment status.
-    * `canceled` - the approved amount that has been canceled. This value may increase per [init](/docs/api/10-init) scope and per specific as cart items can be canceled fully or partially.
-    * `captured` - the approved amount that has been captured. Cart items do not have to be captured all at once, so a cart may contain items that are approved but hasn't been captured or canceled. At the same time, if an item is already captured, it cannot increase. So totalAmout can increase
-    * `completed` - the amount that has been processed after capture. This value may increase per [init](/docs/api/10-init) scope after previously approved amounts are captured and processed.
-    :::note
-    Note that if `amountMode` is set to `calculated` for // `totalAmounts` and `itemAmounts` display the amounts  // `amountMode` is set to `calculated` applied
-    :::
-  </Column>
-  <Column>
+<div class="columns">
+  <div class="column">
+    * `initiated` - the initial amount that was registered with the [`init`](/docs/api/10-init) request.
+    * `captured` - the approved amount that has been captured with the [`capture`](/docs/api/30-capture) request. Note that item amounts can be partially canceled before being captured, so this value may be different from the `initiated` amount. Also, cart items do not have to be captured all at once, therefore, a cart may contain items that are approved but hasn't been captured or canceled, hence, this value may change. However, the`captured` amount cannot exceed the `initiated` amount.
+    * `refunded` - the completed amount that has been refunded. Similar to the above, item amounts can be partially refunded, so this value may be different from the `captured` amount. As in the previous case, you have an option to refund selected items from the cart, not necessarily the entire cart. That means that the `refunded` value may change, however, the`refunded` amount cannot exceed the `captured` amount.
+  </div>
+  <div class="column">
     <Tabs>
       <TabItem value="totalAmounts">
         ```js
@@ -113,44 +113,80 @@ See the [Items Life Cycle](/docs/integration/concepts/payment-lifecycle) section
         "currency": "EUR",
         //highlight-next-line
         "totalAmounts": {
-          "initiated": 999,
-          "canceled": 99,
-          "captured": 900,
-          "completed": 800,
-          "refunded": 100
+          "initiated": 19900,
+          "captured": 0,
+          "refunded": 0,
+          "current": 19000
         },
         ```
+        In the example above the sum of all initiated cart items is `19900`. After the cart was approved, some of the cart items were fully or partially `canceled` worth of `900` and none of them were `captured`. Therefore, the `captured` cart amount is `0` and the `current` cart amount it `19000`.
       </TabItem>
       <TabItem value="itemAmounts">
         ```js
         //highlight-next-line
         "gems": {
-          "paymentStatus": "captured",
+          "paymentStatus": "completed",
         //highlight-next-line
           "itemAmounts": {
-            "initiated": 120,
-            "canceled": 0,
-            "captured": 120,
-            "completed": 0,
-            "refunded": 0
+            "initiated": 1200,
+            "captured": 1200,
+            "refunded": 200,
+            "current": 1000
           },
         ```
-        Note that the current `paymentStatus` of the `gems` item is `captured`. The payment for this item hasn't been `completed` yet. Nor it could be `refunded` since refunds are possible only after a payment is completed.
-        
-        
-        
-        
+        In the example above the `gems` item was initiated and captured for the amount of `1200` without cancellations. After being completed, this item was partially refunded for the amount of `200`. Since it's not a full refund, the item state is `completed` but its current amount is less than the captured one.
       </TabItem>
     </Tabs>
-  </Column>
-</Columns>
+  </div>
+</div>
 
-| Property | Description | May Increase | May Decrease |
-| :-- | :-- | :-- | :-- |
-| `initiated` | The amount that was registered with the [`init`](/docs/api/10-init) method. This amount cannot be changed in the future regardless of any payment status. | `totalAmounts`<br />`itemAmounts` | `totalAmounts`<br />`itemAmounts` |
-| `canceled` | The amount that has been canceled after being approved (see the [Pament Life Cycle](/docs/integration/concepts/payment-lifecycle) section for more information). Items can be canceled fully or partially, so this amount can increase per [init](/docs/api/10-init) scope and per specific item. | `totalAmounts`<br />`itemAmounts` | `totalAmounts`<br />`itemAmounts` |
-| `captured` | The captured amount. Cart items do not have to be captured all at once, so a cart may contain items that are approved but hasn't been captured or canceled. | `totalAmounts`<br />`itemAmounts` | `totalAmounts`<br />`itemAmounts` |
-| `completed` | The amount that has been processed after capture. This value may increase per [init](/docs/api/10-init) scope after previously approved amounts are captured and processed. | `totalAmounts`<br />`itemAmounts` | `totalAmounts`<br />`itemAmounts` |
-| `refunded` |  | `totalAmounts`<br />`itemAmounts` | `totalAmounts`<br />`itemAmounts` |
+* `current` - current amount of a cart or item. For example, if the some cart items are `approved` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less that the `captured` amount.
 
-After an Item is captures, it cannot be canceled.
+### `paymentSnapshot` object {#paymentsnapshot}
+
+<div class="columns">
+  <div class="column">
+    The `paymentSnapshot` object is part of the item object that is returned in the response to the [`status`](/docs/api/15-status) request. It contains the values that were defined in the preceding [`init`](/docs/api/10-init) or [`modify`](/docs/api/40-modify) request (see the description given [earlier](#totalamounts-itemamounts) on this page).
+    
+    Note that if `amountMode` is set to `declared`, the `current` value of the `itemAmounts` object duplicates the `amount` (in the example to the right it is `600`) value since amount multipliers `quantity` and `amountModifier` are not applied.
+    
+    Otherwise, if the `amountMode` is set to `calculated`, the `current` value of the `itemAmounts` object is a product of the `amount`, `quantity`, and `amountModifier` values. In the example to the right it is `4000`.
+  </div>
+  <div class="column">
+    ```js title="Legend"
+    //info
+    //properties that affect the final item price
+    ```
+    <Tabs groupId="amountMode">
+    <TabItem value="declared">
+      ```js
+      "paymentSnapshot": {
+      //info
+        "amount": 600,
+        "amountMode": "declared",
+        "quantity": 6,
+        "amountModifier": 1
+      },
+      ```
+    </TabItem>
+    <TabItem value="calculated">
+      ```js
+      "paymentSnapshot": {
+      //info
+        "amount": 500,
+        "amountMode": "calculated",
+      //info
+        "quantity": 8,
+      //info
+        "amountModifier": 1
+      },
+      ```
+    </TabItem>
+    </Tabs>
+    </div>
+    </div>
+
+
+
+
+

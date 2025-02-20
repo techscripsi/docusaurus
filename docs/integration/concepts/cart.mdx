@@ -8,16 +8,16 @@ OmniCart is designed to accept multiple items in a payment request by default so
 
 ## Items in Carts
 
-<Columns>
-  <Column>
+<div class="columns">
+  <div class="column">
     The code to the right is an example of a simple request with only the mandatory properties for the [initiate cart](/docs/api/10-init) request.
     
     Each cart must have a unique `cartId` that is generated on your side. The `currency` property is mandatory and applied to the entire cart. 
     
     The `pegasus` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/integration/concepts/amounts) section for more information on handling amounts).
 
-  </Column>
-  <Column>
+  </div>
+  <div class="column">
 ```js
 {
   "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
@@ -31,23 +31,22 @@ OmniCart is designed to accept multiple items in a payment request by default so
   ]
 }
 ```
-  </Column>
-</Columns>
+  </div>
+</div>
 
 :::info Please, note
 All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/docs/panel/ADDLINK) to be available for purchase as each cart initiation request must contain at least one existing item identifier.
 :::
 
-<Columns>
-  <Column>
+<div class="columns">
+  <div class="column">
     An item is not necessarily an actual consumable product. It can be, for example, a donation, a one time purchase (such as a premium tier), or a temporary access to your resource (e.g., a year subscription).
 
     A cart may contain items of any type.
 
     In the example to the right the `cart` array contains several item identifiers: `donation`, `milk`, and `premiumAccess`. This code implies these item identifiers were previously [registered in the Merchant Panel](/docs/panel/ADDLINK).
-
-  </Column>
-  <Column>
+  </div>
+  <div class="column">
     ```js
       "cart": [
         {
@@ -63,15 +62,14 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
           }
       ]
     ```
-
-  </Column>
-</Columns>
+  </div>
+</div>
 
 
 ## Tags
 
-<Columns>
-  <Column>
+<div class="columns">
+  <div class="column">
     You can mark cart items with tags to group these items, batch apply payment or timer settings (batch settings are explained in the [section below](#overrides)), or for any other reason you may have. 
 
     An item can be assigned only one tag.
@@ -83,8 +81,8 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
     After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/integration/concepts/payment-lifecycle) for more information on item statuses).
     
     Tags can also be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/integration/concepts/modify) section of this documentation.
-  </Column>
-  <Column>
+  </div>
+  <div class="column">
     ```js
         "cart": [
           {
@@ -115,14 +113,14 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
           },
         ]
     ```
-  </Column>
-</Columns>
+  </div>
+</div>
 
 
 ## Batch Settings and Overrides {#overrides}
 
-<Columns>
-  <Column>
+<div class="columns">
+  <div class="column">
   OmniCart allows you to batch apply certain payment settings and timer settings to items in a cart. These settings can be applied to the entire cart or by tag. The tag settings override the cart settings. The settings of a specific item, in turn, override all parent settings, even if this item is marked with a defined tag. Think of it as of nested structure or hierarchical inheritance, cart being the top level.
   
   :::note
@@ -134,8 +132,8 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
   Tag settings inherit `amountMode`, override the `capture` property, and define additional capture settings.
   
   Item settings override the parent `amountMode` and `autoAction` properties and add the `amountModifier` property for that specific item. Other settings are inherited.
-  </Column>
-  <Column>
+  </div>
+  <div class="column">
     ```js title="Legend"
       //undefined
       // added
@@ -210,8 +208,8 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
       ```
     </TabItem>
     </Tabs>
-  </Column>
-</Columns>
+  </div>
+</div>
 
 :::info Please, note
 In an actual request you can define as many tags as you want or assign them to items without defining.
