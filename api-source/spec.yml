@@ -10,7 +10,7 @@ paths:
     post:
       summary: Refund
       description: |
-        Use this method to refund a previously created and approved cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+        Use this method to refund a previously created and authorized cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
 
         Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will refund all specified items and will not return an error.
         
@@ -48,7 +48,7 @@ paths:
     post:
       summary: Cancel
       description: |
-        Use this method to cancel a previously created and approved cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+        Use this method to cancel a previously created and authorized cart or specific items in that cart. You can cancel the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
 
         Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will cancel all specified items and will not return an error.
         
@@ -86,7 +86,7 @@ paths:
     patch:
       summary: Modify
       description: |
-        Use this method to modify cart contents or settings. For example, you can change the `quantity` of an item, reduce its approved `amount`, or adjust timer settings.
+        Use this method to modify cart contents or settings. For example, you can change the `quantity` of an item, reduce its authorized `amount`, or adjust timer settings.
       responses:
         "200":
           $ref: "#/components/responses/200_modify"
@@ -230,7 +230,7 @@ paths:
     post:
       summary: Capture
       description: |
-        Use this method to capture a previously created and approved cart or specific items in that cart. You can capture the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
+        Use this method to capture a previously created and authorized cart or specific items in that cart. You can capture the whole cart or specify items to cancel using `tags`, `itemIds`, or `timerEnabled` settings.
 
         Overlaps are ignored, meaning that if you, for example, specify a `tag` and an `itemId` in the same request and the latter `itemId` is marked with the specified `tag`, the request will cancel all specified items and will not return an error.
         
@@ -303,8 +303,10 @@ paths:
                     Optional customer identifier that links them to the passed `cartId`. It is required only if you want to set timers for your items.
                 currency:
                   $ref: "#/components/schemas/primitive_currency"
+                cartExpiry:
+                  $ref: "#/components/schemas/object_invoice"
                 scope:
-                  $ref: "#/components/schemas/object_scope"
+                  $ref: "#/components/schemas/primitive_cartExpiry"
                   description: |
                     `scope` lets you define sets of settings that you can apply to the whole cart or items marked with specific tags. Child settings override parent ones. That means that if you define both cart and tag settings, the tag settings will override cart settins.
                 cart:
@@ -326,7 +328,7 @@ components:
         - initiated
         - rejected
         - canceled
-        - approved
+        - authorized
         - captured
         - completed
         - refunded
@@ -357,9 +359,9 @@ components:
         - initiated
         - rejected
         - canceled
-        - approved
+        - authorized
         - captured
-        - processing
+        - ongoing
         - completed
         - refunded
     primitive_paymentStatus_empty:
@@ -484,7 +486,7 @@ components:
       description: |
         Full cart amount in the current state. 
         
-        For example, if the some cart items are `approved` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less that the `captured` amount.
+        For example, if the some cart items are `authorized` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less that the `captured` amount.
 
         See the [Amounts](/docs/integration/concepts/amounts#totalamounts-itemamounts) section for more details.
     primitive_totalRefunded:
@@ -508,7 +510,7 @@ components:
       description: |
         Full item amount in the current state. 
         
-        For example, if the item is `approved` and partially canceled, its current amount is less than the initiated amount. Similarly, if the item is `captured` or `completed` and partially refunded, its current amount is less that the `captured` amount.
+        For example, if the item is `authorized` and partially canceled, its current amount is less than the initiated amount. Similarly, if the item is `captured` or `completed` and partially refunded, its current amount is less that the `captured` amount.
 
         See the [Amounts](/docs/integration/concepts/amounts#totalamounts-and-itemamounts-objects) section for more details.
     primitive_fullRefundedAmount:
@@ -550,7 +552,7 @@ components:
       enum:
         - initiated
         - rejected
-        - approved
+        - authorized
         - canceled
         - captured
         - completed
@@ -565,7 +567,7 @@ components:
             - initiated
             - canceled
             - rejected
-            - approved
+            - authorized
             - captured
             - completed
             - refunded
@@ -580,7 +582,7 @@ components:
       description: |
         A set of parameters to modify amounts.
 
-        Captured amount must not exceed approved amount.
+        Captured amount must not exceed authorized amount.
       properties:
         amountMode:
           $ref: "#/components/schemas/primitive_amountMode"
@@ -590,7 +592,7 @@ components:
       type: object
       title: " "
       description: |
-        A set of settings to modify the resulting amount. The resulting amount cannot exceed the approved amount. ADDLINK
+        A set of settings to modify the resulting amount. The resulting amount cannot exceed the authorized amount. ADDLINK
       properties:
         amount:
           $ref: "#/components/schemas/primitive_amount"
@@ -672,7 +674,7 @@ components:
       type: string
       title: ""
       enum:
-        - pending
+        - ongoing
         - started
         - paused
         - stopped
@@ -761,7 +763,7 @@ components:
           enum:
             - initiated
             - rejected
-            - approved
+            - authorized
             - canceled
             - captured
             - completed
@@ -786,11 +788,22 @@ components:
           example: 172800
           minimum: 600
       description: Capture settings.
+    primitive_cartExpiry:
+        type: number
+        title: " "
+        example: 7200
+        description: |
+          Checkout session expiry time in seconds. After the checkout session times out, the customer will not be able to complete the payment and all cart items will change their status to `expired`.
+
+          The default value of this property as well as the privilege to change it depends on your agreement with OmniCart. SNIPPET
+
+          **It is not recommended to change this value  even if you have enough permissions.**
     primitive_currency:
       type: string
       title: " "
       example: EUR
-      description: "[ISO 4217](https://www.iban.com/currency-codes) alphabetic currency code."
+      description: |
+        "[ISO 4217](https://www.iban.com/currency-codes) alphabetic currency code."
     primitive_quantity_status_res:
         type: number
         title: " "
@@ -858,14 +871,14 @@ components:
         capture:
           $ref: "#/components/schemas/primitive_capture"
           description: |
-            Whether it is required to capture a payment after it is approved (after the customer verified their payment) to complete a purchase.
+            Whether it is required to capture a payment after it is authorized (after the customer verified their payment) to complete a purchase.
 
-            `true` - after a cart is approved, manual capture is required (with enough permission, you can configure auto capture as well);
+            `true` - after a cart is authorized, manual capture is required (with enough permission, you can configure auto capture as well);
 
-            `false` - after a cart is approved, it is captured instantly.
+            `false` - after a cart is authorized, it is captured instantly.
         captureSettings:
           $ref: "#/components/schemas/object_captureSettings"
-          description: Capture settings. By default, an approved payment is auto canceled after 2 days (2880 minutes) without manual action.
+          description: Capture settings. By default, an authorized payment is auto canceled after 2 days (2880 minutes) without manual action.
         enableTimer:
           $ref: "#/components/schemas/primitive_timerEnabled"
           description: |

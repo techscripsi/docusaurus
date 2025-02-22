@@ -13,7 +13,7 @@ const sidebar: SidebarsConfig = {
         {
           type: "doc",
           id: "api/50-refund",
-          label: "refund",
+          label: "Refund",
           className: "api-method post",
         },
         {

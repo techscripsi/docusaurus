@@ -49,26 +49,25 @@ const config: Config = {
           // editUrl:
           // 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
-        blog: {
-          showReadingTime: false,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // Useful options to enforce blogging best practices
-          // onInlineTags: 'warn',
-          // onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'ignore',
-        },
+//      blog: {
+//          showReadingTime: false,
+//          feedOptions: {
+//            type: ['rss', 'atom'],
+//            xslt: true,
+//          },
+//          Please change this to your repo.
+//          Remove this to remove the "edit this page" links.
+//          editUrl:
+//            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+//          Useful options to enforce blogging best practices
+//          onInlineTags: 'warn',
+//          onInlineAuthors: 'warn',
+//          onUntruncatedBlogPosts: 'ignore',
+//       },
         theme: {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
-// настройка выше работает и нужна для ts
     ],
   ],
 
@@ -80,7 +79,7 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "example/qpay.yml",
+            specPath: "api-source/spec.yml",
             outputDir: "docs/api",
             sidebarOptions: {
               groupPathsBy: "tag",
@@ -123,9 +122,9 @@ const config: Config = {
   themeConfig: {
 
     mermaid: {
-      theme: {light: 'base', dark: 'base'},
+      theme: {light: 'neutral', dark: 'dark'},
     },
-/* неясно, работает или нет
+/*
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,
@@ -159,6 +158,12 @@ const config: Config = {
           position: 'left',
           label: 'API Specification',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'scenarios',
+          position: 'left',
+          label: 'Scenarios',
+        },
 //        {to: '/blog', label: 'Releases', position: 'left'},
 
 /*
@@ -188,6 +193,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
     },
       footer: {
         style: 'dark',
+/*
         links: [
           {
             title: 'Scripsi',
@@ -215,6 +221,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
               },
             ],
           },
+
           {
             title: 'More',
             items: [
@@ -229,6 +236,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
             ],
           },
         ],
+*/
         copyright: `${new Date().getFullYear()} Scripsi, Built with Docusaurus.`,
       },
     prism: {

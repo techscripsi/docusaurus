@@ -1,19 +1,12 @@
+import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
-// Importing the original mapper + our components according to the Docusaurus doc
-import MDXComponents from '@theme-original/MDXComponents';
-import ColorPickerExample from '@site/src/components/ColorPickerExample';
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import React from 'react';
-
-import Amounts from '/docs/integration/concepts/index.mdx';
 
 type FeatureItem = {
   title: string;
   Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-  description: JSX.Element;
+  description: ReactNode;
 };
 
 const FeatureList: FeatureItem[] = [
@@ -22,14 +15,8 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-<Tabs>
-  <TabItem value="1">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </TabItem>
-  <TabItem value="2">
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-  </TabItem>
-</Tabs>
+        Docusaurus was designed from the ground up to be easily installed and
+        used to get your website up and running quickly.
       </>
     ),
   },
@@ -38,12 +25,11 @@ const FeatureList: FeatureItem[] = [
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        <ColorPickerExample />
-        <Amounts />
+        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
+        ahead and move your docs into the <code>docs</code> directory.
       </>
     ),
   },
-/*
   {
     title: 'Powered by React',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
@@ -54,9 +40,7 @@ const FeatureList: FeatureItem[] = [
       </>
     ),
   },
-*/
 ];
-
 
 function Feature({title, Svg, description}: FeatureItem) {
   return (
@@ -72,8 +56,7 @@ function Feature({title, Svg, description}: FeatureItem) {
   );
 }
 
-
-export default function HomepageFeatures(): JSX.Element {
+export default function HomepageFeatures(): ReactNode {
   return (
     <section className={styles.features}>
       <div className="container">
@@ -86,4 +69,3 @@ export default function HomepageFeatures(): JSX.Element {
     </section>
   );
 }
-

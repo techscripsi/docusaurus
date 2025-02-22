@@ -2,106 +2,132 @@
 sidebar_position: 30
 ---
 
-import Statuses from './img/payment_statuses.svg';
-
 # Payment Life Cycle
 
-Payment statuses are related to cart items rather than to the entire cart.
+Payment statuses are related to cart items rather than to the entire cart. This means that a cart can contain items with different payment statuses. Use the [`status`](/docs/api/15-status) request to find out the current item status.
 
-## Payment Statuses
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      ###### Payment statuses (clickable)
 
-the [`init`](/docs/api/10-init) request
-the [`status`](/docs/api/15-status) request
-the [`cancel`](/docs/api/20-cancel) request
-the [`capture`](/docs/api/30-capture) request
-the [`modify`](/docs/api/40-modify) request
-the [`refund`](/docs/api/50-refund) request
+      <Mermaid
+        value={`
+          flowchart TB
+              initiated --> rejected
+              initiated --> authorized
+              initiated --> expired
+              authorized --> canceled
+              authorized -- two-step --> captured
+              authorized -- one-step --> completed
+              captured --> completed
+              completed --> refunded
+              
+              click initiated "#initiated"
+              click rejected "#rejected"
+              click expired "#expired"
+              click authorized "#authorized"
+              click canceled "#canceled"
+              click captured "#captured"
+              click completed "#completed"
+              click refunded "#refunded"
 
-<div class="columns">
-  <div class="column">
-    | Status | Description |
-    | :-: | :--- |
-    | `initiated` | the [`init`](/docs/api/10-init) request. |
-    | `rejected` | ACS did not verify the provided cardholder's credentials. |
-    | `expired` | The `TIMETOBUY` value expired. |
-    | `approved` | ACS confirmed the cardholder's credentials. |
-    | `canceled` | the [`cancel`](/docs/api/20-cancel) request |
-    | `captured` | the [`capture`](/docs/api/30-capture) request |
-    | `completed` | the [`capture`](/docs/api/30-capture) request |
-    | `refunded` | the [`refund`](/docs/api/50-refund) request |
-  </div>
-  <div class="column">
-    <Mermaid
-      value={`
-        flowchart TB
-            initiated --> rejected
-            initiated --> approved@{ shape: notch-rect}
-            initiated --> expired
-            approved --> canceled
-            approved -- 1-step --> completed@{ shape: notch-rect}
-            approved -- 2-step --> captured@{ shape: notch-rect}
-            captured --> completed
-            completed --> refunded
-      `}
-    />
-:::info
-about processing
-:::
+              style initiated fill:#008B00,font-family:monospace
+              style authorized fill:#008B00,font-family:monospace
+              style captured fill:#008B00,font-family:monospace
+              style completed fill:#008B00,font-family:monospace
+              style rejected fill:#D53035,font-family:monospace
+              style expired fill:#D53035,font-family:monospace
+              style canceled fill:#B38200,font-family:monospace
+              style refunded fill:#B38200,font-family:monospace
+        `}
+      />
+
+      :::note
+      Some requests has on achieved . In these cases, the [status](/docs/api/15-status) request will return the [`ongoing`](#ongoing) state.
+      :::
+    </div>
+    <div class="col col--6">
+
+    ## `initiated`
+
+    The `initiated` status is the beginning of the payment life cycle. Cart items enter this state after a successful [`init`](/docs/api/10-init) request. At this point, the cart is created and the checkout form is delivered to the customer.
+
+    ## `rejected`
+    
+    The customer attempted to make a payment, however, the verification server rejected the attempt. The possible reasons are insufficient funds on the customer's account or failed cardholder authentication.
+
+    ## `expired`
+
+    The `expired` status means that the time set in the `cartExpiry` property passed with the [`init`](/docs/api/10-init) request has elapsed. The possible reasons are that the customer decided no to proceed with the payment or was unable to do it.
+
+    The default value of the `cartExpiry` property depends on your agreement with OmniCart. If you have sufficient permissions, you can override the default `cartExpiry` value, although, it is not recommended.
+
+    :::warning
+    Note that the `cartExpiry` property affects the entire cart, not specific items.
+    :::
+
+    </div>
   </div>
 </div>
 
-## Payment Sequence Example
 
-<Mermaid
-      value={`
-    sequenceDiagram
-    participant Customer
-    participant Merchant
-    participant OmniCart
-    participant ACS
-    Customer ->> Merchant: 
-    Merchant ->> OmniCart: init request
-    OmniCart -->> Merchant: init response
-    Note over Customer,ACS: Status is now initiated
-    Merchant -->> Customer: payment page URL
-    Customer ->> OmniCart: payment data
-    OmniCart ->> Customer: redirect to ACS
-    Customer ->> ACS: Confirm credentials
-    ACS ->> OmniCart: OK
-    Note over Customer,ACS: Status is now approved
-    OmniCart ->> Customer: Final page URL
-    alt
-    OmniCart ->> Merchant: Callback
-    else
-    Merchant ->> OmniCart: status request
-    OmniCart -->> Merchant: status response
-    end
-    opt
-    Merchant ->> OmniCart: modify request
-    OmniCart -->> Merchant: modify response
-    end
-    opt
-    Merchant ->> OmniCart: cancel request
-    OmniCart -->> Merchant: cancel response
-    Note over Customer,ACS: Status is now cancled
-    end
-    opt
-    Merchant ->> OmniCart: capture request
-    OmniCart -->> Merchant: capture response
-    end
-    Note over Customer,ACS: Status is now captured
-    OmniCart -->> OmniCart: processing
-    Note over Customer,ACS: Status is now completed
-    opt
-    Merchant ->> OmniCart: modify request
-    OmniCart -->> Merchant: modify response
-    end
-    opt
-    Merchant ->> OmniCart: refund request
-    OmniCart -->> Merchant: refund response
-    Note over Customer,ACS: Status is now refunded
-    end
-      `}
-    />
+## `authorized`
+
+The `authorized` status means that both the verification service has successfully authenticated the customer and there was enough money in their account to make the payment.
+
+The next status of the payment depends on whether one-step or two-step payment scheme is used.
+
+### One-step payment {#onestep}
+
+In the one-stage scheme, the transaction is done immediately after authorization after which the payment enters the [`completed`](#completed) state. If you need to return the money to the customer at this point, use partial or complete refund. <SeeCancelRefund />
+
+:::note
+Although, with one-step scheme, the payment stays in the `authorized` status for a very short time, the [status](/docs/api/15-status) request may still return this state.
+:::
+
+### Two-step payment {#twostep}
+
+With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although, the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/30-capture) request. Note that you do not have to capture all cart items in a single request.
+
+Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the [`cancel`](/docs/api/20-cancel) request. Like with the [`capture`](/docs/api/30-capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. 
+
+:::info
+<SeeCancelRefund />
+:::
+
+<!--
+fully or partially
+-->
+:::note
+Deongoing on the OmniCart settings and your privileges, the payment may auto change its status to `canceled` or `captured`.
+:::
+
+## `captured`
+
+A payment enters the `captured` status after you capture it using the [`capture`](/docs/api/30-capture) request. A payment can also be auto captured if the OmniCart settings and your privileges allow that. After being captured, a payment is processed by OmniCart and automatically enters the `completed` status.
+
+## `canceled`
+
+A payment enters the `canceled` state only after it has been fully canceled with the the [`cancel`](/docs/api/20-cancel) request. A payment can also be auto canceled if the OmniCart settings and your privileges allow that.
+
+## `completed`
+
+The `completed` status means that the transaction is successfully done: the money is withdrawn from the customer's account and transferred to the target account.  A payment enters this status after it has been auto processed by OmniCart following the `approved` status in case of the one-step scheme and `captured` status in case of the two-step scheme. In this state, the payment may be fully or partially refunded. 
+
+:::warning Please, note
+In the case of a partial refund, the payment remains in the `completed` status. <SeeCancelRefund />
+:::
+
+## `refunded`
+
+The `refunded` status means that after a successful transaction the money has been transferred back to the customer's account from yours. A payment enters the `refunded` state only after it has been fully refunded using the [`refund`](/docs/api/50-refund) request. Otherwise, the payment remains in the `completed` status. <SeeCancelRefund />
+
+## `ongoing`
+
+The `ongoing` status means that a payment is in an intermediate state. Some [`modify`](/docs/api/40-modify) requests as well as partial cancellations or refunds might take longer to process that other requests. This status is also returned after the [`init`](/docs/api/10-init) request when customer action is required.
+
+<!--import-->
+
+import SeeCancelRefund from '/docs/__snippets__/general/refs/see-cancel-refund.mdx';
