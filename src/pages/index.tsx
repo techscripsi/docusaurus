@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
-import Timeline from '@site/src/components/Timeline';
-import TimelineItem from '@site/src/components/Timeline/TimelineItem';
+// import Timeline from '@site/src/components/Timeline';
+// import TimelineItem from '@site/src/components/Timeline/TimelineItem';
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 
@@ -49,27 +49,8 @@ export default function Home(): JSX.Element {
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      <Timeline variant="ifm-color-primary-lightest" horizontal>
-        <TimelineItem variant='primary-darkest' align='right' color='primary-lightest' >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </TimelineItem>
-        <TimelineItem  variant='primary-darkest' align='right' color='primary-lightest' >
-        ### 1
-        Year of creature
-        </TimelineItem>
-        <TimelineItem   variant='primary-darkest' align='right' color='primary-lightest' >
-        #### 1
-        Year of creature
-        </TimelineItem>
-        <TimelineItem  variant='primary-darkest' align='right' color='primary-lightest'>
-        ##### 1
-        Year of creature
-        </TimelineItem>
-        <TimelineItem  variant='primary-darkest' align='right' color='primary-lightest'>
-        ###### 1
-        Year of creature
-        </TimelineItem>
-      </Timeline>
+
+
     </div>
     <div class="col col--6">
       <div class="card-demo">
