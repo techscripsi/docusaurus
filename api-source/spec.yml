@@ -4,7 +4,7 @@ info:
   version: 1.0.2
   description: API DESCRIPTION HERE.
 servers:
-  - url: https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.0
+  - url: https://virtserver.swaggerhub.com/TECHSCRIPSI/qpay/1.0.2
 paths:
   /refund:
     post:
@@ -339,11 +339,11 @@ components:
       description: |
         Timer manual action, the following options are available:
         
-        `start` - starts a pending or paused timer. Stopped or elapsed timer cannot be (re)started;
+        `start` - starts a pending timer or unpause a paused timer. Stopped or elapsed timer cannot be (re)started;
         
-        `pause` - pauses an active timer. A paused timer can be restarted either manually or automatically when an item is in `timerTrigger` status;
+        `pause` - pauses an active timer. A paused timer can be manually unpaused (started);
         
-        `stop` - stops timer. After the timer is stopped, it cannot be restarted.
+        `stop` - stops the timer. After the timer is stopped, it cannot be (re)started.
         LINK
       enum:
         - start
@@ -674,7 +674,7 @@ components:
       type: string
       title: ""
       enum:
-        - ongoing
+        - pending
         - started
         - paused
         - stopped
@@ -801,7 +801,7 @@ components:
     primitive_currency:
       type: string
       title: " "
-      example: EUR
+      example: USD
       description: |
         "[ISO 4217](https://www.iban.com/currency-codes) alphabetic currency code."
     primitive_quantity_status_res:
@@ -913,7 +913,7 @@ components:
       description: |
         If `amountMode` is set to `calculated`, the `amountModifier` value acts as a multiplier for the total item `amount`. Here is an example.
         
-        Consider an item that costs 100 EUR. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is 70% of the original price).
+        Consider an item that costs 100 USD. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is 70% of the original price).
         
         If `amountMode` is set to `declared`, the `amountModifier` value will be stored in OmniCart but will not affect the resulting item price. LINK
     primitive_customerId:

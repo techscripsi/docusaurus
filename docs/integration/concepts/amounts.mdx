@@ -4,10 +4,6 @@ sidebar_position: 20
 
 # Amounts
 
-<!-- FIXME
-method to request
--->
-
 A total cart amount is not passed to OmniCart by a single property. Instead, amounts are specified per item identifier. This allows flexible control over the payment life cycle.
 
 During the payment life cycle amounts can be canceled or refunded fully and partially.
@@ -113,7 +109,7 @@ The `itemAmounts` objects are part of item objects and contain information on th
           ```js
           //highlight-next-line
           "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-          "currency": "EUR",
+          "currency": "USD",
           //highlight-next-line
           "totalAmounts": {
             "initiated": 19900,

@@ -5444,6 +5444,11 @@ docusaurus-plugin-remote-content@^4.0.0:
     pretty-ms "^7.0.1"
     rimraf "^5.0.5"
 
+docusaurus-pushfeedback@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/docusaurus-pushfeedback/-/docusaurus-pushfeedback-1.0.1.tgz#9bff88b897ed8024c95eef1c4a5a163f7c32cd71"
+  integrity sha512-pD9RvbKKivQmIcGrXfDD+UMlavK0yAt/OhhUG/pz8sdfgSU0Hx5AmlEc/xJAsEYj78aVSWX3SV6/XXoksudjDg==
+
 docusaurus-theme-openapi-docs@^4.3.2:
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/docusaurus-theme-openapi-docs/-/docusaurus-theme-openapi-docs-4.3.3.tgz#1bb267b61c7f1b2b8f534c9c0f4b25f749af3b8e"

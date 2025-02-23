@@ -79,28 +79,28 @@ debug mode...
 
 
 ```
-x   xx   xxx
-│   │     └─ specific error code
-│   └─ error category and subcategory
-│      ├─ 0 - not an error
-│      │  ├─ 00 - no special messages
-│      │  └─ 01 - info message
-│      ├─ 1 - authentication errors
-│      │  ├─ 11 - authentication failed
-│      │  └─ 19 - other authentication related errors
-│      ├─ 2 - data related errors
-│      │  ├─ 21 - did not receive expected data
-│      │  ├─ 22 - the received data has wrong format
-│      │  ├─ 23 - the received data has invalid value
-│      │  ├─ 24 - conflict with existing data
-│      │  └─ 29 - other data related errors
-│      ├─ 3 - permissions related errors
-│      │  ├─ 31 - not allowed to pass this method
-│      │  ├─ 32 - not allowed to pass this object or parameter
-│      │  ├─ 33 - the passed value is out of the allowed range
-│      │  └─ 39 - other permission related errors
-│      └─ 9 - other errors
-└─ whether a request failed
+xxxxxx
+││ └─ specific error code, 3 digits
+│└─ error category and subcategory, 2 digits
+│   ├─ 0 - not an error
+│   │  ├─ 00 - no special messages
+│   │  └─ 01 - info message
+│   ├─ 1 - authentication errors
+│   │  ├─ 11 - authentication failed
+│   │  └─ 19 - other authentication related errors
+│   ├─ 2 - data related errors
+│   │  ├─ 21 - did not receive expected data
+│   │  ├─ 22 - the received data has wrong format
+│   │  ├─ 23 - the received data has invalid value
+│   │  ├─ 24 - conflict with existing data
+│   │  └─ 29 - other data related errors
+│   ├─ 3 - permissions related errors
+│   │  ├─ 31 - not allowed to pass this method
+│   │  ├─ 32 - not allowed to pass this object or parameter
+│   │  ├─ 33 - the passed value is out of the allowed range
+│   │  └─ 39 - other permission related errors
+│   └─ 9 - other errors
+└─ whether a request failed, 1 digit
    ├─ 0 - request is successful
    └─ 1 - request failed
 ```

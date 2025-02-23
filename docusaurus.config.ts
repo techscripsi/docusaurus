@@ -99,6 +99,14 @@ const config: Config = {
         // ... other options
       },
     ]
+/*
+    [
+        'docusaurus-pushfeedback',{
+            project: 'xtq56xw90n',
+            buttonPosition: 'sidebar-right',
+        }
+    ]
+*/
 /* плагин для включения удалённых файлов, пока не получается тянуть из github, gitflick
         [
             "docusaurus-plugin-remote-content",

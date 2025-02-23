@@ -6,6 +6,8 @@ sidebar_position: 30
 
 Payment statuses are related to cart items rather than to the entire cart. This means that a cart can contain items with different payment statuses. Use the [`status`](/docs/api/15-status) request to find out the current item status.
 
+<!-- Общее, что товарная позиция проходит определённый жизненный цикл и т. п. -->
+
 <div class="container">
   <div class="row">
     <div class="col col--6">
@@ -45,7 +47,7 @@ Payment statuses are related to cart items rather than to the entire cart. This 
       />
 
       :::note
-      Some requests has on achieved . In these cases, the [status](/docs/api/15-status) request will return the [`ongoing`](#ongoing) state.
+      Some requests has on achieved . In these cases, the [`status`](/docs/api/15-status) request will return the [`ongoing`](#ongoing) state.
       :::
     </div>
     <div class="col col--6">
@@ -91,17 +93,14 @@ Although, with one-step scheme, the payment stays in the `authorized` status for
 
 With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although, the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/30-capture) request. Note that you do not have to capture all cart items in a single request.
 
-Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the [`cancel`](/docs/api/20-cancel) request. Like with the [`capture`](/docs/api/30-capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. 
-
-:::info
-<SeeCancelRefund />
-:::
+Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the [`cancel`](/docs/api/20-cancel) request. Like with the [`capture`](/docs/api/30-capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. <SeeCancelRefund />
 
 <!--
 fully or partially
 -->
+
 :::note
-Deongoing on the OmniCart settings and your privileges, the payment may auto change its status to `canceled` or `captured`.
+Depending on the OmniCart settings and your privileges, the payment may auto change its status to `canceled` or `captured`.
 :::
 
 ## `captured`
