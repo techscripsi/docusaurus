@@ -5,8 +5,8 @@ import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 
-import Timeline from '@site/src/components/Timeline';
-import TimelineItem from '@site/src/components/Timeline/TimelineItem';
+import Timeline from '../components/Timeline';
+import TimelineItem from '../components/Timeline/TimelineItem';
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 

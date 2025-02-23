@@ -7,8 +7,8 @@
   import TabItem from '@theme/TabItem';
   import DocCardList from '@theme/DocCardList';
 
-  import Timeline from '@site/src/components/Timeline';
-  import TimelineItem from '@site/src/components/Timeline/TimelineItem';
+  import Timeline from '../components/Timeline';
+  import TimelineItem from '../components/Timeline/TimelineItem';
 
   // payment cards
 
