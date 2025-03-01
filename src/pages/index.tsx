@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
+import Mermaid from '@theme/Mermaid';
 
 // import Timeline from '@site/src/components/Timeline';
 // import TimelineItem from '@site/src/components/Timeline/TimelineItem';
@@ -25,6 +26,11 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
+          <Link
+            className="button button--secondary button--lg"
+            to="/docs/integration/">
+            Quickstart
+          </Link>&nbsp;
           <Link
             className="button button--secondary button--lg"
             to="/docs/api/omnicart-api">
@@ -49,7 +55,52 @@ export default function Home(): JSX.Element {
 <div class="container">
   <div class="row">
     <div class="col col--6">
+      <Mermaid
+        value={`
+%%{init: { "themeVariables": {"xyChart": {"backgroundColor": "none" } }  }}%%
 
+xychart-beta
+    x-axis "title with space" [cat1, "cat2 with space", cat3]
+    x-axis [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
+    y-axis 10 --> 1000
+    bar [50, 60, 75, 82, 95, 50, 110, 102, 92, 85, 70, 60]
+    bar [400, 600, 750, 820, 950, 500, 1100, 1020, 920, 850, 700, 600]
+        `}
+      />
+
+<Link to="/docs/reference/response-codes" className="card-link">
+  <div class="card-demo text--no-decoration">
+    <div class="card-click item shadow--md">
+      <div class="card__header">
+        <h3>Lorem Ipsum</h3>
+      </div>
+      <div class="card__body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+          suspendisse ultrices gravida.
+        </p>
+      </div>
+    </div>
+  </div>
+</Link>
+<p />
+<Link to="/docs/reference/response-codes" className="card-link">
+  <div class="card-demo text--no-decoration">
+    <div class="card-click item shadow--md">
+      <div class="card__header">
+        <h3>Lorem Ipsum</h3>
+      </div>
+      <div class="card__body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+          suspendisse ultrices gravida.
+        </p>
+      </div>
+    </div>
+  </div>
+</Link>
 
     </div>
     <div class="col col--6">
@@ -74,6 +125,9 @@ export default function Home(): JSX.Element {
       <p />
       <div class="card-demo">
         <div class="card">
+          <div class="card__footer">
+            <button class="button button--primary button--block">See All</button>
+          </div>
           <div class="card__header">
             <h3>Cancel and Refund</h3>
           </div>
@@ -86,12 +140,12 @@ export default function Home(): JSX.Element {
             <div class="button-group button-group--block">
               <button class="button button--info">Cancel Full Cart</button>
               <button class="button button--info">Cancel Cart Items</button>
-              <button class="button button--info">Partial Item Cancel</button>
             </div>
             <div class="button-group button-group--block">
-              <button class="button button--secondary">Refund Full Cart</button>
+              <button class="button button--secondary">
+              Refund Full Cart
+              </button>
               <button class="button button--secondary">Refund Cart Items</button>
-              <button class="button button--secondary">Partial Item Refund</button>
             </div>
           </div>
           <div class="card__footer">

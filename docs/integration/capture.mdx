@@ -1,0 +1,197 @@
+---
+sidebar_position: 55
+---
+
+# Capturing Items
+
+The [`capture`](/docs/api/30-capture) request applies to two-stage payments and allows you to manually capture items in the `authorized` status. After the customer's money has been captured it is transferred from their account to the target account to complete the transaction.
+
+You can capture the entire cart or specific items. There is also an option to use the [`modify`](/docs/api/40-modify) request to reduce an item amount before capturing it (see the [Modifying Items](/docs/integration/modify) section for more information). 
+
+:::warning Please, note
+The difference between the initiated item amount and the modified amount will be canceled. This action is irreversible.
+:::
+
+By default, OmniCart provides 2 days (`172800` seconds) to capture an item in the `authorized` status. If the item is not captured within this period, it enters the `canceled` status.
+
+:::info
+Capture settings may be configurable depending on your agreement with the acquiring bank and privileges in OmniCart. Configuration options are described [below](#configure) on this page.
+:::
+
+## Configuring capture settings {#configure}
+
+## The `capture` request
+
+### Capturing Entire Cart {#entire-cart}
+
+<!--FIXME single source this with cancel-->
+
+:::info
+After capturing the entire cart, all cart items enter the `captured` status.
+:::
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      To capture an entire cart, use the [capture](/docs/api/30-capture) request respectively. The only mandatory property is `cartId` passed with the [init](/docs/api/10-init) request earlier.
+    </div>
+    <div class="col col--6">
+      ```js
+      {
+      //highlight-next-line
+        "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402"
+      }
+
+      ```
+    </div>
+  </div>
+</div>
+
+### Capturing Specific Items {#specific-items}
+
+:::info
+After capturing specific cart items, these items enter the `captured` status.
+:::
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      To capture specific cart items, use the [capture](/docs/api/30-capture) request. The specify the request scope, apart from the mandatory `cartId` value, provide the criteria for the items to be captured in the `filterBox` object. 
+      
+      You can use the `tags` and `itemIds` objects and the `timerEnabled` property.
+      :::warning Please, note
+      The requested cart must contain the specified tags or item identifiers, otherwise, the request will fail.
+      :::
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="tags">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+              "tags": [
+          //highlight-start
+                "rampart",
+                "inferno"
+          //highlight-end
+              ]
+            }
+          }
+          ```
+          In the example above, only the items with the `rampart` and `inferno` tags will be captured.
+        </TabItem>
+        <TabItem value="itemIds">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+               "itemIds": [
+          //highlight-start
+                "sulfur",
+                "crystal",
+                "gems"
+          //highlight-end
+              ]
+            }
+          }
+          ```
+          In the example above, only the `sulfur`, `crystal`, and `gems` items will be captured.
+        </TabItem>
+        <TabItem value="timerEnabled">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+          //highlight-next-line
+              "timerEnabled": false
+            }
+          }
+          ```
+          In the example above, only the items with the disabled (not set) timers will be captured.
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      The `tags` and `itemIds` objects and the `timerEnabled` property can be used in combinations.
+      
+      The `tags` criterion ignores overlaps with the `itemIds` object properties. Consider the following example. You specify a tag and an item that is marked with the specified tag in the same request. OmniCart will capture all items marked with the specified tag and ignore the fact that the item is actually specified twice: with the tag and with its identifier.
+      
+      If you pass the `timerEnabled` property, the request scope will be narrowed down to the items based on their timer settings (see the [Item Timers](/docs/integration/timer) section for more information). 
+      * `"timerEnabled": false` - the request applies only to the items with disabled (not set) timers.
+      * `"timerEnabled": true` - the request applies only to the items with enabled timers.
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="Example #1">
+          ```js
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-next-line
+                  "rampart",
+                ],
+                "itemIds": [
+          //highlight-start
+                  "crystal",
+                  "gems"
+          //highlight-end
+                ]
+              }
+            }
+          ```
+          The example above assumes that the `crystal` item has been marked with the `rampart` tag and the `gems` item has no tags at all. The request will affect all items with the `rampart` tag including the `crystal` item **and** the `gems` item that is untagged.
+        </TabItem>
+        <TabItem value="Example #2">
+          ```js
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-start
+                  "rampart",
+                  "tower",
+                  "inferno"
+          //highlight-end
+                ],
+          //highlight-next-line
+                "timerEnabled": true
+              }
+            }
+          ```
+          The example above assumes that the cart contains the `rampart`, `tower`, and `inferno` tags and each tag is applied to at least one item with an enabled timer. The request will affect only the items that are both marked with one of the above tags and have enabled timers. Other items will be ignored.
+        </TabItem>
+        <TabItem value="Example #3">
+          ```js
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-start
+                  "necropolis",
+                  "dungeon"
+          //highlight-end
+                ],
+          //highlight-next-line
+                "timerEnabled": false
+              }
+            }
+          ```
+          The example above assumes that the cart contains the `necropolis` and `dungeon` tags. The `necropolis` tag is applied to at least one item with a disabled (not set) timer. No items marked with the `dungeon` tag have enabled or disabled timers.
+          
+          In this case, the request will fail.
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+### Partial Item Capture {#partial}
+
+With OmniCart, it is possible to reduce an item amount before capturing. For example, this might be needed if a customer paid for a product and, for some reason, the product cannot be (or was not) delivered in full quantity. To do this, use the [`modify`](/docs/api/40-modify) request to change the item amount to a lower value. Note that you cannot increase the item amount with the `modify` request (see the [Modifying Items](/docs/integration/modify) and the [Amounts](/docs/integration/amounts) sections for more information). The difference between the initial amount and the modified amount will be canceled. After that, you can use the [`capture`](/docs/api/30-capture) request to capture the remaining amount.

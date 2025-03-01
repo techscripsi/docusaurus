@@ -1,0 +1,587 @@
+---
+sidebar_position: 50
+---
+
+# Modifying Items
+
+The [`modify`](/docs/api/40-modify) request allows you to modify a previously initiated cart. This request is similar to the [`init`](/docs/api/10-init) request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/integration/cart) section for more information). Although, there are a number of differences that are covered in this section.
+
+The [`modify`](/docs/api/40-modify) request allows you to:
+
+* reassign or delete existing tags and introduce new ones
+* redefine payment settings, change or recalculate item amounts
+* redefine timer settings.
+
+:::warning Please note
+With the [`modify`](/docs/api/40-modify) request you cannot change the `cartId` value or the values of the cart item identifiers.
+:::
+
+<!--FIXME can be changed separately or in combinations -->
+
+Some of the cart properties can only be modified when items are in a particular payment status (see the [`Payment Life Cycle`](/docs/integration/payment-lifecycle) section for more information on payment statuses), others can be modified regardless of any payment status.
+
+:::note
+The [`modify`](/docs/api/40-modify) request request does not change the item status.
+:::
+
+## Modifying Tags {#tags}
+
+<!-- FIXME  change example to timer and/or to status before/after -->
+
+Tags can be modified regardless of the payment status, unless it involves changing amounts (see [Modifying Payment Settings](#payment-settings) below for details).
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      Tags are applied per request, there is no binding between a tag and payment or timer settings after a tag is used in a request. So if no new settings are defined for an item, the item's settings remain.
+      <!-- in mobile view could be vertical -->
+      Consider the example to the right. The cart was initiated with the `tower` tag that was applied to the `genie` and `naga` items. Then the cart was modified and the `inferno` tag was introduced. The new tag was assigned only to the `genie` item so the `genie` full item amount is now recalculated by OmniCart according to the `inferno` tag settings. It is now multiplied by the `amountModifier` value since `amountMode` is set to `calculated` (see the [Amounts](/docs/integration/amounts) section for more information on amounts). 
+      
+      The `naga` item is still marked with the initial `tower` tag. However, this tag was not redefined in the [`modify`](/docs/api/40-modify) request. Since there were no new settings for the `tower` tag, the `naga` item kept its previous amount settings. In fact, any other undefined tag assigned to the `naga` item would have produced the same effect. That said, the [`status`](/docs/api/15-status) request returns the latest tag assigned to an item regardless of whether its settings were applied to that item or not. So here's a tip.
+      :::tip
+      Manage your tags.
+      :::
+    </div>
+    <div class="col col--6">
+      ```js title="Legend"
+      //added
+      //initial tag
+      //overridden
+      //new tag
+      ```
+      <Tabs>
+        <TabItem value="init values">
+          ```js
+          "scope": {
+            "tags": [
+              {
+          //added
+                "tower": {
+          //highlight-start
+                  "paymentFilter": {
+                    "amountMode": "declared"
+          //highlight-end
+                  }
+                }
+              }
+            ]
+          },
+          "items": [
+            {
+              "genie": {
+          //added
+                "tag": "tower",
+                "amount": 3600
+              },
+              "naga": {
+          //added
+                "tag": "tower",
+                "amount": 6400
+              }
+            }
+          ]
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "scope": {
+            "tags": [
+              {
+          //overridden
+                "inferno": {
+          //highlight-start
+                  "modifyAmount": {
+                    "amountMode": "calculated",
+                    "amountModifier": 0.7
+          //highlight-end
+                  }
+                }
+              }
+            ]
+          },
+          "items": [
+            {
+              "genie": {
+          //overridden
+                "tag": "inferno",
+                "modifyAmount": {
+                  "amount": 3600
+                }
+              },
+              "naga": {
+          //added
+                "tag": "tower",
+                "amount": 6400
+              }
+            }
+          ]
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## Modifying Amounts {#amounts}
+
+Amount settings ​​can be modified on the cart, tag, or item level as with the [`init`](/docs/api/10-init) request (see also the [Cart, Tags, and Items](/docs/integration/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/integration/payment-lifecycle) section for more information). 
+
+:::warning Please, note
+The full item amount cannot be modified to a greater value.
+:::
+
+If the full item amount is modified to a lower value, the difference is automatically canceled or refunded depending on whether an item is in the `authorized` or `completed` status respectively. Note that after an item has been partially canceled or refunded, it remains in the `authorized` or `completed` status respectively. 
+
+There is no limit on the number of times the [`modify`](/docs/api/40-modify) request can be used to reduce the amount. However, to fully cancel or refund an item, use the [`cancel`](/docs/api/20-cancel) and [`refund`](/docs/api/50-refund) methods respectively, since OmniCart does not accept zero amounts.
+
+:::info
+See the [Cancellation and Refund](/docs/integration/cancel-refund#specific-items-partial) section for more information.
+:::
+
+### Example #1
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      In this example, the `naga` item is in the `authorized` status. Its amount was initiated with the `amountMode` property set to `declared`. That is, the full amount of the `naga` item was the value specified in the `amount` field (that is, `4400`).
+
+      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+
+      * `amountMode` was changed from `declared` to `calculated`
+      * `amount` was changed from `4400` to `1100`
+      * `"quantity": 4` was added.
+
+      Since `amountMode` was changed to `calculated`, the total price of the `naga` item is a product of the `amount` and `quantity` values. That equals `4400` and is not different from the initiated price. What changed are the components of the final item price and the fact that now it is calculated by OmniCart instead of being taken as is from the `amount` property.
+      
+      Note that the `initiated` and `current` values of the `itemAmounts`object has not changed after the item has been modified.
+      
+      :::info
+      See the [Amounts](/docs/integration/amounts) section for more information.
+      :::
+    </div>
+    <div class="col col--6">
+      ```js title="Legend"
+      //added
+      //item summary values
+      //overridden
+      //values that make up the final price
+      ```
+      <Tabs>
+        <TabItem value="status before">
+          ```js
+          "items": [
+            {
+              "naga": {
+          //highlight-next-line
+                "paymentStatus": "authorized",
+                "itemAmounts": {
+          //added
+                  "initiated": 4400,
+                  "captured": 0,
+                  "refunded": 0,
+          //added
+                  "current": 4400
+                },
+                "paymentSnapshot": {
+          //overridden
+                  "amount": 4400,
+          //overridden
+                  "amountMode": "declared"
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "items": [
+            {
+              "naga": {
+                "modifyAmount": {
+          //overridden
+                  "amount": 1100,
+          //overridden
+                  "amountMode": "calculated",
+          //overridden
+                  "quantity": 4
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+        <TabItem value="status after">
+          ```js
+          "items": [
+            {
+              "naga": {
+          //highlight-next-line
+                "paymentStatus": "authorized",
+                "itemAmounts": {
+          //added
+                  "initiated": 4400,
+                  "captured": 0,
+                  "refunded": 0,
+          //added
+                  "current": 4400
+                },
+                "paymentSnapshot": {
+          //overridden
+                  "amount": 1100,
+          //overridden
+                  "amountMode": "calculated",
+          //overridden
+                  "quantity": 4
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+### Example #2
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      In this example, the `behemoth` item is in the `authorized` status. Its amount was initiated with the `amountMode` property set to `calculated`, so the total item price was the product of the `amount` and `quantity` values (`1500` * `3` = `4500`).
+      
+      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+
+      * `amountMode` was changed from `calculated` to `declared`
+      * `amount` was changed from `1500` to `3000`.
+
+      Since `amountMode` was changed to `declared`, the total item price equals the `amount` value regardless of the `quantity` value. Now, from the initial `4500`, it is reduced to `3000` which is the value of the `current` property of the `itemAmounts` object. Note that the `initiated` value cannot be changed as it is the value that was passed with the [`init`](/docs/api/10-init) request. 
+      
+      The `behemoth` item is in the `authorized` status so the difference between the initial `4500` and modified `3000` is canceled. If the item status had been `completed` instead of `authorized` the difference would have been refunded instead of canceled.
+      
+      :::info
+      See the [Amounts](/docs/integration/amounts) and [Cancellation and Refund](/docs/integration/cancel-refund#specific-items-partial) sections for more information.
+      :::
+    </div>
+    <div class="col col--6">
+      ```js title="Legend"
+      //added
+      //item summary values
+      //overridden
+      //values that make up the final price
+      ```
+      <Tabs>
+        <TabItem value="status before">
+          ```js
+          "items": [
+            {
+              "behemoth": {
+          //highlight-next-line
+                "paymentStatus": "authorized",
+                "itemAmounts": {
+          //added
+                  "initiated": 4500,
+                  "captured": 0,
+                  "refunded": 0,
+          //added
+                  "current": 4500
+                },
+                "paymentSnapshot": {
+          //overridden
+                  "amount": 1500,
+          //overridden
+                  "amountMode": "calculated",
+          //overridden
+                  "quantity": 3
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "items": [
+            {
+              "behemoth": {
+                "modifyAmount": {
+          //overridden
+                  "amount": 3000,
+          //overridden
+                  "amountMode": "declared",
+          //highlight-next-line
+                  "quantity": 3
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+        <TabItem value="status after">
+          ```js
+          "items": [
+            {
+              "behemoth": {
+          //highlight-next-line
+                "paymentStatus": "authorized",
+                "itemAmounts": {
+          //added
+                  "initiated": 4500,
+                  "captured": 0,
+                  "refunded": 0,
+          //added
+                  "current": 3000
+                },
+                "paymentSnapshot": {
+          //overridden
+                  "amount": 3000,
+          //overridden
+                  "amountMode": "declared",
+          //highlight-next-line
+                  "quantity": 3
+                }
+              }
+            }
+          ]
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## Modifying Timers {#timers}
+
+Timer settings can be changed regardless of any payment status.
+
+With the [`modify`](/docs/api/40-modify) request request you can:
+
+* enable a previously disabled (not set) timer
+* change existing timer settings, including the trigger event or countdown value
+* perform a manual timer action: `start`, `pause`, or `stop`.
+
+:::warning
+Enabling a timer starts its life cycle which only ends when a timer enters the `elapsed` or `stopped` state.
+:::
+
+### Example #1
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      In this example, the `crusader` item is in the `authorized` status. Initially, the timer for this item was disabled and the status request did not return any timer settings.
+      
+      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+
+      * activated the timer by passing the `modifyTimer` object
+      * set the `captured` status as the trigger event
+      * set the timer value to `604800` seconds (one week).
+
+      After the `modify` request, the timer entered the `pending` status. The timer will start as soon as the item enters the `captured` status.
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="status before">
+          ```js
+          "crusader": {
+             "paymentStatus": "authorized",
+             "itemAmounts": {
+               "initiated": 400,
+               "captured": 0,
+               "refunded": 0,
+               "current": 400
+             },
+             "paymentSnapshot": {
+               "amount": 400
+             }
+           }
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "crusader": {
+          //highlight-start
+            "modifyTimer": {
+              "triggerEvent": "captured",
+              "timerValue": 604800
+          //highlight-end
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="status after">
+        ```js
+        "crusader": {
+           "paymentStatus": "authorized",
+           "itemAmounts": {
+             "initiated": 400,
+             "captured": 0,
+             "refunded": 0,
+             "current": 400
+           },
+           "paymentSnapshot": {
+             "amount": 400
+           },
+           "timerSnapshot": {
+        //highlight-start
+             "triggerEvent": "captured",
+             "timerStatus": "pending",
+             "remainingSecs": 604800
+        //highlight-end
+           }
+         }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+### Example #2
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      In this example, the `unicorn` item is in the `authorized` status. The timer has been  previously enabled to start when the item enters the `captured` status. The `modify` request contains the `manualAction` property with the `start` value. It is a manual action to start the timer. After the request is processed, the timer is counting down
+
+      :::note
+      The trigger event (the `captured` status) remains unchanged as the `modify` request did not contain instructions to alter it. This is the expected behavior.
+      :::
+
+      If the `unicorn` item enters the `captured` status, the timer will continue counting down. However, if the timer elapses earlier, it will enter the `elapsed` status. The `elapsed` status is the final status of the timer life cycle. No subsequent payment status changes will affect the timer after that. See the [Item Timers](/docs/integration/timer) and [Payment Life Cycle](/docs/integration/payment-lifecycle) sections for more information.
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="status before">
+          ```js
+          "unicorn": {
+             "paymentStatus": "authorized",
+             "itemAmounts": {
+               "initiated": 850,
+               "captured": 0,
+               "refunded": 0,
+               "current": 850
+             },
+             "paymentSnapshot": {
+               "amount": 850
+             },
+             "timerSnapshot": {
+          //highlight-start
+               "triggerEvent": "captured",
+               "timerStatus": "pending",
+               "remainingSecs": 172800
+          //highlight-end
+             }
+           }
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "unicorn": {
+            "modifyTimer": {
+          //highlight-next-line
+             "manualAction": "start"
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="status after">
+        ```js
+        "unicorn": {
+           "paymentStatus": "authorized",
+           "itemAmounts": {
+             "initiated": 850,
+             "captured": 0,
+             "refunded": 0,
+             "current": 850
+           },
+           "paymentSnapshot": {
+             "amount": 850
+           },
+           "timerSnapshot": {
+             "triggerEvent": "captured",
+          //highlight-start
+             "timerStatus": "started",
+             "remainingSecs": 172716
+          //highlight-end
+           }
+         }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+### Example #3
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      In this example, the `cerberus` item is in the `authorized` status. The timer settings already have a trigger event set for the `captured` status. The current timer status is `pending`.
+
+      The `modify` request changed the trigger event to `initiated`. Since the `initiated` status precedes the `captured` status, the timer switches to the `started` status and starts countdown after the [`modify`](/docs/api/40-modify) request has been processed.
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="status before">
+          ```js
+          "cerberus": {
+             "paymentStatus": "authorized",
+             "itemAmounts": {
+               "initiated": 250,
+               "captured": 0,
+               "refunded": 0,
+               "current": 250
+             },
+             "paymentSnapshot": {
+               "amount": 250
+             },
+             "timerSnapshot": {
+          //highlight-start
+               "triggerEvent": "captured",
+               "timerStatus": "pending",
+               "remainingSecs": 259200
+          //highlight-end
+             }
+           }
+          ```
+        </TabItem>
+        <TabItem value="modify values">
+          ```js
+          "cerberus": {
+            "modifyTimer": {
+          //highlight-next-line
+             "triggerEvent": "initiated"
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="status after">
+        ```js
+        "cerberus": {
+           "paymentStatus": "authorized",
+           "itemAmounts": {
+             "initiated": 250,
+             "captured": 0,
+             "refunded": 0,
+             "current": 250
+           },
+           "paymentSnapshot": {
+             "amount": 250
+           },
+           "timerSnapshot": {
+          //highlight-start
+             "triggerEvent": "initiated",
+             "timerStatus": "started",
+             "remainingSecs": 259112
+          //highlight-end
+           }
+         }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>

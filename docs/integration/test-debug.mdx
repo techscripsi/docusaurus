@@ -1,0 +1,182 @@
+---
+sidebar_position: 120
+---
+
+# Testing and Debugging
+
+import Link from '@docusaurus/Link';
+
+<Link to="/docs/reference/response-codes" className="card-link">
+  <div class="card-demo text--no-decoration">
+    <div class="card-click item shadow--md">
+      <div class="card__header">
+        <h3>Lorem Ipsum</h3>
+      </div>
+      <div class="card__body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+          suspendisse ultrices gravida.
+        </p>
+      </div>
+    </div>
+  </div>
+</Link>
+
+## Test Environment
+
+edpoints/server (посмореть пример)
+???тестовый личный кабинет
+
+Merchant PA
+
+
+Тестовая среда
+
+-operator – для доступа к тестовому личному кабинету;
+-api – для интеграции с тестовой средой через программный интерфейс.
+
+Тестовый личный кабинет.
+
+## Test Cards
+
+import Cards from '/docs/reference/cards.mdx';
+
+<Cards />
+
+## API Debug Mode
+
+OmniCart API is capable of returning debug information in responses. For this purpose, pass the `debug` property set to `true`in a request. If this setting is not specified or disabled, OmniCart returns only the error that caused the failure. If the setting is enabled, OmniCart checks the entire incoming request and returns all errors that may lead to a request processing failure.
+
+:::warning Please, note
+Authentication errors prevent OmniCart from checking the request contents.
+:::
+
+Consider the examples below.
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      This is an example of a successful response. If the debug property is undefined or explicitly disabled, the response contains only the main response code and message pair.
+      
+      If the `debug` property is enabled, the response contains the main message and the `debug` object with an additional message. Note that the request is successful since the above are not error messages.
+    </div>
+    <div class="col col--6">
+      ###### Example of a successful response
+      ```js title="Legend"
+      //overridden
+      //debug information
+      ```
+      <Tabs>
+        <TabItem value="debug: false">
+        ```js
+        {
+          "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+        //highlight-start
+          "code": "000000",
+          "message": "Success",
+        //highlight-end
+          "timestamp": "2025-04-23T18:25:43.511Z"
+        }
+        ```
+        </TabItem>
+          <TabItem value="debug: true">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+          //highlight-start
+            "code": "001001",
+            "message": "Tag(s) [...] defined but not used",
+          //highlight-end
+          //overridden
+            "debug": [
+          //overridden
+              {
+          //overridden
+                "code": "001002",
+          //overridden
+                "message": "Undefined tags in item(s): [...]"
+          //overridden
+              }
+          //overridden
+            ],
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+          </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      This is an example of a failed response. If the `debug` property is undefined or explicitly disabled, the response contains only the main error code and message pair.
+      
+      If the `debug` property is enabled, the response specifies the error that caused the request to fail separately. The `debug` object contains errors that will cause the request to fail next time if you do not fix them at this point.
+    </div>
+    <div class="col col--6">
+      ###### Example of a failed response
+      ```js title="Legend"
+      //overridden
+      //debug information
+      ```
+      <Tabs>
+        <TabItem value="debug: false">
+        ```js
+        {
+        //highlight-start
+          "code": 124101,
+          "message": "cartId already exists",
+        //highlight-end
+          "timestamp": "2025-04-23T18:25:43.511Z"
+        }
+        ```
+        </TabItem>
+          <TabItem value="debug: true">
+          ```js
+          {
+          //highlight-start
+            "code": 124101,
+            "message": "cartId already exists",
+          //highlight-end
+          //overridden
+            "debug": [
+          //overridden
+              {
+          //overridden
+                "code": "124102",
+          //overridden
+                "message": "customerId {0} is linked to itemId {1} in cartId {2} with an active timer"
+          //overridden
+              },
+          //overridden
+              {
+          //overridden
+                "code": "132000",
+          //overridden
+                "message": "Insufficient permissions to pass {0}"
+          //overridden
+              },
+          //overridden
+              {
+          //overridden
+                "code": "132002",
+          //overridden
+                "message": "Insufficient permissions to set or modify timer settings"
+          //overridden
+              }
+          //overridden
+            ],
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+          </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports -->
+

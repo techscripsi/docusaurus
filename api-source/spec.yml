@@ -143,8 +143,6 @@ paths:
                                 $ref: "#/components/schemas/block_modifyAmountTimer_req"
                                 description: |
                                   Replace `tag` with a tag name passed with the cart to modify parameters of the items marked with this tag
-                    debug:
-                      $ref: "#/components/schemas/primitive_debug"
                     items:
                       type: array
                       title: " "
@@ -159,6 +157,10 @@ paths:
                             description: |
                               Replace `itemId` with an actual `itemId` value passed with the cart to modify parameters of the corresponding item.
                             properties:
+                              tag:
+                                $ref: "#/components/schemas/primitive_tag"
+                                description: |
+                                  asd 20250206104628 FIXME
                               modifyAmount:
                                 $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
                               modifyTimer:
@@ -205,21 +207,21 @@ paths:
         - name: timerEnabled
           in: query
           description: |
-            If this option is defined, the results will include **only** items with explicitly defined timer settings:
+            If this property is defined, the results will be narrowed down to items based on their timer settings:
             
-            `true` - only items with enabled timer will be returned
+            `true` - **only** items that meet other criteria AND with the enabled timer will be returned
             
-            `false` - only item with timer will be returned
+            `false` - **only** items that meet other criteria AND with the disabled (not set) timer will be returned
 
-            If this option is not set, all items that meet other criteria will be returned.
+            If this property is not defined, the items will be returned regardless of their timer status.
           schema:
             type: boolean
         - name: debug
           in: query
           description: |
-            If this option is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
+            If this property is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
             
-            It this option is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
+            It this property is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
             
             See [Response codes and messages](/docusaurus/docs/api/response-codes) for more details.
           schema:
@@ -306,10 +308,10 @@ paths:
                 cartExpiry:
                   $ref: "#/components/schemas/object_invoice"
                 scope:
-                  $ref: "#/components/schemas/primitive_cartExpiry"
+                  $ref: "#/components/schemas/object_scope"
                   description: |
                     `scope` lets you define sets of settings that you can apply to the whole cart or items marked with specific tags. Child settings override parent ones. That means that if you define both cart and tag settings, the tag settings will override cart settins.
-                cart:
+                items:
                   $ref: "#/components/schemas/block_cart"
                   description: Cart contents.
                 invoice:
@@ -344,7 +346,8 @@ components:
         `pause` - pauses an active timer. A paused timer can be manually unpaused (started);
         
         `stop` - stops the timer. After the timer is stopped, it cannot be (re)started.
-        LINK
+        
+        See the [Item Timers](/docs/integration/timer) section for more details.
       enum:
         - start
         - pause
@@ -370,7 +373,7 @@ components:
     primitive_tag:
       type: string
       title: " "
-      example: groceries
+      example: dungeon
     primitive_autoCaptureAction:
       type: string
       title: " "
@@ -404,9 +407,9 @@ components:
       type: boolean
       title: " "
       description: |
-        If this option is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
+        If this property is set to `false`, only one response code and related message weill be returned from OmniCart. In a request is a success, the response will contain the most suitable successful code and message. In case of a failure, the response will contain the first error OmniCart encountered while processing the request.
         
-        It this option is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
+        It this property is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
         
         See [Response codes and messages](/docusaurus/docs/api/response-codes) for more details.
       default: false
@@ -446,11 +449,11 @@ components:
     array_tags:
       type: array
       title: " "
-      example: ["groceries", "discount", "digital"]
+      example: ["fortress", "necropolis", "dungeon"]
     array_items:
       type: array
       title: " "
-      example: ["item1", "item2", "item3"]
+      example: ["harpies", "minotaurs", "beholders"]
     primitive_amount_status_res:
         type: integer
         title: " "
@@ -547,8 +550,7 @@ components:
       description: |
         Item payment status that triggers the timer.
         
-        If you pass the `null` value, will have to be started manually.
-        ADDLINK
+        If you pass the `null` value, will have to be started manually. See the [Item Timers](/docs/integration/timer) section for more information.
       enum:
         - initiated
         - rejected
@@ -592,7 +594,7 @@ components:
       type: object
       title: " "
       description: |
-        A set of settings to modify the resulting amount. The resulting amount cannot exceed the authorized amount. ADDLINK
+        A set of settings to modify the resulting amount. The resulting amount cannot exceed the authorized amount. See the [Modifying Items](/docs/integration/modify) section for more information.
       properties:
         amount:
           $ref: "#/components/schemas/primitive_amount"
@@ -606,10 +608,6 @@ components:
           $ref: "#/components/schemas/primitive_amountMode_req"
         quantity:
           $ref: "#/components/schemas/primitive_quantity"
-        tag:
-          $ref: "#/components/schemas/primitive_tag"
-          description: |
-            asd 20250206104628 FIXME
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
           description: |
@@ -618,7 +616,7 @@ components:
       type: object
       title: " "
       description: |
-        Block of settings to narrow down the request scope.
+        Block of settings to specify the request scope.
       properties:
         tags:
           $ref: "#/components/schemas/array_tags"
@@ -631,13 +629,13 @@ components:
         timerEnabled:
           $ref: "#/components/schemas/primitive_timerEnabled"
           description: |
-            If this option is set, **only** the items with explicitly defined timer setting be affected by the request:
+            If this property is defined, the results will be narrowed down to items based on their timer settings:
             
-            `true` - only items with enabled timer
+            `true` - **only** items that meet other criteria AND with the enabled timer will be returned
+            
+            `false` - **only** items that meet other criteria AND with the disabled (not set) timer will be returned
 
-            `false` - only items with disabled timer.
-
-            If this option is not set, other criteria will be applied regardless of the timer setting.
+            If this property is not defined, the items will be returned regardless of their timer status.
           example: false
     object_amountInfo_status_res:
       type: object
@@ -692,10 +690,21 @@ components:
             description: |
               Replace `tag` with a tag name defined in your merchant dashboard.
             properties:
-              paymentFilter:
-                $ref: "#/components/schemas/object_paymentFilter"
+              paymentBox:
+                $ref: "#/components/schemas/object_paymentBox"
                 description: |
                   Payment and timer settings applied to the tag specified as object name. Tag settings override cart settings.
+              enableTimer:
+                $ref: "#/components/schemas/primitive_timerEnabled"
+                description: |
+                  Enable/disable timer:
+                          
+                  `true` - the timer is enabled, you can configure its settings
+                
+                  `false` - the timer is disabled.
+              timer:
+                $ref: "#/components/schemas/object_timerSettings"
+                description: Timer settings.
     array_debug:
       type: array
       title: " "
@@ -711,7 +720,6 @@ components:
               Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
           message: 
             $ref: "#/components/schemas/primitiveRes_message"
-
     object_item_status_res:
       type: object
       title: " "
@@ -738,16 +746,30 @@ components:
             Item quantity. Can be a floating point (for example, litres of milk). Depending on the `amountMode` setting can be processed by OmniCart.
             `amountMode: declared` - the `quantity` value is ignored for the final price calculation and stored in OmniCart.
             `amountMode: calculated` -  the final price is calculated by multiplying `amount` by `quantity` on the OmniCart side.
-        paymentFilter:
-          $ref: "#/components/schemas/object_paymentFilter"
+        paymentBox:
+          $ref: "#/components/schemas/object_paymentBox"
       description: Replace `itemId` with an actual item ID available in your merchant dashboard.
     object_scope:
       type: object
       properties:
         cart:
-          $ref: "#/components/schemas/object_paymentFilter"
-          description: |
-            Payment and timer settings applied to the whole cart. If you define the tag settings, they will override the cart settings for items marked with the defined tags.
+          type: object
+          properties:
+            paymentBox:
+              $ref: "#/components/schemas/object_paymentBox"
+              description: |
+                Payment and timer settings applied to the whole cart. If you define the tag settings, they will override the cart settings for items marked with the defined tags.
+            enableTimer:
+              $ref: "#/components/schemas/primitive_timerEnabled"
+              description: |
+                Enable/disable timer:
+                               
+                `true` - the timer is enabled, you can configure its settings
+                        
+                `false` - the timer is disabled.
+            timer:
+              $ref: "#/components/schemas/object_timerSettings"
+              description: Timer settings.
         tags:
           $ref: "#/components/schemas/object_tags"
           description: |
@@ -856,7 +878,7 @@ components:
           $ref: "#/components/schemas/primitive_timerManualAction"
         timerValue:
           $ref: "#/components/schemas/primitive_timerValue_req"
-    object_paymentFilter:
+    object_paymentBox:
       type: object
       title: " "
       description: |
@@ -879,17 +901,6 @@ components:
         captureSettings:
           $ref: "#/components/schemas/object_captureSettings"
           description: Capture settings. By default, an authorized payment is auto canceled after 2 days (2880 minutes) without manual action.
-        enableTimer:
-          $ref: "#/components/schemas/primitive_timerEnabled"
-          description: |
-            Enable/disable timer:
-            
-            `true` - the timer is enabled, you can configure its settings
-
-            `false` - the timer is disabled.
-        timer:
-          $ref: "#/components/schemas/object_timerSettings"
-          description: Timer settings.
     primitive_timerValue_req:
       type: integer
       title: " "
@@ -1016,7 +1027,7 @@ components:
               debug:
                 $ref: "#/components/schemas/array_debug"
                 description: |
-                  An array of the request related codes and their corresponding messages. ADDLINK
+                  An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/integration/debugging) page for more information.
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":

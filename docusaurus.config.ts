@@ -29,7 +29,7 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ko'],
   },
 
   markdown: {
@@ -44,10 +44,9 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          // editUrl:
-          // 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+//        Remove this to remove the "edit this page" links.
+//          editUrl:
+//          'https://github.com/techscripsi/docusaurus',
         },
 //      blog: {
 //          showReadingTime: false,
@@ -55,10 +54,9 @@ const config: Config = {
 //            type: ['rss', 'atom'],
 //            xslt: true,
 //          },
-//          Please change this to your repo.
 //          Remove this to remove the "edit this page" links.
 //          editUrl:
-//            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+//          'https://github.com/techscripsi/docusaurus/tree/main/',
 //          Useful options to enforce blogging best practices
 //          onInlineTags: 'warn',
 //          onInlineAuthors: 'warn',
@@ -88,16 +86,6 @@ const config: Config = {
           } satisfies OpenApiPlugin.Options,
         }
       },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'users',
-        path: 'users',
-        routeBasePath: 'users',
-        sidebarPath: './users/users.ts',
-        // ... other options
-      },
     ]
 /*
     [
@@ -107,7 +95,7 @@ const config: Config = {
         }
     ]
 */
-/* плагин для включения удалённых файлов, пока не получается тянуть из github, gitflick
+/* 
         [
             "docusaurus-plugin-remote-content",
             {
@@ -125,20 +113,37 @@ const config: Config = {
 
   themes: [ "docusaurus-theme-openapi-docs",
           '@docusaurus/theme-mermaid',
+
+    [
+      require.resolve("@easyops-cn/docusaurus-search-local"),
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        language: ['en', 'ko'],
+        searchBarShortcut: true,
+        hashed: true,
+        highlightSearchTermsOnTargetPage: true
+      }),
+    ],
+
           ], // export theme components
 
   themeConfig: {
 
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 4,
+      },
+
     mermaid: {
       theme: {light: 'neutral', dark: 'dark'},
     },
-/*
+
     colorMode: {
-      defaultMode: 'dark',
+//      defaultMode: 'dark',
       disableSwitch: false,
-      respectPrefersColorScheme: false,
+      respectPrefersColorScheme: true,
     },
-*/
+
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
@@ -170,8 +175,15 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'scenarios',
           position: 'left',
-          label: 'Scenarios',
+          label: 'Usage Scenarios',
         },
+        {
+          type: 'docSidebar',
+          sidebarId: 'reference',
+          position: 'left',
+          label: 'Quick Reference',
+        },
+
 //        {to: '/blog', label: 'Releases', position: 'left'},
 
 /*
@@ -190,13 +202,17 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
           label: 'New instance',
         },
 */
-/*
         {
-          href: 'https://github.com/facebook/docusaurus',
-          label: 'GitHub',
+          type: 'localeDropdown',
           position: 'right',
         },
-*/
+        {
+          href: 'https://github.com/techscripsi/docusaurus/',
+//          label: 'GitHub',
+          position: 'right',
+          className: "header-github-link",
+          "aria-label": "GitHub repository"
+        },
       ],
     },
       footer: {
@@ -245,7 +261,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
           },
         ],
 */
-        copyright: `${new Date().getFullYear()} Scripsi, Built with Docusaurus.`,
+        copyright: `${new Date().getFullYear()} Techscripsi, Built with Docusaurus.`,
       },
     prism: {
       theme: prismThemes.github,
