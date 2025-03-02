@@ -353,7 +353,7 @@ components:
         
         `stop` - stops the timer. After the timer is stopped, it cannot be (re)started.
         
-        See the [Item Timers](/docs/integration/timer) section for more details.
+        See the [Item Timers](/docs/concepts/timer) section for more details.
       enum:
         - start
         - pause
@@ -497,7 +497,7 @@ components:
         
         For example, if the some cart items are `authorized` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less that the `captured` amount.
 
-        See the [Amounts](/docs/integration/concepts/amounts#totalamounts-itemamounts) section for more details.
+        See the [Amounts](/docs/concepts/concepts/amounts#totalamounts-itemamounts) section for more details.
     primitive_totalRefunded:
       type: integer
       title: " "
@@ -521,7 +521,7 @@ components:
         
         For example, if the item is `authorized` and partially canceled, its current amount is less than the initiated amount. Similarly, if the item is `captured` or `completed` and partially refunded, its current amount is less that the `captured` amount.
 
-        See the [Amounts](/docs/integration/concepts/amounts#totalamounts-and-itemamounts-objects) section for more details.
+        See the [Amounts](/docs/concepts/concepts/amounts#totalamounts-and-itemamounts-objects) section for more details.
     primitive_fullRefundedAmount:
       type: integer
       title: " "
@@ -556,7 +556,7 @@ components:
       description: |
         Item payment status that triggers the timer.
         
-        If you pass the `null` value, will have to be started manually. See the [Item Timers](/docs/integration/timer) section for more information.
+        If you pass the `null` value, will have to be started manually. See the [Item Timers](/docs/concepts/timer) section for more information.
       enum:
         - initiated
         - rejected
@@ -600,7 +600,7 @@ components:
       type: object
       title: " "
       description: |
-        A set of settings to modify the resulting amount. The resulting amount cannot exceed the authorized amount. See the [Modifying Items](/docs/integration/modify) section for more information.
+        A set of settings to modify the resulting amount. The resulting amount cannot exceed the authorized amount. See the [Modifying Items](/docs/concepts/modify) section for more information.
       properties:
         amount:
           $ref: "#/components/schemas/primitive_amount"
@@ -1033,7 +1033,7 @@ components:
               debug:
                 $ref: "#/components/schemas/array_debug"
                 description: |
-                  An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/integration/debugging) page for more information.
+                  An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/concepts/debugging) page for more information.
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":

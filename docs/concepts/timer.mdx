@@ -4,7 +4,7 @@ sidebar_position: 40
 
 # Item Timers {#item-timers}
 
-Timers are an additional way to manage the [payment life cycle](/docs/integration/payment-lifecycle). They can be useful when providing temporary access to your products and services like subscriptions or premium app features. Timers require the `customerId` property to be passed with the request. `customerId` values are generated on your side.
+Timers are an additional way to manage the [payment life cycle](/docs/concepts/lifecycle). They can be useful when providing temporary access to your products and services like subscriptions or premium app features. Timers require the `customerId` property to be passed with the request. `customerId` values are generated on your side.
 
 OmniCart remembers the relation between the `customerId` value and the item identifier and prevents buying an item with an active timer for the specified customer. A timer is considered active in the `pending`, `started`, and `paused` statuses (see [Timer Life Cycle](#timer-life-cycle) section below).
 
@@ -86,7 +86,7 @@ A timer can be started by a trigger event or manually. Until started, an enabled
 
 ### Trigger Events {#trigger-events}
 
-A trigger event is an item [payment status](/docs/integration/payment-lifecycle). For example, if you set `authorized` as a trigger event, the timer will start the countdown as soon as the item enters the `authorized` status. Any future, current, or past trigger event can be selected. Consider the following examples.
+A trigger event is an item [payment status](/docs/concepts/lifecycle). For example, if you set `authorized` as a trigger event, the timer will start the countdown as soon as the item enters the `authorized` status. Any future, current, or past trigger event can be selected. Consider the following examples.
 
 * You set a timer using the [`init`](/docs/api/10-init) request with the `initiated` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors.
 * The current item status is `captured` and you set a timer using the [`modify`](/docs/api/40-modify) request with the `authorized` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors as the `authorized` status is prior to the `captured` status.

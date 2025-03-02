@@ -154,10 +154,10 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'start',
+          type: 'doc',
+          docId: 'concepts',
           position: 'left',
-          label: 'Integration',
+          label: 'Key Concepts',
         },
         {
           type: 'docSidebar',
@@ -178,8 +178,8 @@ const config: Config = {
           label: 'Usage Scenarios',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'reference',
+          type: 'doc',
+          docId: 'quickref',
           position: 'left',
           label: 'Quick Reference',
         },

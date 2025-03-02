@@ -4,7 +4,7 @@ sidebar_position: 50
 
 # Modifying Items
 
-The [`modify`](/docs/api/40-modify) request allows you to modify a previously initiated cart. This request is similar to the [`init`](/docs/api/10-init) request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/integration/cart) section for more information). Although, there are a number of differences that are covered in this section.
+The [`modify`](/docs/api/40-modify) request allows you to modify a previously initiated cart. This request is similar to the [`init`](/docs/api/10-init) request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/concepts/cart) section for more information). Although, there are a number of differences that are covered in this section.
 
 The [`modify`](/docs/api/40-modify) request allows you to:
 
@@ -18,7 +18,7 @@ With the [`modify`](/docs/api/40-modify) request you cannot change the `cartId` 
 
 <!--FIXME can be changed separately or in combinations -->
 
-Some of the cart properties can only be modified when items are in a particular payment status (see the [`Payment Life Cycle`](/docs/integration/payment-lifecycle) section for more information on payment statuses), others can be modified regardless of any payment status.
+Some of the cart properties can only be modified when items are in a particular payment status (see the [`Payment Life Cycle`](/docs/concepts/lifecycle) section for more information on payment statuses), others can be modified regardless of any payment status.
 
 :::note
 The [`modify`](/docs/api/40-modify) request request does not change the item status.
@@ -35,7 +35,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
     <div class="col col--6">
       Tags are applied per request, there is no binding between a tag and payment or timer settings after a tag is used in a request. So if no new settings are defined for an item, the item's settings remain.
       <!-- in mobile view could be vertical -->
-      Consider the example to the right. The cart was initiated with the `tower` tag that was applied to the `genie` and `naga` items. Then the cart was modified and the `inferno` tag was introduced. The new tag was assigned only to the `genie` item so the `genie` full item amount is now recalculated by OmniCart according to the `inferno` tag settings. It is now multiplied by the `amountModifier` value since `amountMode` is set to `calculated` (see the [Amounts](/docs/integration/amounts) section for more information on amounts). 
+      Consider the example to the right. The cart was initiated with the `tower` tag that was applied to the `genie` and `naga` items. Then the cart was modified and the `inferno` tag was introduced. The new tag was assigned only to the `genie` item so the `genie` full item amount is now recalculated by OmniCart according to the `inferno` tag settings. It is now multiplied by the `amountModifier` value since `amountMode` is set to `calculated` (see the [Amounts](/docs/concepts/amounts) section for more information on amounts). 
       
       The `naga` item is still marked with the initial `tower` tag. However, this tag was not redefined in the [`modify`](/docs/api/40-modify) request. Since there were no new settings for the `tower` tag, the `naga` item kept its previous amount settings. In fact, any other undefined tag assigned to the `naga` item would have produced the same effect. That said, the [`status`](/docs/api/15-status) request returns the latest tag assigned to an item regardless of whether its settings were applied to that item or not. So here's a tip.
       :::tip
@@ -124,7 +124,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
 
 ## Modifying Amounts {#amounts}
 
-Amount settings ​​can be modified on the cart, tag, or item level as with the [`init`](/docs/api/10-init) request (see also the [Cart, Tags, and Items](/docs/integration/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/integration/payment-lifecycle) section for more information). 
+Amount settings ​​can be modified on the cart, tag, or item level as with the [`init`](/docs/api/10-init) request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
 
 :::warning Please, note
 The full item amount cannot be modified to a greater value.
@@ -135,7 +135,7 @@ If the full item amount is modified to a lower value, the difference is automati
 There is no limit on the number of times the [`modify`](/docs/api/40-modify) request can be used to reduce the amount. However, to fully cancel or refund an item, use the [`cancel`](/docs/api/20-cancel) and [`refund`](/docs/api/50-refund) methods respectively, since OmniCart does not accept zero amounts.
 
 :::info
-See the [Cancellation and Refund](/docs/integration/cancel-refund#specific-items-partial) section for more information.
+See the [Cancellation and Refund](/docs/concepts/cancel-refund#specific-items-partial) section for more information.
 :::
 
 ### Example #1
@@ -156,7 +156,7 @@ See the [Cancellation and Refund](/docs/integration/cancel-refund#specific-items
       Note that the `initiated` and `current` values of the `itemAmounts`object has not changed after the item has been modified.
       
       :::info
-      See the [Amounts](/docs/integration/amounts) section for more information.
+      See the [Amounts](/docs/concepts/amounts) section for more information.
       :::
     </div>
     <div class="col col--6">
@@ -261,7 +261,7 @@ See the [Cancellation and Refund](/docs/integration/cancel-refund#specific-items
       The `behemoth` item is in the `authorized` status so the difference between the initial `4500` and modified `3000` is canceled. If the item status had been `completed` instead of `authorized` the difference would have been refunded instead of canceled.
       
       :::info
-      See the [Amounts](/docs/integration/amounts) and [Cancellation and Refund](/docs/integration/cancel-refund#specific-items-partial) sections for more information.
+      See the [Amounts](/docs/concepts/amounts) and [Cancellation and Refund](/docs/concepts/cancel-refund#specific-items-partial) sections for more information.
       :::
     </div>
     <div class="col col--6">
@@ -449,7 +449,7 @@ Enabling a timer starts its life cycle which only ends when a timer enters the `
       The trigger event (the `captured` status) remains unchanged as the `modify` request did not contain instructions to alter it. This is the expected behavior.
       :::
 
-      If the `unicorn` item enters the `captured` status, the timer will continue counting down. However, if the timer elapses earlier, it will enter the `elapsed` status. The `elapsed` status is the final status of the timer life cycle. No subsequent payment status changes will affect the timer after that. See the [Item Timers](/docs/integration/timer) and [Payment Life Cycle](/docs/integration/payment-lifecycle) sections for more information.
+      If the `unicorn` item enters the `captured` status, the timer will continue counting down. However, if the timer elapses earlier, it will enter the `elapsed` status. The `elapsed` status is the final status of the timer life cycle. No subsequent payment status changes will affect the timer after that. See the [Item Timers](/docs/concepts/timer) and [Payment Life Cycle](/docs/concepts/lifecycle) sections for more information.
     </div>
     <div class="col col--6">
       <Tabs>

@@ -4,7 +4,7 @@ sidebar_position: 60
 
 # Cancellation and Refund
 
-Cancellation and refund are two different operations that can be done on different stages of the [payment life cycle](/docs/integration/payment-lifecycle).
+Cancellation and refund are two different operations that can be done on different stages of the [payment life cycle](/docs/concepts/lifecycle).
 
 Cancellation is possible with the two-step payment scheme. This operation can be done after a payment is authorized and before it is captured. At this stage, the customer's money has not been transferred from their account. Instead, it is held on their account waiting to be captured by the merchant. On cancellation, the issuing bank removes the hold from the customer's funds, and the funds are released back to the customer. Another word for cancellation is reversal.
 
@@ -22,7 +22,7 @@ Although cancellation and refund are two different operations, the required API 
 You can cancel or refund an entire cart or specific cart items with the [cancel](/docs/api/20-cancel) and [refund](/docs/api/50-refund) requests respectively. There is also an option to partially cancel or refund specific cart items. To do that, the [`modify`](/docs/api/40-modify) request is used.
 
 :::warning Please, note
-Neither the [`cancel`](/docs/api/20-cancel) nor [`refund`](/docs/api/50-refund) request affects item timers. If you need to change timer settings, use the [`modify`](/docs/api/40-modify) request. See the [Item Timers](/docs/integration/timer) for more information.
+Neither the [`cancel`](/docs/api/20-cancel) nor [`refund`](/docs/api/50-refund) request affects item timers. If you need to change timer settings, use the [`modify`](/docs/api/40-modify) request. See the [Item Timers](/docs/concepts/timer) for more information.
 :::
 
 ## Entire Cart {#entire-cart}
@@ -126,7 +126,7 @@ After canceling or refunding specific cart items, these items enter the `cancele
       
       The `tags` criterion ignores overlaps with the `itemIds` object properties. Consider the following example. You specify a tag and an item that is marked with the specified tag in the same request. OmniCart will cancel/refund all items marked with the specified tag and ignore the fact that the item is actually specified twice: with the tag and with its identifier.
       
-      If you pass the `timerEnabled` property, the request scope will be narrowed down to the items based on their timer settings (see the [Item Timers](/docs/integration/timer) section for more information). 
+      If you pass the `timerEnabled` property, the request scope will be narrowed down to the items based on their timer settings (see the [Item Timers](/docs/concepts/timer) section for more information). 
       * `"timerEnabled": false` - the request applies only to the items with disabled (not set) timers.
       * `"timerEnabled": true` - the request applies only to the items with enabled timers.
     </div>
@@ -198,7 +198,7 @@ After canceling or refunding specific cart items, these items enter the `cancele
 
 ## Specific Items, partial cancellation/refund {#partial}
 
-With OmniCart, it is possible to partially cancel or refund cart items. For example, this might be needed if a customer paid for a product and, for some reason, the product cannot be (or was not) delivered in full quantity. To do this, use the [`modify`](/docs/api/40-modify) request to change the item amount to a lower value. Note that you cannot increase the item amount with the `modify` request (see the [Modifying Items](/docs/integration/modify) and the [Amounts](/docs/integration/amounts) sections for more information). The difference between the initial amount and the modified amount will be returned to the customer automatically.
+With OmniCart, it is possible to partially cancel or refund cart items. For example, this might be needed if a customer paid for a product and, for some reason, the product cannot be (or was not) delivered in full quantity. To do this, use the [`modify`](/docs/api/40-modify) request to change the item amount to a lower value. Note that you cannot increase the item amount with the `modify` request (see the [Modifying Items](/docs/concepts/modify) and the [Amounts](/docs/concepts/amounts) sections for more information). The difference between the initial amount and the modified amount will be returned to the customer automatically.
 
 Partial cancellation or refund can be done multiple times. That said, to fully cancel or refund an item, use the [`cancel`](/docs/api/20-cancel) and [`refund`](/docs/api/50-refund) requests respectively, as changing an item amount to zero is not allowed.
 

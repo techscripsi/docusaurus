@@ -15,7 +15,7 @@ OmniCart is designed to accept multiple items in a payment request by default so
       
       Each cart must have a unique `cartId` that is generated on your side. The `currency` property is mandatory and applied to the entire cart. 
       
-      The `pegasus` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/integration/amounts) section for more information on handling amounts).
+      The `pegasus` object here is an item identifier that contains the mandatory `amount` property (see [Amounts](/docs/concepts/amounts) section for more information on handling amounts).
     </div>
     <div class="col col--6">
       ```js
@@ -82,9 +82,9 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
 
       In the request snippet to the right, the `mage` and `naga` items are assigned the `tower` tag. The `beholder` item is marked with the `dungeon` tag and the `nomad` item doesn't have a tag at all.
       
-      After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/integration/payment-lifecycle) for more information on item statuses).
+      After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/concepts/lifecycle) for more information on item statuses).
       
-      Tags can also be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/integration/modify) section of this documentation.
+      Tags can also be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/concepts/modify) section of this documentation.
     </div>
     <div class="col col--6">
       ```js
