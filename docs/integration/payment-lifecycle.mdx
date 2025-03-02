@@ -17,7 +17,7 @@ Payment statuses are related to cart items rather than to the entire cart. This 
       <Mermaid
         value={`
           flowchart TB
-              initiated --> rejected
+              initiated["initiated"] --> rejected
               initiated --> authorized
               initiated --> expired
               authorized --> canceled

@@ -225,3 +225,12 @@
   --ifm-card-horizontal-spacing: var(--ifm-global-spacing);
   --ifm-card-vertical-spacing: var(--ifm-global-spacing);
   */
+  
+.mermaid .node:hover rect {
+  fill: #FFA500; /* Цвет при наведении */
+  transition: fill 0.3s ease; /* Плавное изменение */
+}
+
+#initiated:hover rect {
+    fill: #FFA500; /* Цвет при наведении */
+}

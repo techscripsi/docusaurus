@@ -4,7 +4,7 @@ info:
   version: 1.0.2
   description: API DESCRIPTION HERE.
 servers:
-  - url: https://omnicart.free.beeceptor.com
+  - url: https://api.omnicart.scripsi.io
 paths:
   /refund:
     post:
@@ -44,6 +44,8 @@ paths:
                   $ref: "#/components/schemas/object_filterBox_req"
                 debug:
                   $ref: "#/components/schemas/primitive_debug"
+      security:
+        - ApiKey: []
   /cancel:
     post:
       summary: Cancel
@@ -82,6 +84,8 @@ paths:
                   $ref: "#/components/schemas/object_filterBox_req"
                 debug:
                   $ref: "#/components/schemas/primitive_debug"
+      security:
+        - ApiKey: []
   /modify:
     patch:
       summary: Modify
@@ -167,6 +171,8 @@ paths:
                                 $ref: "#/components/schemas/object_modifyTimer_modify_req"
                 debug:
                   $ref: "#/components/schemas/primitive_debug"
+      security:
+        - ApiKey: []
   /status/{cartId}:
     get:
       summary: Status 
