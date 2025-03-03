@@ -2,61 +2,14 @@
 sidebar_position: 5
 ---
 
-# Payment stages
+# Payment Schemes
 
-Одностадийные и двухстадийные платежи используются в разных сценариях, в зависимости от бизнес-процессов и требований безопасности. Вот основные случаи:
+Depending on the specifics of your business, you can use one-step or two-step payments.
 
+With one-step payments, after a payment is authorized, it does not require your attention. The money is immediately transferred from the customer's account to the target account. Typically, one-step payments are used when payments must be completed instantly. For example, if the goods or services are provided immediately (e.g., digital goods).
 
-## One-Step Payments
+With two-step payments, the customer's funds are first put on hold on their account. You need to capture the payment in order to complete the transaction. At this point you can also cancel the payment if, for example, you are unable to deliver the goods or for any other reason. The two-step scheme allow you to postpone the final completion of the payment.
 
-Используются, когда оплата должна быть завершена мгновенно. Деньги сразу списываются с карты покупателя и зачисляются на счёт продавца.
-
-### Когда применяются:
-
-1. Онлайн-покупки:
-   * Товары или услуги, которые доставляются/оказываются сразу после оплаты.
-   * Пример: покупка цифровых товаров (билеты, подписки, программы).
-
-2. Офлайн-оплата:
-   * Оплата в магазинах, кафе, ресторанах.
-   * Пример: оплата картой через терминал.
-
-3. Минимальные риски:
-   * Когда продавец уверен в успешном завершении транзакции (например, предоплата за товар).
-
-## Двухстадийные платежи
-
-Используются, когда нужно сначала заблокировать средства на карте покупателя, а затем подтвердить списание. Это позволяет отложить окончательное завершение платежа.
-
-### Когда применяются:
-
-1. Бронирование:
-   * Бронирование отелей, аренда автомобилей, билетов.
-   * Пример: средства блокируются на карте, но списываются только после завершения бронирования.
-
-2. Доставка товаров:
-   * Когда товар оплачивается заранее, но списание происходит только после подтверждения доставки.
-   * Пример: интернет-магазины с доставкой.
-
-3. Проверка данных:
-   * Когда нужно убедиться в наличии средств на карте перед выполнением заказа.
-   * Пример: предварительная авторизация средств.
-
-4. Сложные бизнес-процессы:
-   * Когда оплата зависит от выполнения определённых условий (например, проверка качества товара).
-
-
-## Разница между одностадийными и двухстадийными платежами:
-
-| **Аспект**              | **Одностадийные**                     | **Двухстадийные**                     |
-|-------------------------|---------------------------------------|---------------------------------------|
-| **Списание средств**    | Мгновенное                            | Сначала блокировка, затем списание    |
-| **Скорость**            | Быстро                                | Медленнее (два этапа)                 |
-| **Гибкость**            | Нет возможности отмены/возврата       | Можно отменить до завершения платежа  |
-| **Риски**               | Выше для продавца (возвраты)          | Ниже для продавца                     |
-| **Примеры**             | Онлайн-магазины, цифровые товары      | Бронирование, доставка товаров        |
-
-## Итог
-
-* **Одностадийные** — для мгновенных платежей с минимальными задержками.
-* **Двухстадийные** — для случаев, когда нужно заблокировать средства и подтвердить списание позже.
+:::info
+Technically, one-step payments go through the same statuses as two-step payments. However, with one-step payments, the `capture` action is automated on the OmniCart side. The gateway API allows you to perform both one-step and two-step payments provided that you have sufficient privileges to execute requests with the appropriate parameters. See also the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information on payment statues.
+:::

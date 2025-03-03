@@ -4,174 +4,55 @@ hide_title: true
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from '@docusaurus/Link';
+import Cards from '/docs/_snippets/cards.mdx';
+
+<h1>Quick Reference</h1>
 
 <div class="container">
-# Quick Reference
-  <div class="row">
-    <div class="col col--4">
-      <Link to="/docs/concepts/stages" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Payment Stages</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
+  <div class="row row--no-gutters">
+    <div class="col col--6">
+      <h2>API</h2>
+      | Requests || Statuses<br />before | Statuses<br />after |
+      | :-- | :-- | :-- | :-- |
+      | [`init`](/docs/api/10-init) | [Response codes](/docs/api/response-codes#init) | N/A | [`initiated`](/docs/concepts/lifecycle#initiated)<br />[`rejected`](/docs/concepts/lifecycle#rejected)<br />[`expired`](/docs/concepts/lifecycle#expired)<br />[`authorized`](/docs/concepts/lifecycle#authorized)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | [`status`](/docs/api/15-status) | [Response codes](/docs/api/response-codes#status) | Any | Any |
+      | [`cancel`](/docs/api/20-cancel) | [Response codes](/docs/api/response-codes#cancel) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`canceled`](/docs/concepts/lifecycle#canceled) |
+      | [`capture`](/docs/api/30-capture) | [Response codes](/docs/api/response-codes#capture) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`captured`](/docs/concepts/lifecycle#captured)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | [`modify`](/docs/api/40-modify) | [Response codes](/docs/api/response-codes#modify) | Any | Any |
+      | [`refund`](/docs/api/50-refund) | [Response codes](/docs/api/response-codes#refund) | [`completed`](/docs/concepts/lifecycle#completed) | [`refunded`](/docs/concepts/lifecycle#refunded) |
+
+      ---
+      Note that there is the [`ongoing`](/docs/concepts/lifecycle#ongoing) status that can be returned by a response to the [`status`](/docs/api/15-status) request any time a payment is being processed by OmniCart.
+
+      ---
+
+      | Timer Statuses |
+      | :--: |
+      | [`pending`](/docs/concepts/timer#pending) |
+      | [`started`](/docs/concepts/timer#started) |
+      | [`paused`](/docs/concepts/timer#paused) |
+      | [`stopped`](/docs/concepts/timer#stopped) |
+      | [`elapsed`](/docs/concepts/timer#elapsed) |
     </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/cart" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Carts, Tags, and Items</h3>
-            </div>
-            <div class="card__body">
-              <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/lifecycle" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Payment Life Cycle</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-  </div><p />
-  <div class="row">
-    <div class="col col--4">
-      <Link to="/docs/concepts/amounts" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Amounts</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/timer" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Item Timers</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/modify" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Modifying Items</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-    </div>
-  </div><p />
-  <div class="row">
-    <div class="col col--4">
-      <Link to="/docs/concepts/capture" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Capturing Items</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/cancel-refund" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Cancellation and Refund</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
-    </div>
-    <div class="col col--4">
-      <Link to="/docs/concepts/test-debug" className="card-link">
-        <div class="card-demo text--no-decoration">
-          <div class="card-click item shadow--md">
-            <div class="card__header">
-              <h3>Testing and Debugging</h3>
-            </div>
-            <div class="card__body">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Link>
-      <p />
+    <div class="col col--6">
+      <h2>Test Cards</h2>
+      <Cards />
     </div>
   </div>
 </div>
 
 
+
+
 <!--
+
+        | Timer Statuses |
+        | :--: |
+        | [`pending`](/docs/concepts/timer#pending) |
+        | [`started`](/docs/concepts/timer#started) |
+        | [`paused`](/docs/concepts/timer#paused) |
+        | [`stopped`](/docs/concepts/timer#stopped) |
+        | [`elapsed`](/docs/concepts/timer#elapsed) |
 
 hourglass-half
 

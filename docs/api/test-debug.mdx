@@ -19,7 +19,32 @@ After you are done with testing, contact or our technical support to switch to p
 
 ## Test Cards
 
-import Cards from '/docs/reference/cards.mdx';
+Use these cards in test environments. For each of the cards below, the following details will work.
+
+<div class="badge badge--secondary">
+  <table>
+    <tr>
+      <th align="left">CVV/CVC</th>
+      <td>Any 3-digit number.</td>
+    </tr>
+    <tr>
+      <th align="left">EXPIRY</th>
+      <td>Any future date.</td>
+    </tr>
+    <tr>
+      <th align="left">CARDHOLDER NAME</th>
+      <td>Any name.</td>
+    </tr>
+  </table>
+</div>
+
+<p />
+
+:::warning Please, note
+An invalid input, such as a past expiration date, will return the corresponding error regardless of the test card number.
+:::
+
+import Cards from '/docs/_snippets/cards.mdx';
 
 <Cards />
 

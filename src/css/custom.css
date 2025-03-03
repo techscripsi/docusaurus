@@ -234,3 +234,21 @@
 #initiated:hover rect {
     fill: #FFA500; /* Цвет при наведении */
 }
+
+/* infima* start */
+
+/*
+.card-demo-container {
+  align-items: center;
+  background-color: var(--ifm-color-black-alpha-05);
+  border-radius: var(--ifm-global-radius);
+  display: grid;
+  flex-direction: column;
+  padding: 2rem;
+}
+*/
+/*
+.card-demo {
+  max-width: 320px;
+}
+*/

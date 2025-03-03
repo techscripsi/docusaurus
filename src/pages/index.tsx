@@ -8,17 +8,9 @@ import Mermaid from '@theme/Mermaid';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-import Quickstart from '@site/docs/_snippets/quickstart.mdx'
+import Features from '@site/docs/_snippets/features.mdx'
 
 import Concepts from '/docs/concepts.mdx';
-
-export const Beverage = () => (
-  <div>
-    <FontAwesomeIcon icon="check-square" />
-    Your <FontAwesomeIcon icon="coffee" /> is hot and ready!
-  </div>
-)
-
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 
@@ -67,7 +59,7 @@ export default function Home(): JSX.Element {
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      <Quickstart />
+      <Features />
     </div>
     <div class="col col--6">
     <h1><FontAwesomeIcon icon="gear" />&nbsp;Technical Information</h1>
@@ -88,7 +80,7 @@ export default function Home(): JSX.Element {
         </div>
       </Link>
       <p />
-      <Link to="/docs/concepts/test-debug" className="card-link">
+      <Link to="/docs/api/test-debug" className="card-link">
         <div class="card-demo text--no-decoration">
           <div class="card-click item shadow--md">
             <div class="card__header">
