@@ -13,6 +13,12 @@ import { fas } from '@fortawesome/free-solid-svg-icons'; // Import all solid ico
 
 library.add(fab, fas); // Add all icons to the library so you can use them without importing them individually.
 
+import { config } from '@fortawesome/fontawesome-svg-core' // 👈
+import '@fortawesome/fontawesome-svg-core/styles.css' // 👈
+config.autoAddCss = false // 👈
+
+import { faBook } from '@fortawesome/pro-solid-svg-icons' // 👈
+
 
 import Features from '@site/docs/_snippets/features.mdx'
 
