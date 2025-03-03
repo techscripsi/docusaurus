@@ -28,7 +28,7 @@ The [`modify`](/docs/api/40-modify) request request does not change the item sta
 
 <!-- FIXME  change example to timer and/or to status before/after -->
 
-Tags can be modified regardless of the payment status, unless it involves changing amounts (see [Modifying Payment Settings](#payment-settings) below for details).
+Tags can be modified regardless of the payment status, unless it involves changing amounts (see [Modifying Payment Settings](#amounts) below for details).
 
 <div class="container">
   <div class="row">
@@ -135,7 +135,7 @@ If the full item amount is modified to a lower value, the difference is automati
 There is no limit on the number of times the [`modify`](/docs/api/40-modify) request can be used to reduce the amount. However, to fully cancel or refund an item, use the [`cancel`](/docs/api/20-cancel) and [`refund`](/docs/api/50-refund) methods respectively, since OmniCart does not accept zero amounts.
 
 :::info
-See the [Cancellation and Refund](/docs/concepts/cancel-refund#specific-items-partial) section for more information.
+See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section for more information.
 :::
 
 ### Example #1
@@ -261,7 +261,7 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#specific-items-pa
       The `behemoth` item is in the `authorized` status so the difference between the initial `4500` and modified `3000` is canceled. If the item status had been `completed` instead of `authorized` the difference would have been refunded instead of canceled.
       
       :::info
-      See the [Amounts](/docs/concepts/amounts) and [Cancellation and Refund](/docs/concepts/cancel-refund#specific-items-partial) sections for more information.
+      See the [Amounts](/docs/concepts/amounts) and [Cancellation and Refund](/docs/concepts/cancel-refund#partial) sections for more information.
       :::
     </div>
     <div class="col col--6">

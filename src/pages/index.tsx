@@ -6,7 +6,13 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 import Mermaid from '@theme/Mermaid';
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import the FontAwesomeIcon component.
+import { library } from '@fortawesome/fontawesome-svg-core'; // Import the library component.
+import { fab } from '@fortawesome/free-brands-svg-icons'; // Import all brands icons.
+import { fas } from '@fortawesome/free-solid-svg-icons'; // Import all solid icons.
+
+library.add(fab, fas); // Add all icons to the library so you can use them without importing them individually.
+
 
 import Features from '@site/docs/_snippets/features.mdx'
 
@@ -17,6 +23,12 @@ import Logo from '@site/static/img/logo-9BC834.svg';
 import Index from '/docs/__snippets__/index.mdx';
 
 import styles from './index.module.css';
+
+
+import ReactDOM from 'react-dom'
+// import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'
+// const element = <FontAwesomeIcon icon={byPrefixAndName.fas['house']} />
+// ReactDOM.render(element, document.body)
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -71,9 +83,22 @@ export default function Home(): JSX.Element {
             </div>
             <div class="card__body">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
-                suspendisse ultrices gravida.
+                Implement our API in your store
+              </p>
+            </div>
+          </div>
+        </div>
+      </Link>
+      <p />
+      <Link to="/docs/scenarios/" className="card-link">
+        <div class="card-demo text--no-decoration">
+          <div class="card-click item shadow--md">
+            <div class="card__header">
+              <h3><FontAwesomeIcon icon="money-bill-transfer" />&nbsp;Payment Scenarios</h3>
+            </div>
+            <div class="card__body">
+              <p>
+                Take a look at some examples of payment scenarios available with OmniCart
               </p>
             </div>
           </div>
@@ -88,7 +113,7 @@ export default function Home(): JSX.Element {
             </div>
             <div class="card__body">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Test your payment scenarios before switching to production
               </p>
             </div>
           </div>
@@ -103,7 +128,7 @@ export default function Home(): JSX.Element {
             </div>
             <div class="card__body">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Some useful reference information that you might want to keep at hand
               </p>
             </div>
           </div>
