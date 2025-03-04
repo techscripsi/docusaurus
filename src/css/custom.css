@@ -236,7 +236,6 @@
 }
 
 /* infima* start */
-
 /*
 .card-demo-container {
   align-items: center;
@@ -247,16 +246,31 @@
   padding: 2rem;
 }
 */
-/*
-.card-demo {
-  max-width: 320px;
-}
-*/
 
-/* Пример стилей для Mermaid */
-.mermaid .actor {
-    fill: #ffcc00 !important; /* Жёлтый фон для участников */
+/* custom */
+
+.tile-container {
+/*
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+*/
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 16px;
+    justify-content: center;
 }
-.mermaid .arrowheadPath {
-    fill: #ff0000 !important; /* Красные стрелки */
+
+.tile {
+    height: 150px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+
+/*   flex: 1 1 auto; */
+/*   height: 150px; */
+/*    min-width: 150px; */
+/*   max-width: 30%; */
+/*   box-sizing: border-box; */
+/*   padding: 10px; */
 }
