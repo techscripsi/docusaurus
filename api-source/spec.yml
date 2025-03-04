@@ -2,7 +2,8 @@ openapi: '3.0.3'
 info:
   title: OmniCart API
   version: 1.0.2
-  description: API DESCRIPTION HERE.
+  description: |
+    This section contains the OmniCart API specification.
 servers:
   - url: https://api.omnicart.scripsi.io
 paths:

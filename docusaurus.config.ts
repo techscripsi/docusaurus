@@ -24,9 +24,6 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
-  // Even if you don't use internationalization, you can use this field to set
-  // useful metadata like html lang. For example, if your site is Chinese, you
-  // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'ko'],
@@ -166,16 +163,16 @@ const config: Config = {
           label: 'Merchant Panel',
         },
         {
+          type: 'doc',
+          docId: 'scenarios',
+          position: 'left',
+          label: 'Payment Scenarios',
+        },
+        {
           type: 'docSidebar',
           sidebarId: 'api',
           position: 'left',
           label: 'API Specification',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'scenarios',
-          position: 'left',
-          label: 'Usage Scenarios',
         },
         {
           type: 'doc',
@@ -188,7 +185,7 @@ const config: Config = {
 
 /*
 
-THIS INSTANCE IS INACTIVE, SAVED FOR INTEGRATIONS
+THIS INSTANCE IS INACTIVE, SAVED FOR POSSIBLE INTEGRATIONS
 
   {
     to: "/users/start", label: "New Instance",

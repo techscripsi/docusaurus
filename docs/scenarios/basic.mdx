@@ -1,0 +1,148 @@
+---
+sidebar_position: 10
+---
+
+# Basic Scenarios
+
+## One-Step Payment {#onestep}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as Customer
+        participant M as Merchant
+        participant O as OmniCart
+        participant A as Verification Service
+        C ->> M: customer begins payment
+        M ->>+O: 𝚒𝚗𝚒𝚝 request
+        O ->> C: invoice delivery
+        C ->> A: payment authorization
+        A ->> O: authorized
+      par
+        O ->> O: payment
+        O -->>-M: 𝚒𝚗𝚒𝚝 response
+      end
+        M -->> C: success message
+      opt
+        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
+        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InvoiceDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <Payment />
+      1. <InitResponse />
+      1. <SuccessMessage />
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="init request">
+        </TabItem>
+        <TabItem value="init response">
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## Two-Step Payment {#twostep}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as Customer
+        participant M as Merchant
+        participant O as OmniCart
+        participant A as Verification Service
+        C ->> M: customer begins payment
+        M ->>+O: 𝚒𝚗𝚒𝚝 request
+        O ->> C: invoice delivery
+        C ->> A: payment authorization
+        A ->> O: authorized
+        O ->> O: funds on hold
+        O -->>-M: 𝚒𝚗𝚒𝚝 response
+        M -->> C: success message
+        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
+        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 request
+        O ->> O: payment
+        O -->>-M: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 response
+      opt
+        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
+        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InvoiceDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <FundsOnHold />
+      1. <InitResponse />
+      1. <SuccessMessage />
+      1. <StatusRequest />
+      1. <StatusResponse />
+      1. <CaptureRequest />
+      1. <Payment />
+      1. <CaptureResponse />
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="init request">
+        </TabItem>
+        <TabItem value="init response">
+        </TabItem>
+      </Tabs>
+      <Tabs>
+        <TabItem value="capture request">
+        </TabItem>
+        <TabItem value="capture response">
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports -->
+
+import Authorized from './_snippets/authorized.mdx';
+import CancelRequest from './_snippets/cancel-request.mdx';
+import CancelResponse from './_snippets/cancel-response.mdx';
+import CaptureRequest from './_snippets/capture-request.mdx';
+import CaptureResponse from './_snippets/capture-response.mdx';
+import CustomerBeginsPayment from './_snippets/customer-begins-payment.mdx';
+import CustomerRequestsARefund from './_snippets/customer-requests-a-refund.mdx';
+import CustomerRequestsCancellation from './_snippets/customer-requests-cancellation.mdx';
+import FundsOnHold from './_snippets/funds-on-hold.mdx';
+import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
+import InitRequest from './_snippets/init-request.mdx';
+import InitResponse from './_snippets/init-response.mdx';
+import InvoiceDelivery from './_snippets/invoice-delivery.mdx';
+import ModifyRequest from './_snippets/modify-request.mdx';
+import ModifyResponse from './_snippets/modify-response.mdx';
+import Payment from './_snippets/payment.mdx';
+import PaymentAuthorization from './_snippets/payment-authorization.mdx';
+import RefundRequest from './_snippets/refund-request.mdx';
+import RefundResponse from './_snippets/refund-response.mdx';
+import StatusRequest from './_snippets/status-request.mdx';
+import StatusResponse from './_snippets/status-response.mdx';
+import SuccessMessage from './_snippets/success-message.mdx';

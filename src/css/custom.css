@@ -252,3 +252,11 @@
   max-width: 320px;
 }
 */
+
+/* Пример стилей для Mermaid */
+.mermaid .actor {
+    fill: #ffcc00 !important; /* Жёлтый фон для участников */
+}
+.mermaid .arrowheadPath {
+    fill: #ff0000 !important; /* Красные стрелки */
+}

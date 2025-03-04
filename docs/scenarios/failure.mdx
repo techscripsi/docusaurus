@@ -1,0 +1,113 @@
+---
+sidebar_position: 40
+---
+
+# Failure Scenarios
+
+## Cart Expiry {#expiry}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as Customer
+        participant M as Merchant
+        participant O as OmniCart
+        C ->> M: customer begins payment
+        M ->>+O: 𝚒𝚗𝚒𝚝 request
+      activate C
+        O ->> C: invoice delivery
+        C --X O: cart expires
+      deactivate C
+      deactivate O
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InvoiceDelivery />
+      1. <CartExpires />
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="init request">
+        </TabItem>
+        <TabItem value="init response">
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## Payment Authorization Failure {#auth}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as Customer
+        participant M as Merchant
+        participant O as OmniCart
+        participant A as Verification Service
+        C ->> M: customer begins payment
+        M ->>+O: 𝚒𝚗𝚒𝚝 request
+        O ->> C: invoice delivery
+        C -x A: payment authorization
+        A ->>O: not authorized
+        O -->>-M: 𝚒𝚗𝚒𝚝 response
+        M -->> C: fail message
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InvoiceDelivery />
+      1. <PaymentAuthorization />
+      1. <NotAuthorized />
+      1. <InitResponse />
+      1. <FailMessage />
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="init request">
+        </TabItem>
+        <TabItem value="init response">
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports  --->
+
+import Authorized from './_snippets/authorized.mdx';
+import CancelRequest from './_snippets/cancel-request.mdx';
+import CancelResponse from './_snippets/cancel-response.mdx';
+import CaptureRequest from './_snippets/capture-request.mdx';
+import CaptureResponse from './_snippets/capture-response.mdx';
+import CartExpires from './_snippets/cart-expires.mdx';
+import CustomerBeginsPayment from './_snippets/customer-begins-payment.mdx';
+import CustomerRequestsARefund from './_snippets/customer-requests-a-refund.mdx';
+import CustomerRequestsCancellation from './_snippets/customer-requests-cancellation.mdx';
+import FailMessage from './_snippets/fail-message.mdx';
+import FundsOnHold from './_snippets/funds-on-hold.mdx';
+import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
+import InitRequest from './_snippets/init-request.mdx';
+import InitResponse from './_snippets/init-response.mdx';
+import InvoiceDelivery from './_snippets/invoice-delivery.mdx';
+import ModifyRequest from './_snippets/modify-request.mdx';
+import ModifyResponse from './_snippets/modify-response.mdx';
+import NotAuthorized from './_snippets/not-authorized.mdx';
+import Payment from './_snippets/payment.mdx';
+import PaymentAuthorization from './_snippets/payment-authorization.mdx';
+import RefundRequest from './_snippets/refund-request.mdx';
+import RefundResponse from './_snippets/refund-response.mdx';
+import StatusRequest from './_snippets/status-request.mdx';
+import StatusResponse from './_snippets/status-response.mdx';
+import SuccessMessage from './_snippets/success-message.mdx';
