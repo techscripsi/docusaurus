@@ -14,12 +14,14 @@ sidebar_position: 40
         participant M as Merchant
         participant O as OmniCart
         C ->> M: customer begins payment
-        M ->>+O: 𝚒𝚗𝚒𝚝 request
-      activate C
+        M ->>+O: init request
         O ->> C: invoice delivery
-        C --X O: cart expires
-      deactivate C
+      note over O: ⏲ cart expires
       deactivate O
+      opt
+        M ->>O: status request
+        O ->>M: status response
+      end
   `}
 />
 
@@ -28,14 +30,81 @@ sidebar_position: 40
     <div class="col col--6">
       1. <CustomerBeginsPayment />
       1. <InitRequest />
-      1. <InvoiceDelivery />
-      1. <CartExpires />
+      1. <InvoiceDelivery /><br /><CartExpires />
     </div>
     <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
       <Tabs>
-        <TabItem value="init request">
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "USD",
+            "cartExpiry": 7200,
+            "items": [
+              {
+                "naga": {
+                  "amount": 1100
+                }
+              }
+            ]
+          }
+          ```
         </TabItem>
-        <TabItem value="init response">
+        <TabItem value="response">
+          <InitResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+       5. <StatusRequest />
+       1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+              "totalAmounts": {
+                "initiated": 1100,
+                "captured": 0,
+                "refunded": 0,
+                "current": 0
+              },
+              "items": [
+                {
+                  "nage": {
+          //highlight-next-line
+                    "paymentStatus": "canceled",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+                    "paymentSnapshot": {
+                      "amount": 1100
+                    },
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -53,11 +122,11 @@ sidebar_position: 40
         participant O as OmniCart
         participant A as Verification Service
         C ->> M: customer begins payment
-        M ->>+O: 𝚒𝚗𝚒𝚝 request
+        M ->>+O: init request
         O ->> C: invoice delivery
         C -x A: payment authorization
         A ->>O: not authorized
-        O -->>-M: 𝚒𝚗𝚒𝚝 response
+        O -->>-M: init response
         M -->> C: fail message
   `}
 />
@@ -74,10 +143,31 @@ sidebar_position: 40
       1. <FailMessage />
     </div>
     <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
       <Tabs>
-        <TabItem value="init request">
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "GEM",
+            "items": [
+              {
+                "naga": {
+                  "amount": 1100
+                }
+              }
+            ]
+          }
+          ```
         </TabItem>
-        <TabItem value="init response">
+        <TabItem value="response">
+          ```js
+          {
+            "code": 123000,
+            "message": "Unknown currency",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -111,3 +201,12 @@ import RefundResponse from './_snippets/refund-response.mdx';
 import StatusRequest from './_snippets/status-request.mdx';
 import StatusResponse from './_snippets/status-response.mdx';
 import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx'
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx'
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx'
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx'
+import StatusResPegasusAuthorized from '../_snippets/api/code-snippets/status-res-pegasus-authorized.mdx';
+import StatusResPegasusCompleted from '../_snippets/api/code-snippets/status-res-pegasus-completed.mdx';
+import ModifyReqPegasusAmount from '../_snippets/api/code-snippets/modify-req-pegasus-amount.mdx';
+import ModifyResPegasusAmount from '../_snippets/api/code-snippets/modify-res-pegasus-amount.mdx';

@@ -4,7 +4,7 @@ sidebar_position: 30
 
 # Refund Scenarios
 
-### Refund Entire Cart {#entire-cart}
+## Refund Entire Cart {#entire-cart}
 
 <Mermaid
   value={`
@@ -17,12 +17,12 @@ sidebar_position: 30
         C ->> M: customer requests a refund
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚛𝚎𝚏𝚞𝚗𝚍 request
+        M ->>+O: refund request
         O ->> O: payment refunded
-        O -->>-M: 𝚛𝚎𝚏𝚞𝚗𝚍 response
+        O -->>-M: refund response
       opt
         M -->> C: success message
       end
@@ -35,16 +35,36 @@ sidebar_position: 30
       1. <CustomerRequestsARefund />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <RefundRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          <StatusResPegasusCompleted />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <RefundRequest />
       1. <PaymentRefunded />
       1. <RefundResponse />
       1. <SuccessMessage />
     </div>
     <div class="col col--6">
+      ### [`refund`](/docs/api/50-refund)
       <Tabs>
-        <TabItem value="refund request">
+        <TabItem value="request">
+          <CartIdOnlyReq />
         </TabItem>
-        <TabItem value="refund response">
+        <TabItem value="response">
+          <PegasusItemResSuccess />
         </TabItem>
       </Tabs>
     </div>
@@ -65,14 +85,18 @@ sidebar_position: 30
         C ->> M: customer requests a refund
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚛𝚎𝚏𝚞𝚗𝚍 request
+        M ->>+O: refund request
         O ->> O: payment refunded
-        O -->>-M: 𝚛𝚎𝚏𝚞𝚗𝚍 response
+        O -->>-M: refund response
       opt
         M -->> C: success message
+      end
+      opt
+        M ->>+O: status request
+        O -->>-M: status response
       end
       end
   `}
@@ -84,16 +108,172 @@ sidebar_position: 30
       1. <CustomerRequestsARefund />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <RefundRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 0,
+                "current": 1100
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <RefundRequest />
       1. <PaymentRefunded />
       1. <RefundResponse />
       1. <SuccessMessage />
     </div>
     <div class="col col--6">
+      ### [`refund`](/docs/api/50-refund)
       <Tabs>
-        <TabItem value="refund request">
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+          //overridden
+              "tags": [
+          //overridden
+                "rampart"
+              ]
+            }
+          }
+          ```
         </TabItem>
-        <TabItem value="refund response">
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+          //overridden
+              "itemIds": [
+          //overridden
+                "pegasus"
+            },
+            "code": "string",
+            "message": "string",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 250,
+                "current": 1100
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "refuded",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 250,
+                      "refunded": 250,
+                      "current": 0
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -114,14 +294,18 @@ sidebar_position: 30
         C ->> M: customer requests a refund
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚖𝚘𝚍𝚒𝚏𝚢 request
-        O ->> O: funds payment refunded
-        O -->>-M: 𝚖𝚘𝚍𝚒𝚏𝚢 response
+        M ->>+O: modify request
+        O ->> O: payment refunded
+        O -->>-M: modify response
       opt
         M -->> C: success message
+      end
+      opt
+        M ->>+O: status request
+        O -->>-M: status response
       end
       end
   `}
@@ -133,16 +317,89 @@ sidebar_position: 30
       1. <CustomerRequestsARefund />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <ModifyRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          <StatusResPegasusCompleted />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <ModifyRequest />
       1. <PaymentRefunded />
       1. <ModifyResponse />
       1. <SuccessMessage />
     </div>
     <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify)
       <Tabs>
-        <TabItem value="modify request">
+        <TabItem value="request">
+          <ModifyReqPegasusAmount />
         </TabItem>
-        <TabItem value="modify response">
+        <TabItem value="response">
+          <ModifyResPegasusAmount />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+
+              "totalAmounts": {
+                "initiated": 250,
+         //highlight-start
+                "captured": 250,
+                "refunded": 100,
+                "current": 150
+        //highlight-end
+              },
+              "items": [
+                {
+                  "pegasus": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 250,
+        //highlight-start
+                      "captured": 250,
+                      "refunded": 100,
+                      "current": 150
+        //highlight-end
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -174,3 +431,12 @@ import RefundResponse from './_snippets/refund-response.mdx';
 import StatusRequest from './_snippets/status-request.mdx';
 import StatusResponse from './_snippets/status-response.mdx';
 import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx'
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx'
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx'
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx'
+import StatusResPegasusAuthorized from '../_snippets/api/code-snippets/status-res-pegasus-authorized.mdx';
+import StatusResPegasusCompleted from '../_snippets/api/code-snippets/status-res-pegasus-completed.mdx';
+import ModifyReqPegasusAmount from '../_snippets/api/code-snippets/modify-req-pegasus-amount.mdx';
+import ModifyResPegasusAmount from '../_snippets/api/code-snippets/modify-res-pegasus-amount.mdx';

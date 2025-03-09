@@ -4,16 +4,16 @@ sidebar_position: 50
 
 # Modifying Items
 
-The [`modify`](/docs/api/40-modify) request allows you to modify a previously initiated cart. This request is similar to the [`init`](/docs/api/10-init) request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/concepts/cart) section for more information). Although, there are a number of differences that are covered in this section.
+The <ModifyLink /> request allows you to modify a previously initiated cart. This request is similar to the <InitLink /> request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/concepts/cart) section for more information). Although, there are a number of differences that are covered in this section.
 
-The [`modify`](/docs/api/40-modify) request allows you to:
+The <ModifyLink /> request allows you to:
 
 * reassign or delete existing tags and introduce new ones
 * redefine payment settings, change or recalculate item amounts
 * redefine timer settings.
 
 :::warning Please note
-With the [`modify`](/docs/api/40-modify) request you cannot change the `cartId` value or the values of the cart item identifiers.
+With the <ModifyLink /> request you cannot change the `cartId` value or the values of the cart item identifiers.
 :::
 
 <!--FIXME can be changed separately or in combinations -->
@@ -21,7 +21,7 @@ With the [`modify`](/docs/api/40-modify) request you cannot change the `cartId` 
 Some of the cart properties can only be modified when items are in a particular payment status (see the [`Payment Life Cycle`](/docs/concepts/lifecycle) section for more information on payment statuses), others can be modified regardless of any payment status.
 
 :::note
-The [`modify`](/docs/api/40-modify) request request does not change the item status.
+The <ModifyLink /> request request does not change the item status.
 :::
 
 ## Modifying Tags {#tags}
@@ -37,7 +37,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
       <!-- in mobile view could be vertical -->
       Consider the example to the right. The cart was initiated with the `tower` tag that was applied to the `genie` and `naga` items. Then the cart was modified and the `inferno` tag was introduced. The new tag was assigned only to the `genie` item so the `genie` full item amount is now recalculated by OmniCart according to the `inferno` tag settings. It is now multiplied by the `amountModifier` value since `amountMode` is set to `calculated` (see the [Amounts](/docs/concepts/amounts) section for more information on amounts). 
       
-      The `naga` item is still marked with the initial `tower` tag. However, this tag was not redefined in the [`modify`](/docs/api/40-modify) request. Since there were no new settings for the `tower` tag, the `naga` item kept its previous amount settings. In fact, any other undefined tag assigned to the `naga` item would have produced the same effect. That said, the [`status`](/docs/api/15-status) request returns the latest tag assigned to an item regardless of whether its settings were applied to that item or not. So here's a tip.
+      The `naga` item is still marked with the initial `tower` tag. However, this tag was not redefined in the <ModifyLink /> request. Since there were no new settings for the `tower` tag, the `naga` item kept its previous amount settings. In fact, any other undefined tag assigned to the `naga` item would have produced the same effect. That said, the <StatusLink /> request returns the latest tag assigned to an item regardless of whether its settings were applied to that item or not. So here's a tip.
       :::tip
       Manage your tags.
       :::
@@ -124,7 +124,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
 
 ## Modifying Amounts {#amounts}
 
-Amount settings ​​can be modified on the cart, tag, or item level as with the [`init`](/docs/api/10-init) request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
+Amount settings ​​can be modified on the cart, tag, or item level as with the <InitLink /> request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
 
 :::warning Please, note
 The full item amount cannot be modified to a greater value.
@@ -132,7 +132,7 @@ The full item amount cannot be modified to a greater value.
 
 If the full item amount is modified to a lower value, the difference is automatically canceled or refunded depending on whether an item is in the `authorized` or `completed` status respectively. Note that after an item has been partially canceled or refunded, it remains in the `authorized` or `completed` status respectively. 
 
-There is no limit on the number of times the [`modify`](/docs/api/40-modify) request can be used to reduce the amount. However, to fully cancel or refund an item, use the [`cancel`](/docs/api/20-cancel) and [`refund`](/docs/api/50-refund) methods respectively, since OmniCart does not accept zero amounts.
+There is no limit on the number of times the <ModifyLink /> request can be used to reduce the amount. However, to fully cancel or refund an item, use the <CancelLink /> and <RefundLink /> methods respectively, since OmniCart does not accept zero amounts.
 
 :::info
 See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section for more information.
@@ -145,7 +145,7 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section 
     <div class="col col--6">
       In this example, the `naga` item is in the `authorized` status. Its amount was initiated with the `amountMode` property set to `declared`. That is, the full amount of the `naga` item was the value specified in the `amount` field (that is, `4400`).
 
-      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+      The <ModifyLink /> request introduced the following changes:
 
       * `amountMode` was changed from `declared` to `calculated`
       * `amount` was changed from `4400` to `1100`
@@ -251,12 +251,12 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section 
     <div class="col col--6">
       In this example, the `behemoth` item is in the `authorized` status. Its amount was initiated with the `amountMode` property set to `calculated`, so the total item price was the product of the `amount` and `quantity` values (`1500` * `3` = `4500`).
       
-      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+      The <ModifyLink /> request introduced the following changes:
 
       * `amountMode` was changed from `calculated` to `declared`
       * `amount` was changed from `1500` to `3000`.
 
-      Since `amountMode` was changed to `declared`, the total item price equals the `amount` value regardless of the `quantity` value. Now, from the initial `4500`, it is reduced to `3000` which is the value of the `current` property of the `itemAmounts` object. Note that the `initiated` value cannot be changed as it is the value that was passed with the [`init`](/docs/api/10-init) request. 
+      Since `amountMode` was changed to `declared`, the total item price equals the `amount` value regardless of the `quantity` value. Now, from the initial `4500`, it is reduced to `3000` which is the value of the `current` property of the `itemAmounts` object. Note that the `initiated` value cannot be changed as it is the value that was passed with the <InitLink /> request. 
       
       The `behemoth` item is in the `authorized` status so the difference between the initial `4500` and modified `3000` is canceled. If the item status had been `completed` instead of `authorized` the difference would have been refunded instead of canceled.
       
@@ -355,7 +355,7 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section 
 
 Timer settings can be changed regardless of any payment status.
 
-With the [`modify`](/docs/api/40-modify) request request you can:
+With the <ModifyLink /> request request you can:
 
 * enable a previously disabled (not set) timer
 * change existing timer settings, including the trigger event or countdown value
@@ -372,7 +372,7 @@ Enabling a timer starts its life cycle which only ends when a timer enters the `
     <div class="col col--6">
       In this example, the `crusader` item is in the `authorized` status. Initially, the timer for this item was disabled and the status request did not return any timer settings.
       
-      The [`modify`](/docs/api/40-modify) request introduced the following changes:
+      The <ModifyLink /> request introduced the following changes:
 
       * activated the timer by passing the `modifyTimer` object
       * set the `captured` status as the trigger event
@@ -521,7 +521,7 @@ Enabling a timer starts its life cycle which only ends when a timer enters the `
     <div class="col col--6">
       In this example, the `cerberus` item is in the `authorized` status. The timer settings already have a trigger event set for the `captured` status. The current timer status is `pending`.
 
-      The `modify` request changed the trigger event to `initiated`. Since the `initiated` status precedes the `captured` status, the timer switches to the `started` status and starts countdown after the [`modify`](/docs/api/40-modify) request has been processed.
+      The `modify` request changed the trigger event to `initiated`. Since the `initiated` status precedes the `captured` status, the timer switches to the `started` status and starts countdown after the <ModifyLink /> request has been processed.
     </div>
     <div class="col col--6">
       <Tabs>

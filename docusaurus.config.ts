@@ -126,6 +126,10 @@ const config: Config = {
 
   themeConfig: {
 
+    prism: {
+      additionalLanguages: ['curl, kt'],
+    },
+
       tableOfContents: {
         minHeadingLevel: 2,
         maxHeadingLevel: 4,
@@ -157,8 +161,8 @@ const config: Config = {
           label: 'Key Concepts',
         },
         {
-          type: 'docSidebar',
-          sidebarId: 'panel',
+          type: 'doc',
+          docId: 'panel',
           position: 'left',
           label: 'Merchant Panel',
         },

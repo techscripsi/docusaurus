@@ -39,8 +39,8 @@ Timer statuses can be retrieved using the [status](/docs/api/15-status) request.
       style pending fill:#008B00,font-family:monospace
       style started fill:#008B00,font-family:monospace
       style paused fill:#008B00,font-family:monospace
-      style elapsed fill:#2554A0,font-family:monospace
-      style stopped fill:#2554A0,font-family:monospace
+      style elapsed fill:#538CE9,font-family:monospace
+      style stopped fill:#538CE9,font-family:monospace
   `}
 />
     </div>
@@ -58,26 +58,26 @@ Timer statuses can be retrieved using the [status](/docs/api/15-status) request.
 
     ### `paused`
 
-    The `paused` status means that a timer has been manually stopped with the [`modify`](/docs/api/40-modify) request. It is an active state, meaning that you cannot initiate another cart containing this item with the same `customerId` value. From this state a timer can be manually unpaused or stopped.
+    The `paused` status means that a timer has been manually stopped with the <ModifyLink /> request. It is an active state, meaning that you cannot initiate another cart containing this item with the same `customerId` value. From this state a timer can be manually unpaused or stopped.
     </div>
   </div>
 </div>
 
 ### `stopped`
 
-A timer enters the `stopped` status after it has been manually stopped with the [`modify`](/docs/api/40-modify) request. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the [`init`](/docs/api/10-init) request or enable a timer for an existing cart item with the [`modify`](/docs/api/40-modify) request.
+A timer enters the `stopped` status after it has been manually stopped with the <ModifyLink /> request. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
 ### `elapsed`
 
-A timer enters the `stopped` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the [`init`](/docs/api/10-init) request or enable a timer for an existing cart item with the [`modify`](/docs/api/40-modify) request.
+A timer enters the `stopped` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
 
 ## Enabling a timer {#timer-enable}
 
-By default, timers are disabled (not set). You can enable a timer at the beginning of the payment life cycle with the [`init`](/docs/api/10-init) request or at any other stage of the payment process using the [`modify`](/docs/api/40-modify) request. By enabling a timer, you define its settings like starting conditions and the countdown value.
+By default, timers are disabled (not set). You can enable a timer at the beginning of the payment life cycle with the <InitLink /> request or at any other stage of the payment process using the <ModifyLink /> request. By enabling a timer, you define its settings like starting conditions and the countdown value.
 
 :::tip
-With the [`modify`](/docs/api/40-modify) request, you can disable any timer at any moment regardless of its current status.
+With the <ModifyLink /> request, you can disable any timer at any moment regardless of its current status.
 :::
 
 ## Starting a timer {#timer-start}
@@ -88,9 +88,9 @@ A timer can be started by a trigger event or manually. Until started, an enabled
 
 A trigger event is an item [payment status](/docs/concepts/lifecycle). For example, if you set `authorized` as a trigger event, the timer will start the countdown as soon as the item enters the `authorized` status. Any future, current, or past trigger event can be selected. Consider the following examples.
 
-* You set a timer using the [`init`](/docs/api/10-init) request with the `initiated` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors.
-* The current item status is `captured` and you set a timer using the [`modify`](/docs/api/40-modify) request with the `authorized` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors as the `authorized` status is prior to the `captured` status.
-* The item is not initiated or in any status prior to `refunded`. You set a timer using the [`init`](/docs/api/10-init) or [`modify`](/docs/api/40-modify) request with the `refunded` status as the trigger event. The item timer countdown starts if the item enters the `refunded` state.
+* You set a timer using the <InitLink /> request with the `initiated` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors.
+* The current item status is `captured` and you set a timer using the <ModifyLink /> request with the `authorized` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors as the `authorized` status is prior to the `captured` status.
+* The item is not initiated or in any status prior to `refunded`. You set a timer using the <InitLink /> or <ModifyLink /> request with the `refunded` status as the trigger event. The item timer countdown starts if the item enters the `refunded` state.
 
 <!--
 ???one stage payments
@@ -102,14 +102,14 @@ It's up to you whether to use timers and how to utilize them. If we refer to the
 
 ### Manual start {#manual-start}
 
-An enabled timer can be started manually from the `pending` or `paused` state with the [`modify`](/docs/api/40-modify) request. Note that you can start the timer manually prior to a previously set trigger event. On that event, the timer will continue the countdown. If a timer is manually started and elapses before a previously set trigger event, it is not restarted as the `elapsed` status is final in the timer life cycle.
+An enabled timer can be started manually from the `pending` or `paused` state with the <ModifyLink /> request. Note that you can start the timer manually prior to a previously set trigger event. On that event, the timer will continue the countdown. If a timer is manually started and elapses before a previously set trigger event, it is not restarted as the `elapsed` status is final in the timer life cycle.
 
 ## Countdown {#countdown}
 
-The timer works as a countdown, its value is specified in seconds. For example, to set a timer for 2 hours, pass `7200` as the timer value in the [`init`](/docs/api/10-init) or [`modify`](/docs/api/40-modify) request. If you need to set a timer for 3 days, pass `259200` and so on. 
+The timer works as a countdown, its value is specified in seconds. For example, to set a timer for 2 hours, pass `7200` as the timer value in the <InitLink /> or <ModifyLink /> request. If you need to set a timer for 3 days, pass `259200` and so on. 
 
 :::tip
-If you pass value `0`, the timer is infinite. For example, you can utilize this for items that cannot be purchased more than once like unique artifacts in video games or one-time pro upgrades. Later you can always change the timer settings with the [`modify`](/docs/api/40-modify) request.
+If you pass value `0`, the timer is infinite. For example, you can utilize this for items that cannot be purchased more than once like unique artifacts in video games or one-time pro upgrades. Later you can always change the timer settings with the <ModifyLink /> request.
 :::
 
 <!--
@@ -122,7 +122,7 @@ When a timer elapses or is stopped manually, it reaches the end of its life cycl
 
 ### Countdown End {#countdown-end}
 
-A timer's countdown ends when the number of seconds specified in the timer settings of the [`init`](/docs/api/10-init) or [`modify`](/docs/api/40-modify) request elapses. If a timer is manually paused after it starts, the countdown freezes until manually unpaused. To unpause a timer, pass the `start` value of the `manualAction` property in the [`modify`](/docs/api/40-modify) request.
+A timer's countdown ends when the number of seconds specified in the timer settings of the <InitLink /> or <ModifyLink /> request elapses. If a timer is manually paused after it starts, the countdown freezes until manually unpaused. To unpause a timer, pass the `start` value of the `manualAction` property in the <ModifyLink /> request.
 
 :::note
 A paused timer is still active. That means that you cannot initiate the current item with the same `customerId` value until the timer elapses or is stopped manually.
@@ -130,7 +130,7 @@ A paused timer is still active. That means that you cannot initiate the current 
 
 ### Manual Stop {#manual-stop}
 
-A timer can be manually stopped from the `paused` or `started` state. To stop a timer, pass the `stop` value of the `manualAction` property in the [`modify`](/docs/api/40-modify) request. 
+A timer can be manually stopped from the `paused` or `started` state. To stop a timer, pass the `stop` value of the `manualAction` property in the <ModifyLink /> request. 
 
 :::warning Please, note
 You cannot restart a stopped timer for the current item. To start a new timer, initiate a new cart (or modify an existing one) with the `customerId` value and timer settings.

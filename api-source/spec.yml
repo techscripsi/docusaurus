@@ -313,7 +313,7 @@ paths:
                 currency:
                   $ref: "#/components/schemas/primitive_currency"
                 cartExpiry:
-                  $ref: "#/components/schemas/object_invoice"
+                  $ref: "#/components/schemas/primitive_cartExpiry"
                 scope:
                   $ref: "#/components/schemas/object_scope"
                   description: |
@@ -715,6 +715,8 @@ components:
     array_debug:
       type: array
       title: " "
+      description: |
+        An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/concepts/debugging) page for more information.
       items:
         type: object
         required:
@@ -755,6 +757,17 @@ components:
             `amountMode: calculated` -  the final price is calculated by multiplying `amount` by `quantity` on the OmniCart side.
         paymentBox:
           $ref: "#/components/schemas/object_paymentBox"
+        enableTimer:
+           $ref: "#/components/schemas/primitive_timerEnabled"
+           description: |
+             Enable/disable timer:
+                               
+             `true` - the timer is enabled, you can configure its settings
+                        
+             `false` - the timer is disabled.
+        timer:
+          $ref: "#/components/schemas/object_timerSettings"
+          description: Timer settings.
       description: Replace `itemId` with an actual item ID available in your merchant dashboard.
     object_scope:
       type: object
@@ -824,7 +837,7 @@ components:
         description: |
           Checkout session expiry time in seconds. After the checkout session times out, the customer will not be able to complete the payment and all cart items will change their status to `expired`.
 
-          The default value of this property as well as the privilege to change it depends on your agreement with OmniCart. SNIPPET
+          The default value of this property as well as the privilege to change it depends on your agreement with OmniCart. SNIPPET FIXME
 
           **It is not recommended to change this value  even if you have enough permissions.**
     primitive_currency:
@@ -1003,6 +1016,8 @@ components:
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
                 example: Requested cart does not contain tag(s) [...]
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "201_init":
@@ -1033,8 +1048,6 @@ components:
                 example: Success
               debug:
                 $ref: "#/components/schemas/array_debug"
-                description: |
-                  An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/concepts/debugging) page for more information.
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_modify":
@@ -1071,6 +1084,8 @@ components:
                 $ref: "#/components/schemas/primitiveRes_message"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#modify) for more details).
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_capture":
@@ -1098,6 +1113,8 @@ components:
                 $ref: "#/components/schemas/primitiveRes_message"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#capture) for more details).
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_cancel":
@@ -1125,6 +1142,8 @@ components:
                 $ref: "#/components/schemas/primitiveRes_message"                
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#cancel) for more details).
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200_refund":
@@ -1149,10 +1168,14 @@ components:
                 $ref: "#/components/schemas/primitiveRes_code"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#refund) for more details).
+                example: 000000
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#refund) for more details).
+                example: "Success"
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "200":
@@ -1192,6 +1215,8 @@ components:
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 example: Endpoint not found
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "400_init":
@@ -1211,6 +1236,8 @@ components:
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 example: Unknown currency
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "400":
@@ -1228,6 +1255,8 @@ components:
                 $ref: "#/components/schemas/primitiveRes_code"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "400_status":
@@ -1247,6 +1276,8 @@ components:
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 example: cartId cannot be empty
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "401":
@@ -1266,6 +1297,8 @@ components:
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 example: Authentication error
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
     "500":
@@ -1291,6 +1324,8 @@ components:
                 description: |
                   Error message (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
                 example: General system error
+              debug:
+                $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
 #      "503":

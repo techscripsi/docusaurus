@@ -4,7 +4,7 @@ sidebar_position: 20
 
 # Cancellation Scenarios
 
-## Cancel Entire Cart {#entire-cart}
+## Cancel Entire Cart (manual) {#cart-manual}
 
 <Mermaid
   value={`
@@ -17,12 +17,12 @@ sidebar_position: 20
         C ->> M: customer requests cancellation
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚌𝚊𝚗𝚌𝚎𝚕 request
+        M ->>+O: cancel request
         O ->> O: funds released from hold
-        O -->>-M: 𝚌𝚊𝚗𝚌𝚎𝚕 response
+        O -->>-M: cancel response
       opt
         M -->> C: success message
       end
@@ -35,23 +35,136 @@ sidebar_position: 20
       1. <CustomerRequestsCancellation />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <CancelRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          <StatusResPegasusAuthorized />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <CancelRequest />
       1. <FundsReleasedFromHold />
       1. <CancelResponse />
       1. <SuccessMessage />
     </div>
     <div class="col col--6">
+      ### [`cancel`](/docs/api/20-cancel)
       <Tabs>
-        <TabItem value="cancel request">
+        <TabItem value="request">
+          <CartIdOnlyReq />
         </TabItem>
-        <TabItem value="cancel response">
+        <TabItem value="response">
+          <PegasusItemResSuccess />
         </TabItem>
       </Tabs>
     </div>
   </div>
 </div>
 
-## Cancel by Tags or Items {#specific-items}
+## Cancel Entire Cart (auto) {#cart-auto}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as Customer
+        participant M as Merchant
+        participant O as OmniCart
+        participant V as Verification Service
+        C ->> M: customer begins payment
+        M ->>+O: init request
+        O -->>-M: init response
+        M ->> C: invoice delivery
+        C ->>+V: payment authorization
+        V ->>-O: authorized
+      activate O
+        O ->>-O: funds on hold
+        M -->> C: success message
+      note over O: ⏲ "autoAction": "cancel" expires
+        O ->> O: funds released from hold
+      opt
+        M ->>+O: status request
+        O -->>-M: status response
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InitResponse />
+      1. <InvoiceDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <FundsOnHold />
+      1. <SuccessMessage />
+      1. <FundsReleasedFromHold />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
+      <Tabs>
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "USD",
+            "items": [
+              {
+                "pegasus": {
+                  "amount": 250,
+          //highlight-start
+                  "capture": true,
+                  "captureSettings": {
+                    "autoAction": "cancel",
+                    "value": 172800
+          //highlight-end
+                  }
+                }
+              }
+            ]
+          }
+          ```
+        </TabItem>
+        <TabItem value="response">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      10. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          <StatusResPegasusCanceled />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## Cancel by Tags or Items {#items}
 
 <Mermaid
   value={`
@@ -65,24 +178,25 @@ sidebar_position: 20
         C ->> M: customer requests cancellation
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚌𝚊𝚗𝚌𝚎𝚕 request
+        M ->>+O: cancel request
         O ->> O: funds released from hold
-        O -->>-M: 𝚌𝚊𝚗𝚌𝚎𝚕 response
+        O -->>-M: cancel response
       opt
         M -->> C: success message
       end
       end
-      opt
-        M ->>+O: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 request
+      rect rgb(83, 140, 233)
+      note over C,O: Capture the rest of the cart
+        M ->>+O: capture request
         O ->> O: payment
-        O -->>-M: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 response
-      end
+        O -->>-M: capture response
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
+      end
       end
   `}
 />
@@ -93,21 +207,204 @@ sidebar_position: 20
       1. <CustomerRequestsCancellation />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <CancelRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 0,
+                "current": 1350
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 250
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <CancelRequest />
       1. <FundsReleasedFromHold />
       1. <CancelResponse />
       1. <SuccessMessage />
-      1. <CaptureRequest />
+    </div>
+    <div class="col col--6">
+      ### [`cancel`](/docs/api/20-cancel)
+      <Tabs>
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+          //overridden
+              "tags": [
+          //overridden
+                "rampart"
+              ]
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+          //overridden
+              "itemIds": [
+          //overridden
+                "pegasus"
+            },
+            "code": "string",
+            "message": "string",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <CaptureRequest />
       1. <Payment />
       1. <CaptureResponse />
-      1. <StatusRequest />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture)
+      <Tabs>
+        <TabItem value="request">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "itemIds": [
+          //added
+                "naga"
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      11. <StatusRequest />
       1. <StatusResponse />
     </div>
     <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
       <Tabs>
-        <TabItem value="cancel request">
+        <TabItem value="request">
+          <StatusReq />
         </TabItem>
-        <TabItem value="cancel response">
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 0,
+                "current": 1100
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "canceled",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -128,24 +425,25 @@ sidebar_position: 20
         C ->> M: customer requests cancellation
       end
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
-        M ->>+O: 𝚖𝚘𝚍𝚒𝚏𝚢 request
+        M ->>+O: modify request
         O ->> O: funds released from hold
-        O -->>-M: 𝚖𝚘𝚍𝚒𝚏𝚢 response
+        O -->>-M: modify response
       opt
         M -->> C: success message
       end
       end
-      opt
-        M ->>+O: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 request
+      rect rgb(83, 140, 233)
+      note over C,O: Capture the rest of the cart
+        M ->>+O: capture request
         O ->> O: payment
-        O -->>-M: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 response
-      end
+        O -->>-M: capture response
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
+      end
       end
   `}
 />
@@ -156,21 +454,109 @@ sidebar_position: 20
       1. <CustomerRequestsCancellation />
       1. <StatusRequest />
       1. <StatusResponse />
-      1. <ModifyRequest />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
+      <Tabs>
+        <TabItem value="request">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="response">
+          <StatusResPegasusAuthorized />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <ModifyRequest />
       1. <FundsReleasedFromHold />
       1. <ModifyResponse />
       1. <SuccessMessage />
-      1. <CaptureRequest />
+    </div>
+    <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify)
+      <Tabs>
+        <TabItem value="request">
+          <ModifyReqPegasusAmount />
+        </TabItem>
+        <TabItem value="response">
+          <ModifyResPegasusAmount />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <CaptureRequest />
       1. <Payment />
       1. <CaptureResponse />
-      1. <StatusRequest />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture)
+      <Tabs>
+        <TabItem value="request">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="response">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      11. <StatusRequest />
       1. <StatusResponse />
     </div>
     <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
       <Tabs>
-        <TabItem value="modify request">
+        <TabItem value="request">
+          <StatusReq />
         </TabItem>
-        <TabItem value="modify response">
+        <TabItem value="response">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "USD",
+
+              "totalAmounts": {
+                "initiated": 250,
+         //highlight-start
+                "captured": 150,
+                "refunded": 0,
+                "current": 150
+        //highlight-end
+              },
+              "items": [
+                {
+                  "pegasus": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 250,
+        //highlight-start
+                      "captured": 150,
+                      "refunded": 0,
+                      "current": 150
+        //highlight-end
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
         </TabItem>
       </Tabs>
     </div>
@@ -201,3 +587,12 @@ import RefundResponse from './_snippets/refund-response.mdx';
 import StatusRequest from './_snippets/status-request.mdx';
 import StatusResponse from './_snippets/status-response.mdx';
 import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx'
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx'
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx'
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx'
+import StatusResPegasusAuthorized from '../_snippets/api/code-snippets/status-res-pegasus-authorized.mdx';
+import StatusResPegasusCanceled from '../_snippets/api/code-snippets/status-res-pegasus-canceled.mdx';
+import ModifyReqPegasusAmount from '../_snippets/api/code-snippets/modify-req-pegasus-amount.mdx';
+import ModifyResPegasusAmount from '../_snippets/api/code-snippets/modify-res-pegasus-amount.mdx';

@@ -25,7 +25,7 @@ OmniCart is designed to accept multiple items in a payment request by default so
         "items": [
           {
             "pegasus": {
-              "amount": 250,
+              "amount": 250
             }
           }
         ]
@@ -36,7 +36,7 @@ OmniCart is designed to accept multiple items in a payment request by default so
 </div>
 
 :::info Please, note
-All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/docs/panel/ADDLINK) to be available for purchase as each cart initiation request must contain at least one existing item identifier.
+All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/docs/panel) to be available for purchase as each cart initiation request must contain at least one existing item identifier.
 :::
 
 <div class="container">
@@ -46,20 +46,20 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
 
       A cart may contain items of any type.
 
-      In the example to the right the `items` array contains several item identifiers: `donation`, `milk`, and `premiumAccess`. This code implies these item identifiers were previously [registered in the Merchant Panel](/docs/panel/ADDLINK).
+      In the example to the right the `items` array contains several item identifiers: `donation`, `milk`, and `premiumAccess`. This code implies these item identifiers were previously [registered in the Merchant Panel](/docs/panel).
     </div>
     <div class="col col--6">
       ```js
         "items": [
           {
             "lich": {
-              "amount": 600,
+              "amount": 600
               },
             "wight": {
-              "amount": 230,
+              "amount": 230
               },
             "vampire": {
-              "amount": 500,
+              "amount": 500
               }
             }
         ]
@@ -82,9 +82,9 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
 
       In the request snippet to the right, the `mage` and `naga` items are assigned the `tower` tag. The `beholder` item is marked with the `dungeon` tag and the `nomad` item doesn't have a tag at all.
       
-      After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), [cancel](/docs/api/20-cancel), [capture](/docs/api/30-capture), or [refund](/docs/api/50-refund) items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/concepts/lifecycle) for more information on item statuses).
+      After a cart is initiated, you can utilize tags to [retrieve cart item statuses](/docs/api/15-status), <CancelLink />, [capture](/docs/api/30-capture), or <RefundLink /> items by calling the corresponding API methods (see also [Payment Lifecycle](/docs/concepts/lifecycle) for more information on item statuses).
       
-      Tags can also be redefined or reassigned by calling the [modify](/docs/api/40-modify) method — this option is described in detail in the [Modify](/docs/concepts/modify) section of this documentation.
+      Tags can also be redefined or reassigned by calling the <ModifyLink /> method — this option is described in detail in the [Modify](/docs/concepts/modify) section of this documentation.
     </div>
     <div class="col col--6">
       ```js
@@ -92,27 +92,27 @@ All item identifiers have to be uploaded to OmniCart in the [Merchant Panel](/do
             {
               "mage": {
       //added
-                "tag": "tower"
-                "amount": 450,
+                "tag": "tower",
+                "amount": 450
               }
             },
             {
               "naga": {
       //added
-                "tag": "tower"
-                "amount": 1600,
+                "tag": "tower",
+                "amount": 1600
               }
             },
             {
               "nomad": {
-                "amount": 200,
+                "amount": 200
               }
             },
             {
               "beholder": {
       //added
-                "tag": "dungeon"
-                "amount": 280,
+                "tag": "dungeon",
+                "amount": 280
               }
             },
           ]

@@ -13,20 +13,19 @@ sidebar_position: 10
         participant C as Customer
         participant M as Merchant
         participant O as OmniCart
-        participant A as Verification Service
+        participant V as Verification Service
         C ->> M: customer begins payment
-        M ->>+O: 𝚒𝚗𝚒𝚝 request
-        O ->> C: invoice delivery
-        C ->> A: payment authorization
-        A ->> O: authorized
-      par
-        O ->> O: payment
-        O -->>-M: 𝚒𝚗𝚒𝚝 response
-      end
+        M ->>+O: init request
+        O -->>-M: init response
+        M ->> C: invoice delivery
+        C ->>+V: payment authorization
+        V ->>-O: authorized
+      activate O
+        O ->>-O: payment
         M -->> C: success message
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
   `}
 />
@@ -36,20 +35,54 @@ sidebar_position: 10
     <div class="col col--6">
       1. <CustomerBeginsPayment />
       1. <InitRequest />
+      1. <InitResponse />
       1. <InvoiceDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <Payment />
-      1. <InitResponse />
       1. <SuccessMessage />
-      1. <StatusRequest />
+    </div>
+    <div class="col col--6">
+    ### [`init`](/docs/api/10-init)
+      <Tabs>
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "USD",
+            "items": [
+              {
+                "pegasus": {
+                  "amount": 250,
+          //highlight-next-line
+                  "capture": false
+                }
+              }
+            ]
+          }
+          ```
+        </TabItem>
+        <TabItem value="response">
+          <InitResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      9. <StatusRequest />
       1. <StatusResponse />
     </div>
     <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
       <Tabs>
-        <TabItem value="init request">
+        <TabItem value="request">
+          <StatusReq />
         </TabItem>
-        <TabItem value="init response">
+        <TabItem value="response">
+          <StatusResPegasusCompleted />
         </TabItem>
       </Tabs>
     </div>
@@ -65,23 +98,22 @@ sidebar_position: 10
         participant C as Customer
         participant M as Merchant
         participant O as OmniCart
-        participant A as Verification Service
+        participant V as Verification Service
         C ->> M: customer begins payment
-        M ->>+O: 𝚒𝚗𝚒𝚝 request
-        O ->> C: invoice delivery
-        C ->> A: payment authorization
-        A ->> O: authorized
-        O ->> O: funds on hold
-        O -->>-M: 𝚒𝚗𝚒𝚝 response
+        M ->>+O: init request
+        O -->>-M: init response
+        M ->> C: invoice delivery
+        C ->>+V: payment authorization
+        V ->>-O: authorized
+      activate O
+        O ->>-O: funds on hold
         M -->> C: success message
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
-        M ->>+O: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 request
+        M ->>+O: capture request
         O ->> O: payment
-        O -->>-M: 𝚌𝚊𝚙𝚝𝚞𝚛𝚎 response
+        O -->>-M: capture response
       opt
-        M ->> O: 𝚜𝚝𝚊𝚝𝚞𝚜 request
-        O -->> M: 𝚜𝚝𝚊𝚝𝚞𝚜 response
+        M ->>+O: status request
+        O -->>-M: status response
       end
   `}
 />
@@ -91,31 +123,77 @@ sidebar_position: 10
     <div class="col col--6">
       1. <CustomerBeginsPayment />
       1. <InitRequest />
+      1. <InitResponse />
       1. <InvoiceDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <FundsOnHold />
-      1. <InitResponse />
       1. <SuccessMessage />
-      1. <StatusRequest />
-      1. <StatusResponse />
-      1. <CaptureRequest />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
+      <Tabs>
+        <TabItem value="request">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "USD",
+            "items": [
+              {
+                "pegasus": {
+                  "amount": 250,
+                    //highlight-next-line
+                  "capture": true
+                }
+              }
+            ]
+          }
+          ```
+          :::tip
+          Note that it is not necessary to pass `"capture": true` for two-step payments as this is the default behavior.
+          :::
+        </TabItem>
+        <TabItem value="response">
+          <InitResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      9. <CaptureRequest />
       1. <Payment />
       1. <CaptureResponse />
-      1. <StatusRequest />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture)
+      <Tabs>
+        <TabItem value="request">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="response">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      12. <StatusRequest />
       1. <StatusResponse />
     </div>
     <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (optional)
       <Tabs>
-        <TabItem value="init request">
+        <TabItem value="request">
+          <StatusReq />
         </TabItem>
-        <TabItem value="init response">
-        </TabItem>
-      </Tabs>
-      <Tabs>
-        <TabItem value="capture request">
-        </TabItem>
-        <TabItem value="capture response">
+        <TabItem value="response">
+          <StatusResPegasusCompleted />
         </TabItem>
       </Tabs>
     </div>
@@ -146,3 +224,10 @@ import RefundResponse from './_snippets/refund-response.mdx';
 import StatusRequest from './_snippets/status-request.mdx';
 import StatusResponse from './_snippets/status-response.mdx';
 import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx';
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx';
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx';
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx';
+import StatusResPegasusCompleted from '../_snippets/api/code-snippets/status-res-pegasus-completed.mdx';
+

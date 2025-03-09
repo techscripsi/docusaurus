@@ -29,6 +29,13 @@ library.add(fab, fas); // Add all icons to the library so you can use them witho
   import Amex from '@site/static/img/cards/amex.svg';
   import Link from '@docusaurus/Link';
 
+  import InitLink from '@site/docs/_snippets/api/init-link.mdx';
+  import StatusLink from '@site/docs/_snippets/api/status-link.mdx';
+  import ModifyLink from '@site/docs/_snippets/api/modify-link.mdx';
+  import CaptureLink from '@site/docs/_snippets/api/capture-link.mdx';
+  import CancelLink from '@site/docs/_snippets/api/cancel-link.mdx';
+  import RefundLink from '@site/docs/_snippets/api/refund-link.mdx';
+
 
   export default {
     ...MDXComponents,
@@ -48,5 +55,11 @@ library.add(fab, fas); // Add all icons to the library so you can use them witho
     Amex,
 
     Link,
-  };
-  
+    
+    InitLink,
+    StatusLink,
+    ModifyLink,
+    CaptureLink,
+    CancelLink,
+    RefundLink,
+  }

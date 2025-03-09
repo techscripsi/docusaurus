@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from '@docusaurus/Link';
 import Cards from '/docs/_snippets/cards.mdx';
 
-<h1><FontAwesomeIcon icon="asterisk" />&nbsp;Quick Reference</h1>
+<!--
+<h1 class="hero__title"><FontAwesomeIcon icon="asterisk" /> Quick Reference</h1>
+-->
 
 <div class="container">
   <div class="row">
@@ -15,12 +17,12 @@ import Cards from '/docs/_snippets/cards.mdx';
       <h2>API</h2>
       | Requests || Statuses<br />before | Statuses<br />after |
       | :-- | :-- | :-- | :-- |
-      | [`init`](/docs/api/10-init) | [Response codes](/docs/api/response-codes#init) | N/A | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`initiated`](/docs/concepts/lifecycle#initiated)<br />[`rejected`](/docs/concepts/lifecycle#rejected)<br />[`expired`](/docs/concepts/lifecycle#expired)<br />[`authorized`](/docs/concepts/lifecycle#authorized)<br />[`completed`](/docs/concepts/lifecycle#completed) |
-      | [`status`](/docs/api/15-status) | [Response codes](/docs/api/response-codes#status) | Any | Any |
-      | [`cancel`](/docs/api/20-cancel) | [Response codes](/docs/api/response-codes#cancel) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`canceled`](/docs/concepts/lifecycle#canceled) |
-      | [`capture`](/docs/api/30-capture) | [Response codes](/docs/api/response-codes#capture) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`captured`](/docs/concepts/lifecycle#captured)<br />[`completed`](/docs/concepts/lifecycle#completed) |
-      | [`modify`](/docs/api/40-modify) | [Response codes](/docs/api/response-codes#modify) | Any | Any |
-      | [`refund`](/docs/api/50-refund) | [Response codes](/docs/api/response-codes#refund) | [`completed`](/docs/concepts/lifecycle#completed) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`refunded`](/docs/concepts/lifecycle#refunded) |
+      | <InitLink /> | [Response codes and messages](/docs/api/response-codes#init) | N/A | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`initiated`](/docs/concepts/lifecycle#initiated)<br />[`rejected`](/docs/concepts/lifecycle#rejected)<br />[`expired`](/docs/concepts/lifecycle#expired)<br />[`authorized`](/docs/concepts/lifecycle#authorized)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | <StatusLink /> | [Response codes and messages](/docs/api/response-codes#status) | Any | Any |
+      | <CancelLink /> | [Response codes and messages](/docs/api/response-codes#cancel) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`canceled`](/docs/concepts/lifecycle#canceled) |
+      | <CaptureLink /> | [Response codes and messages](/docs/api/response-codes#capture) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`captured`](/docs/concepts/lifecycle#captured)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | <ModifyLink /> | [Response codes and messages](/docs/api/response-codes#modify) | Any | Any |
+      | <RefundLink /> | [Response codes and messages](/docs/api/response-codes#refund) | [`completed`](/docs/concepts/lifecycle#completed) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`refunded`](/docs/concepts/lifecycle#refunded) |
 
       <div class="container">
         <div class="row">

@@ -19,9 +19,7 @@ config.autoAddCss = false
 import { faBook } from '@fortawesome/pro-solid-svg-icons'
 // FontAwesome end
 
-
 import Features from '@site/docs/_snippets/features.mdx'
-
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 
@@ -38,7 +36,7 @@ import ReactDOM from 'react-dom'
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
+    <header className={clsx('hero hero-index', styles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
         {siteConfig.title}

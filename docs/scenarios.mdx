@@ -6,45 +6,50 @@ hide_table_of_contents: true
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Link from '@docusaurus/Link';
 
-<h1><FontAwesomeIcon icon="money-bill-transfer" />&nbsp;Payment Scenarios</h1>
-
-<p className="hero__subtitle">Review some examples of payment scenarios to get a better idea of how payments work</p>
-
+<div class="hero section-banner">
+  <div class="container">
+    <h1 class="hero__title"><FontAwesomeIcon icon="money-bill-transfer" /> Payment Scenarios</h1>
+    <p class="hero__subtitle">Review examples of payment scenarios to get a better idea of how payments work</p>
+    <div>
+    </div>
+  </div>
+</div>
+<p />
 <div class="tile-container">
-   <Link to="/docs/scenarios/basic#onestep" className="card-link">
+  <Link to="/docs/scenarios/basic#onestep" className="card-link">
+   <div class="tile card-click item shadow--md">
+       <h3>Basic One-Step Payment</h3>
+       <p>This section covers the straightforward process of executing a single payment transaction</p>
+   </div>
+  </Link>
+  <Link to="/docs/scenarios/basic#twostep" className="card-link">
     <div class="tile card-click item shadow--md">
-        <h3>Basic One-Step Payment</h3>
-        <p>Minimum one-step payment scenario</p>
+      <h3>Basic Two-Step Payment</h3>
+       <p>Explore the two-step payment method, detailing authorization followed by capture of funds</p>
     </div>
-   </Link>
+  </Link>
+  <Link to="/docs/scenarios/complex" className="card-link">
     <div class="tile card-click item shadow--md">
-      <Link to="/docs/scenarios/basic#twostep" className="card-link">
-        <h3>Basic Two-Step Payment</h3>
-        <p>Minimum two-step payment scenario</p>
-      </Link>
+      <h3>Complex Scenarios</h3>
+      <p>Look into advanced payment situations, including multi-item carts and partial payments</p>
     </div>
+  </Link>
+  <Link to="/docs/scenarios/cancel" className="card-link">
     <div class="tile card-click item shadow--md">
-      <Link to="/docs/scenarios/complex" className="card-link">
-        <h3>Complex Scenarios</h3>
-        <p>A couple of complex scenarios with multiple options combined</p>
-      </Link>
+      <h3>Cancellation Scenarios</h3>
+      <p>Understand the procedures and implications of canceling a payment before processing is complete</p>
     </div>
+  </Link>
+  <Link to="/docs/scenarios/refund" className="card-link">
     <div class="tile card-click item shadow--md">
-      <Link to="/docs/scenarios/cancel" className="card-link">
-        <h3>Cancellation Scenarios</h3>
-        <p>Examples of different cancellation scenarios</p>
-      </Link>
+      <h3>Refund Scenarios</h3>
+      <p>Learn how to process refunds, whether for full amounts or specific items</p>
     </div>
+  </Link>
+  <Link to="/docs/scenarios/failure" className="card-link">
     <div class="tile card-click item shadow--md">
-      <Link to="/docs/scenarios/refund" className="card-link">
-        <h3>Refund Scenarios</h3>
-        <p>Examples of several refund scenarios</p>
-      </Link>
+      <h3>Failure Scenarios</h3>
+      <p>Examine common payment failures and their causes</p>
     </div>
-    <div class="tile card-click item shadow--md">
-      <Link to="/docs/scenarios/failure" className="card-link">
-        <h3>Failure Scenarios</h3>
-        <p>Examples of several payment failure scenarios</p>
-      </Link>
-    </div>
+  </Link>
 </div>
