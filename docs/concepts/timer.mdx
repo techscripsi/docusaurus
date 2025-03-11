@@ -2,13 +2,13 @@
 sidebar_position: 40
 ---
 
-# Item Timers {#item-timers}
+# Item Timers
 
 Timers are an additional way to manage the [payment life cycle](/docs/concepts/lifecycle). They can be useful when providing temporary access to your products and services like subscriptions or premium app features. Timers require the `customerId` property to be passed with the request. `customerId` values are generated on your side.
 
-OmniCart remembers the relation between the `customerId` value and the item identifier and prevents buying an item with an active timer for the specified customer. A timer is considered active in the `pending`, `started`, and `paused` statuses (see [Timer Life Cycle](#timer-life-cycle) section below).
+OmniCart remembers the relation between the `customerId` value and the item identifier and prevents buying an item with an active timer for the specified customer. A timer is considered active in the `pending`, `started`, and `paused` statuses (see [Timer Life Cycle](#lifecycle) section below).
 
-## Timer Life Cycle {#timer-life-cycle}
+## Timer Life Cycle {#lifecycle}
 
 Timer statuses can be retrieved using the [status](/docs/api/15-status) request. These statuses are returned per item.
 
@@ -50,7 +50,7 @@ Timer statuses can be retrieved using the [status](/docs/api/15-status) request.
     
     The `pending` status means that the current item has not entered a set timer trigger event. It is an active state, meaning that you cannot initiate another cart containing this item with the same `customerId` value.
     
-    From the `pending` state a timer can be started by a trigger event or manually (see the [Starting a timer](#timer-start) section above).
+    From the `pending` state a timer can be started by a trigger event or manually (see the [Starting a timer](#start) section above).
 
     ### `started`
 
@@ -72,7 +72,7 @@ A timer enters the `stopped` status after it has been manually stopped with the 
 A timer enters the `stopped` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
 
-## Enabling a timer {#timer-enable}
+## Enabling a timer {#enable}
 
 By default, timers are disabled (not set). You can enable a timer at the beginning of the payment life cycle with the <InitLink /> request or at any other stage of the payment process using the <ModifyLink /> request. By enabling a timer, you define its settings like starting conditions and the countdown value.
 
@@ -80,21 +80,17 @@ By default, timers are disabled (not set). You can enable a timer at the beginni
 With the <ModifyLink /> request, you can disable any timer at any moment regardless of its current status.
 :::
 
-## Starting a timer {#timer-start}
+## Starting a timer {#start}
 
 A timer can be started by a trigger event or manually. Until started, an enabled timer stays in the `pending` state.
 
-### Trigger Events {#trigger-events}
+### Trigger Events {#events}
 
 A trigger event is an item [payment status](/docs/concepts/lifecycle). For example, if you set `authorized` as a trigger event, the timer will start the countdown as soon as the item enters the `authorized` status. Any future, current, or past trigger event can be selected. Consider the following examples.
 
 * You set a timer using the <InitLink /> request with the `initiated` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors.
 * The current item status is `captured` and you set a timer using the <ModifyLink /> request with the `authorized` status as the trigger event. The item timer countdown starts immediately after the request is processed with no errors as the `authorized` status is prior to the `captured` status.
 * The item is not initiated or in any status prior to `refunded`. You set a timer using the <InitLink /> or <ModifyLink /> request with the `refunded` status as the trigger event. The item timer countdown starts if the item enters the `refunded` state.
-
-<!--
-???one stage payments
--->
 
 :::tip
 It's up to you whether to use timers and how to utilize them. If we refer to the last example, you, for some reason, might want to prevent your customer from purchasing the item they asked to refund for a certain period of time (or forever, if the countdown value is set to `0`).
@@ -116,11 +112,11 @@ If you pass value `0`, the timer is infinite. For example, you can utilize this 
 Must have enough privileges
 -->
 
-## End of Timer Life Cycle {#end-of-timer-life-cycle}
+## End of Timer Life Cycle {#endof-lifecycle}
 
 When a timer elapses or is stopped manually, it reaches the end of its life cycle and cannot be restarted. To set a new timer for an item, you need to initiate a new cart (or modify an existing one) with the `customerId` value and timer settings.
 
-### Countdown End {#countdown-end}
+### Countdown End {#elapse}
 
 A timer's countdown ends when the number of seconds specified in the timer settings of the <InitLink /> or <ModifyLink /> request elapses. If a timer is manually paused after it starts, the countdown freezes until manually unpaused. To unpause a timer, pass the `start` value of the `manualAction` property in the <ModifyLink /> request.
 

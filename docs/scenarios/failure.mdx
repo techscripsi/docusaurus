@@ -15,7 +15,7 @@ sidebar_position: 40
         participant O as OmniCart
         C ->> M: customer begins payment
         M ->>+O: init request
-        O ->> C: invoice delivery
+        O ->> C: payment form delivery
       note over O: ⏲ cart expires
       deactivate O
       opt
@@ -30,7 +30,7 @@ sidebar_position: 40
     <div class="col col--6">
       1. <CustomerBeginsPayment />
       1. <InitRequest />
-      1. <InvoiceDelivery /><br /><CartExpires />
+      1. <PaymentFormDelivery /><br /><CartExpires />
     </div>
     <div class="col col--6">
       ### [`init`](/docs/api/10-init)
@@ -39,7 +39,7 @@ sidebar_position: 40
           ```js
           {
             "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-            "currency": "USD",
+            "currency": "XAU",
             "cartExpiry": 7200,
             "items": [
               {
@@ -75,7 +75,7 @@ sidebar_position: 40
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 1100,
                 "captured": 0,
@@ -123,7 +123,7 @@ sidebar_position: 40
         participant A as Verification Service
         C ->> M: customer begins payment
         M ->>+O: init request
-        O ->> C: invoice delivery
+        O ->> C: payment form delivery
         C -x A: payment authorization
         A ->>O: not authorized
         O -->>-M: init response
@@ -136,7 +136,7 @@ sidebar_position: 40
     <div class="col col--6">
       1. <CustomerBeginsPayment />
       1. <InitRequest />
-      1. <InvoiceDelivery />
+      1. <PaymentFormDelivery />
       1. <PaymentAuthorization />
       1. <NotAuthorized />
       1. <InitResponse />
@@ -190,7 +190,7 @@ import FundsOnHold from './_snippets/funds-on-hold.mdx';
 import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
 import InitRequest from './_snippets/init-request.mdx';
 import InitResponse from './_snippets/init-response.mdx';
-import InvoiceDelivery from './_snippets/invoice-delivery.mdx';
+import PaymentFormDelivery from './_snippets/paymentform-delivery.mdx';
 import ModifyRequest from './_snippets/modify-request.mdx';
 import ModifyResponse from './_snippets/modify-response.mdx';
 import NotAuthorized from './_snippets/not-authorized.mdx';

@@ -6,6 +6,8 @@ sidebar_position: 40
 
 ## Example #1
 
+In this scenario, a cart item is created with an expiring timer. For example, it could be temporary access to a mobile app feature. The customer then wants to upgrade to the PRO version before the temporary timer expires. The PRO version implies unlimited use of the feature. One way to achieve this, is to stop the item timer and register a new cart with an unlimited timer.
+
 <Mermaid
   value={`
     sequenceDiagram
@@ -18,28 +20,28 @@ sidebar_position: 40
         C ->> M: customer begins payment
         M ->>+O: init request with temp timer
         O -->>-M: init response
-        M ->> C: invoice delivery
+        M ->> C: payment form delivery
         C ->>+V: payment authorization
         V ->>-O: authorized
       activate O
         O ->>-O: payment
         M ->> C: success message
       end
-        C ->> M: wants access forever
+        C ->> M: customer wants to upgrade to PRO
       opt
         M ->>+O: status request
         O -->>-M: status response
       end
-        M ->>+O: modify request - stop timer // implement your own logic //FIXME
+        M ->>+O: modify request: stop timer
         O ->> O: timer stopped
         O -->>-M: modify response
       opt
         M -->> C: success message
       end
-        C ->> M: approve payment for forever
-        M ->>+O: init request //timer set to 0, forever
+        C ->> M: customer comfirmation to upgrade
+        M ->>+O: init request: timer value set to 0
         O -->>-M: init response
-        M ->> C: invoice delivery
+        M ->> C: payment form delivery
         C ->> +V: payment authorization
         V ->> -O: authorized
       activate O
@@ -55,7 +57,7 @@ sidebar_position: 40
       1. <CustomerBeginsPayment />
       1. <InitRequest /> WithTempTimer
       1. <InitResponse />
-      1. <InvoiceDelivery />
+      1. <PaymentFormDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <Payment />
@@ -69,7 +71,7 @@ sidebar_position: 40
           {
             "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
             "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
-            "currency": "USD",
+            "currency": "XAU",
             "items": [
               {
                 "bloodlust": {
@@ -84,7 +86,7 @@ sidebar_position: 40
                 }
               }
             ],
-            "invoice": {
+            "paymentForm": {
               "deliveryOption": "redirect",
               "value": "https://test.com/payment"
             }
@@ -101,7 +103,7 @@ sidebar_position: 40
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      9. WantsAccessForever FIXME
+      9. The customer wants to upgrade to PRO version.
       1. <StatusRequest />
       1. <StatusResponse />
     </div>
@@ -117,7 +119,7 @@ sidebar_position: 40
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
               "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 100,
                 "captured": 100,
@@ -161,8 +163,8 @@ sidebar_position: 40
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      12. <ModifyRequest /> -StopTimerImplementYourOwnLogic
-      1. TimerStopped FIXME
+      12. <ModifyRequest /> These settings instruct OmniCart toto stop the item timer.
+      1. The timer is stopped by manual action.
       1. <ModifyResponse />
       1. <SuccessMessage />
     </div>
@@ -198,10 +200,10 @@ sidebar_position: 40
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      16. ApprovePaymentForForever FIXME
-      1. <InitRequest /> -TimerSetTo0,Forever
+      16. The customer confirmed the upgrade.
+      1. <InitRequest /> The timer value is set to `0` meaning that it does not expire.
       1. <InitResponse />
-      1. <InvoiceDelivery />
+      1. <PaymentFormDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <Payment />
@@ -215,7 +217,7 @@ sidebar_position: 40
           {
             "cartId": "998090f3-e1a3-446b-b503-c41ad9ee546a",
             "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
-            "currency": "USD",
+            "currency": "XAU",
             "items": [
               {
                 "bloodlust": {
@@ -230,7 +232,7 @@ sidebar_position: 40
                 }
               }
             ],
-            "invoice": {
+            "paymentForm": {
               "deliveryOption": "redirect",
               "value": "https://test.com/payment"
             }
@@ -248,12 +250,13 @@ sidebar_position: 40
           ```
         </TabItem>
       </Tabs>
-      <!-- another cartId-->
     </div>
   </div>
 </div>
 
 ## Example #2
+
+This scenario involves reassigning tags after authorization, capturing selected items, expiration of the capture period, and a partial refund.
 
 <Mermaid
   value={`
@@ -266,7 +269,7 @@ sidebar_position: 40
         C ->> M: customer begins payment
         M ->>+O: init request
         O -->>-M: init response
-        M ->> C: invoice delivery
+        M ->> C: payment form delivery
         C ->>+V: payment authorization
         V ->>-O: authorized
       activate O
@@ -291,8 +294,8 @@ sidebar_position: 40
         M ->>+O: status request
         O ->>-M: status response
       end
-        C ->> M: demand refund for some amount of C
-        M ->>+O: modify request for C
+        C ->> M: customer requests a refund
+        M ->>+O: modify request to reduce item quantity
         O ->> O: payment refunded
         O -->>-M: modify response
       opt
@@ -311,7 +314,7 @@ sidebar_position: 40
       1. <CustomerBeginsPayment />
       1. <InitRequest />
       1. <InitResponse />
-      1. <InvoiceDelivery />
+      1. <PaymentFormDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <FundsOnHold />
@@ -324,7 +327,7 @@ sidebar_position: 40
           ```js
           {
             "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-            "currency": "USD",
+            "currency": "XAU",
             "scope": {
               "cart": {
                 "paymentBox": {
@@ -359,7 +362,7 @@ sidebar_position: 40
                 }
               }
             ],
-            "invoice": {
+            "paymentForm": {
               "deliveryOption": "redirect",
               "value": "https://test.com/payment"
             }
@@ -390,7 +393,7 @@ sidebar_position: 40
             {
               "data": {
                 "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-                "currency": "USD",
+                "currency": "XAU",
                 "totalAmounts": {
                   "initiated": 15400,
                   "captured": 0,
@@ -510,7 +513,7 @@ sidebar_position: 40
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 15400,
                 "captured": 0,
@@ -643,7 +646,7 @@ sidebar_position: 40
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 15400,
                 "captured": 12700,
@@ -717,7 +720,7 @@ sidebar_position: 40
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      21. DemandRefundForSomeAmount //FIXME
+      21. The customer wants a partial refund.
       1. <ModifyRequest />
       1. <PaymentRefunded />
       1. <ModifyResponse />
@@ -785,7 +788,7 @@ sidebar_position: 40
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 15400,
                 "captured": 12700,
@@ -871,7 +874,7 @@ import FundsOnHold from './_snippets/funds-on-hold.mdx';
 import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
 import InitRequest from './_snippets/init-request.mdx';
 import InitResponse from './_snippets/init-response.mdx';
-import InvoiceDelivery from './_snippets/invoice-delivery.mdx';
+import PaymentFormDelivery from './_snippets/paymentform-delivery.mdx';
 import ModifyRequest from './_snippets/modify-request.mdx';
 import ModifyResponse from './_snippets/modify-response.mdx';
 import Payment from './_snippets/payment.mdx';

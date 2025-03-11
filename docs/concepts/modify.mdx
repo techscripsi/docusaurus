@@ -4,12 +4,12 @@ sidebar_position: 50
 
 # Modifying Items
 
-The <ModifyLink /> request allows you to modify a previously initiated cart. This request is similar to the <InitLink /> request in that it allows you to define properties on the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/concepts/cart) section for more information). Although, there are a number of differences that are covered in this section.
+The <ModifyLink /> request allows you to modify a previously initiated cart. This request is similar to the <InitLink /> request in that it allows you to define properties at the cart, tag, and item levels (see the [Carts, Tags, and Items](/docs/concepts/cart) section for more information). Although, there are a number of differences that are covered in this section.
 
 The <ModifyLink /> request allows you to:
 
-* reassign or delete existing tags and introduce new ones
-* redefine payment settings, change or recalculate item amounts
+* reassign or delete existing tags and introduce new ones;
+* redefine payment settings, change or recalculate item amounts;
 * redefine timer settings.
 
 :::warning Please note
@@ -124,7 +124,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
 
 ## Modifying Amounts {#amounts}
 
-Amount settings ​​can be modified on the cart, tag, or item level as with the <InitLink /> request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
+Amount settings ​​can be modified at the cart, tag, or item level as with the <InitLink /> request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
 
 :::warning Please, note
 The full item amount cannot be modified to a greater value.

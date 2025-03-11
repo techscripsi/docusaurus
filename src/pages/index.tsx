@@ -6,6 +6,7 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
 import Mermaid from '@theme/Mermaid';
 import React from 'react';
+import Translate, {translate} from '@docusaurus/Translate';
 
 // FontAwesome start
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,7 +42,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
         {siteConfig.title}
         </Heading>
-        <p className="hero__subtitle">Every order fits the cart, from one item to many</p>
+        <p className="hero__subtitle"><Translate>Every order fits the cart, from one item to many</Translate></p>
 {/* 
         <div className={styles.buttons}>
           <Link
@@ -76,16 +77,16 @@ export default function Home(): JSX.Element {
               <Features />
             </div>
             <div class="col col--6">
-            <h1><FontAwesomeIcon icon="gear" />&nbsp;Technical Information</h1>
+            <h1><FontAwesomeIcon icon="gear" />&nbsp;<Translate>Technical Information</Translate></h1>
               <Link to="/docs/api/omnicart-api" className="card-link">
                 <div class="card-demo text--no-decoration">
                   <div class="card-click item shadow--md">
                     <div class="card__header">
-                      <h3><FontAwesomeIcon icon="code" />&nbsp;API Specification</h3>
+                      <h3><FontAwesomeIcon icon="code" />&nbsp;<Translate>API Specification</Translate></h3>
                     </div>
                     <div class="card__body">
                       <p>
-                        Implement our API in your store
+                      <Translate>Implement our API in your store</Translate>
                       </p>
                     </div>
                   </div>
@@ -96,11 +97,11 @@ export default function Home(): JSX.Element {
                 <div class="card-demo text--no-decoration">
                   <div class="card-click item shadow--md">
                     <div class="card__header">
-                      <h3><FontAwesomeIcon icon="money-bill-transfer" />&nbsp;Payment Scenarios</h3>
+                      <h3><FontAwesomeIcon icon="money-bill-transfer" />&nbsp;<Translate>Payment Scenarios</Translate></h3>
                     </div>
                     <div class="card__body">
                       <p>
-                        Take a look at some examples of payment scenarios available with OmniCart
+                      <Translate>Take a look at some examples of payment scenarios available with OmniCart</Translate>
                       </p>
                     </div>
                   </div>
@@ -111,11 +112,11 @@ export default function Home(): JSX.Element {
                 <div class="card-demo text--no-decoration">
                   <div class="card-click item shadow--md">
                     <div class="card__header">
-                      <h3><FontAwesomeIcon icon="bug" />&nbsp;Testing and Debugging</h3>
+                      <h3><FontAwesomeIcon icon="bug" />&nbsp;<Translate>Testing and Debugging</Translate></h3>
                     </div>
                     <div class="card__body">
                       <p>
-                        Test your payment scenarios before switching to production
+                      <Translate>Test your payment scenarios before switching to production</Translate>
                       </p>
                     </div>
                   </div>
@@ -126,11 +127,11 @@ export default function Home(): JSX.Element {
                 <div class="card-demo text--no-decoration">
                   <div class="card-click item shadow--md">
                     <div class="card__header">
-                      <h3><FontAwesomeIcon icon="asterisk" />&nbsp;Quick Reference</h3>
+                      <h3><FontAwesomeIcon icon="asterisk" />&nbsp;<Translate>Quick Reference</Translate></h3>
                     </div>
                     <div class="card__body">
                       <p>
-                        Some useful reference information that you might want to keep at hand
+                      <Translate>Some useful reference information that you might want to keep at hand</Translate>
                       </p>
                     </div>
                   </div>

@@ -165,7 +165,7 @@ paths:
                               tag:
                                 $ref: "#/components/schemas/primitive_tag"
                                 description: |
-                                  asd 20250206104628 FIXME
+                                  The tag the item is marked with.
                               modifyAmount:
                                 $ref: "#/components/schemas/object_modifyAmount_modify_item_req"
                               modifyTimer:
@@ -230,7 +230,7 @@ paths:
             
             It this property is set to `true`, the response will return all success or failure codes and messages OmniCart will be able collect regarding the request.
             
-            See [Response codes and messages](/docusaurus/docs/api/response-codes) for more details.
+            See [Tesing and Debugging](/docs/api/test-debug) for more details.
           schema:
             $ref: "#/components/schemas/primitive_debug"
       security:
@@ -301,6 +301,7 @@ paths:
               type: object
               required:
                 - cartId
+                - paymentForm
               properties:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
@@ -321,8 +322,8 @@ paths:
                 items:
                   $ref: "#/components/schemas/block_cart"
                   description: Cart contents.
-                invoice:
-                  $ref: "#/components/schemas/object_invoice"
+                paymentForm:
+                  $ref: "#/components/schemas/object_paymentForm"
                 debug:
                     $ref: "#/components/schemas/primitive_debug"
       parameters: []
@@ -400,11 +401,14 @@ components:
         enum:
           - declared
           - calculated
-    object_invoice:
+    object_paymentForm:
       type: object
       title: " "
+      required:
+        - deliveryOption
+        - value
       description: |
-        This object contains data necessary to deliver your invoice to the customer.
+        This object contains data necessary to deliver your payment form to the customer.
       properties:
         deliveryOption:
           $ref: "#/components/schemas/primitive_deliveryOption"
@@ -425,7 +429,7 @@ components:
       type: string
       title: " "
       description: |
-        Invoice delivery option.
+        Payment form delivery option.
       enum:
         - redirect
         - email
@@ -436,7 +440,7 @@ components:
       type: string
       title: " "
       description: |
-        Value for the invoice delivery option depending on `deliveryOption`.
+        Value for the payment form delivery option depending on `deliveryOption`.
         
         `redirect` - HTTP redirect to the payment page
         
@@ -464,19 +468,25 @@ components:
     primitive_amount_status_res:
         type: integer
         title: " "
-        example: 9999
+        example: 1100
     primitive_amount:
       type: integer
       title: " "
-      example: 9999
+      example: 1100
     primitiveRes_code:
       type: string
       title: " "
+    primitiveRes_code_succes:
+      type: string
+      title: " "
+      example: "000000"
     primitiveRes_message:
       type: string
-      description: |
-        Response message (see [Response codes and messages](/docusaurus/docs/api/response-codes) for more details).
       title: " "
+    primitiveRes_message_success:
+      type: string
+      title: " "
+      example: "Success"
     objectRes_data:
       type: object
       title: " "
@@ -535,7 +545,13 @@ components:
         amount:
           $ref: "#/components/schemas/primitive_amount_status_res"
           description: |
-            amount description FIXME
+            Item amount in minimum currency units. How this value is applied depends on the `amountMode` property.
+            
+            `amountMode: declared` - the `amount` value passed to OmniCart is the total amount for this `itemId` in the cart. The `quantity` and `amountModifier` values are stored in OmniCart but ignored for final item price calculation.
+            
+            `amountMode: calculated` - the `amount` value is specified per item. The total amount is calculated on the OmniCart side based on the `quantity` and `amountModifier` values.
+
+            See the [Amounts](/docs/concepts/amounts) section for more information.
         amountMode:
           $ref: "#/components/schemas/primitive_amountMode"
           description: |
@@ -543,12 +559,14 @@ components:
         quantity:
           $ref: "#/components/schemas/primitive_quantity_status_res"
           description: |
-            FIXME
+            Item quantity. Can be a floating point (for example, litres of milk). Depending on the `amountMode` setting can be processed by OmniCart.
+            `amountMode: declared` - the `quantity` value is ignored for the final price calculation and stored in OmniCart.
+            `amountMode: calculated` -  the final price is calculated by multiplying `amount` by `quantity` on the OmniCart side.
           example: 1
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier_status_res"
           description: |
-            FIXME
+            If `amountMode` is set to `calculated`, this value affects the finale price for the passed item. The item price set in `amount` is multiplied by `amountModifier` and `quantity`. For example, you can use this field to arrange discounts.
           example: 1
     primitive_triggerEvent:
       type: string
@@ -572,6 +590,10 @@ components:
       properties:
         triggerEvent:
           $ref: "#/components/schemas/primitive_paymentStatus_empty"
+          description: |
+            Item payment status that triggers the timer.
+        
+            If you pass the `null` value, will have to be started manually. See the [Item Timers](/docs/concepts/timer) section for more information.
           enum:
             - initiated
             - canceled
@@ -583,8 +605,13 @@ components:
             - manual
         timerStatus:
           $ref: "#/components/schemas/primitive_timerStatus"
+          description: |
+            Current timer status.
         remainingSecs:
           $ref: "#/components/schemas/primitive_timerValue"          
+          description: |
+            Number of seconds remaining before the timer elapses.
+          example: 7200
     object_modifyAmount_modify_req:
       type: object
       title: " "
@@ -606,11 +633,13 @@ components:
         amount:
           $ref: "#/components/schemas/primitive_amount"
           description: |
-            Item amount in minimum currency units.
+            Item amount in minimum currency units. How this value is applied depends on the `amountMode` property.
             
             `amountMode: declared` - the `amount` value passed to OmniCart is the total amount for this `itemId` in the cart. The `quantity` and `amountModifier` values are stored in OmniCart but ignored for final item price calculation.
             
             `amountMode: calculated` - the `amount` value is specified per item. The total amount is calculated on the OmniCart side based on the `quantity` and `amountModifier` values.
+
+            See the [Amounts](/docs/concepts/amounts) section for more information.
         amountMode:
           $ref: "#/components/schemas/primitive_amountMode_req"
         quantity:
@@ -618,7 +647,7 @@ components:
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
           description: |
-            asd 20250206104650 FIXME
+            If `amountMode` is set to `calculated`, this value affects the finale price for the passed item. The item price set in `amount` is multiplied by `amountModifier` and `quantity`. For example, you can use this field to arrange discounts.
     object_filterBox_req:
       type: object
       title: " "
@@ -653,12 +682,16 @@ components:
       properties:
         initiated:
           $ref: "#/components/schemas/primitive_fullInitiatedAmount"
+          example: 36300
         captured:
           $ref: "#/components/schemas/primitive_fullCapturedAmount"
+          example: 33000
         refunded:
           $ref: "#/components/schemas/primitive_fullRefundedAmount"
+          example: 1100
         current:
           $ref: "#/components/schemas/primitive_fullCurrentAmount"
+          example: 31900
     primitiveRes_timestamp:
       type: string
       title: " "
@@ -675,6 +708,8 @@ components:
         properties:
           itemId:
             $ref: "#/components/schemas/object_item_init_req"
+            description: |
+              `itemId` is placeholder for a unique item idetifier.
     primitive_timerStatus:
       type: string
       title: ""
@@ -716,19 +751,18 @@ components:
       type: array
       title: " "
       description: |
-        An array of the request related codes and their corresponding messages. See the [Sandbox & Debugging](/docs/concepts/debugging) page for more information.
+        An array of the request related codes and their corresponding messages. See the [Response codes and messages](/docusaurus/docs/api/response-codes) section for more information.
       items:
         type: object
-        required:
-          - code
-          - message
         properties:
           code:
             $ref: "#/components/schemas/primitiveRes_code"
             description: |
-              Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
+              Response code.
           message: 
             $ref: "#/components/schemas/primitiveRes_message"
+            description: |
+              Response code.
     object_item_status_res:
       type: object
       title: " "
@@ -762,7 +796,7 @@ components:
            description: |
              Enable/disable timer:
                                
-             `true` - the timer is enabled, you can configure its settings
+             `true` - the timer is enabled, you can configure its settings;
                         
              `false` - the timer is disabled.
         timer:
@@ -774,6 +808,8 @@ components:
       properties:
         cart:
           type: object
+          description: |
+            Cart settings.
           properties:
             paymentBox:
               $ref: "#/components/schemas/object_paymentBox"
@@ -784,7 +820,7 @@ components:
               description: |
                 Enable/disable timer:
                                
-                `true` - the timer is enabled, you can configure its settings
+                `true` - the timer is enabled, you can configure its settings;
                         
                 `false` - the timer is disabled.
             timer:
@@ -801,7 +837,7 @@ components:
         triggerEvent:
           $ref: "#/components/schemas/primitive_paymentStatus_empty"
           description: |
-            Item payment status that triggers the timer. You can also select to start the timer manually. LINK
+            Item payment status that triggers the timer. You can also select to start the timer manually. See the [Item Timers](/docs/concepts/timer) section for more information.
           enum:
             - initiated
             - rejected
@@ -837,13 +873,13 @@ components:
         description: |
           Checkout session expiry time in seconds. After the checkout session times out, the customer will not be able to complete the payment and all cart items will change their status to `expired`.
 
-          The default value of this property as well as the privilege to change it depends on your agreement with OmniCart. SNIPPET FIXME
+          The default value of this property as well as the privilege to change it depends on your agreement with OmniCart.
 
           **It is not recommended to change this value  even if you have enough permissions.**
     primitive_currency:
       type: string
       title: " "
-      example: USD
+      example: XAU
       description: |
         "[ISO 4217](https://www.iban.com/currency-codes) alphabetic currency code."
     primitive_quantity_status_res:
@@ -880,12 +916,16 @@ components:
       properties:
         initiated:
           $ref: "#/components/schemas/primitive_totalInitiated"
+          example: 36300
         captured:
           $ref: "#/components/schemas/primitive_totalCaptured"
+          example: 33000
         refunded:
           $ref: "#/components/schemas/primitive_totalRefunded"
+          example: 1100
         current:
           $ref: "#/components/schemas/primitive_totalCurrent"
+          example: 31900
     object_modifyTimer_modify_req:
       type: object
       title: " "
@@ -902,14 +942,14 @@ components:
       type: object
       title: " "
       description: |
-        Set of payment and timer settings.
+        Set of payment settings.
       properties:
         amountMode:
           $ref: "#/components/schemas/primitive_amountMode_req"
         amountModifier:
           $ref: "#/components/schemas/primitive_amountModifier"
           description: |
-            If `amountMode` is set to `calculated`, this value affects the finale price for the passed item. The item price set in `amount` is multiplied by `amountModifier` and `quantity`. For example, you can use this field to arrange discounts. FIXME duplicated description
+            If `amountMode` is set to `calculated`, this value affects the finale price for the passed item. The item price set in `amount` is multiplied by `amountModifier` and `quantity`. For example, you can use this field to arrange discounts.
         capture:
           $ref: "#/components/schemas/primitive_capture"
           description: |
@@ -920,7 +960,7 @@ components:
             `false` - after a cart is authorized, it is captured instantly.
         captureSettings:
           $ref: "#/components/schemas/object_captureSettings"
-          description: Capture settings. By default, an authorized payment is auto canceled after 2 days (2880 minutes) without manual action.
+          description: Capture settings. By default, an authorized payment is auto canceled after 2 days (172800 seconds) without manual action.
     primitive_timerValue_req:
       type: integer
       title: " "
@@ -944,9 +984,9 @@ components:
       description: |
         If `amountMode` is set to `calculated`, the `amountModifier` value acts as a multiplier for the total item `amount`. Here is an example.
         
-        Consider an item that costs 100 USD. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is 70% of the original price).
+        Consider an item that costs 100 XAU. However, there is a time-limited 30% discount or the customer has a personal 30% discount. For this item, the `amountModifier` value should be set to `0.7` (as it is 70% of the original price).
         
-        If `amountMode` is set to `declared`, the `amountModifier` value will be stored in OmniCart but will not affect the resulting item price. LINK
+        If `amountMode` is set to `declared`, the `amountModifier` value will be stored in OmniCart but will not affect the resulting item price. See the [Amounts](/docs/concepts/amounts) section for more information.
     primitive_customerId:
       type: string
       title: " "
@@ -986,8 +1026,12 @@ components:
                     $ref: "#/components/schemas/primitive_currency"
                   totalAmounts:
                     $ref: "#/components/schemas/object_totalAmounts_status_res"
+                    description: |
+                      Total cart amounts. See the [Amounts](/docs/concepts/amounts) section for more details.
                   items:
                     type: array
+                    description: |
+                      Returned items.
                     items:
                       type: object
                       title: " "
@@ -1002,17 +1046,23 @@ components:
                                 $ref: "#/components/schemas/object_amountInfo_status_res"
                               tag:
                                 $ref: "#/components/schemas/primitive_tag"
+                                description: |
+                                  The tag the item is marked with.
                               paymentSnapshot:
                                 $ref: "#/components/schemas/object_paymentSnapshot_status_res"
+                                description: |
+                                  Current information about item amounts. See the [Amounts](/docs/concepts/amounts) section for more details.
                               timerSnapshot:
                                 $ref: "#/components/schemas/object_timerSnapshot_status_res"
+                                description: |
+                                  Current information about timer settings. See the [Item Timers](/docs/concepts/timer) section for more details.
               code:
-                $ref: "#/components/schemas/primitiveRes_code"
+                $ref: "#/components/schemas/primitiveRes_code_succes"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
                 example: "001004"
               message:
-                $ref: "#/components/schemas/primitiveRes_message"
+                $ref: "#/components/schemas/primitiveRes_message_success"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#status) for more details).
                 example: Requested cart does not contain tag(s) [...]
@@ -1037,15 +1087,13 @@ components:
                 description: |
                   Cart identifier generated on your side and passed to OmniCart on card registration.
               code:
-                $ref: "#/components/schemas/primitiveRes_code"
+                $ref: "#/components/schemas/primitiveRes_code_succes"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#init) for more details).
-                example: "000000"
               message:
-                $ref: "#/components/schemas/primitiveRes_message"
+                $ref: "#/components/schemas/primitiveRes_message_success"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#init) for more details).
-                example: Success
               debug:
                 $ref: "#/components/schemas/array_debug"
               timestamp:
@@ -1070,18 +1118,18 @@ components:
                     type: array
                     title: " "
                     description: Array of itemIds with modified amount
-                    example: ["itemId1", "itemId2", "itemId3"]
+                    example: ["harpies", "minotaurs", "beholders"]
                   modifiedTimers:
                     type: array
                     title: " "
                     description: Array of itemIds with modified timer
-                    example: ["itemId1", "itemId2", "itemId3"]
+                    example: ["slow", "berserk", "bless"]
               code:
-                $ref: "#/components/schemas/primitiveRes_code"
+                $ref: "#/components/schemas/primitiveRes_code_succes"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#modify) for more details).
               message:
-                $ref: "#/components/schemas/primitiveRes_message"
+                $ref: "#/components/schemas/primitiveRes_message_success"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#modify) for more details).
               debug:
@@ -1106,11 +1154,11 @@ components:
                     $ref: "#/components/schemas/array_items"
                     description: Array of captured itemIds.
               code:
-                $ref: "#/components/schemas/primitiveRes_code"
+                $ref: "#/components/schemas/primitiveRes_code_succes"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#capture) for more details).
               message:
-                $ref: "#/components/schemas/primitiveRes_message"
+                $ref: "#/components/schemas/primitiveRes_message_success"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#capture) for more details).
               debug:
@@ -1135,13 +1183,15 @@ components:
                     $ref: "#/components/schemas/array_items"
                     description: Array of itemIds with canceled payment.
               code:
-                $ref: "#/components/schemas/primitiveRes_code"
+                $ref: "#/components/schemas/primitiveRes_code_succes"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#cancel) for more details).
+                example: "000000"
               message:
-                $ref: "#/components/schemas/primitiveRes_message"                
+                $ref: "#/components/schemas/primitiveRes_message_success"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#cancel) for more details).
+                example: "Success"
               debug:
                 $ref: "#/components/schemas/array_debug"
               timestamp:
@@ -1168,7 +1218,7 @@ components:
                 $ref: "#/components/schemas/primitiveRes_code"
                 description: |
                   Response code (see [Response codes and messages](/docusaurus/docs/api/response-codes#refund) for more details).
-                example: 000000
+                example: "000000"
               message:
                 $ref: "#/components/schemas/primitiveRes_message"
                 description: |
@@ -1178,26 +1228,26 @@ components:
                 $ref: "#/components/schemas/array_debug"
               timestamp:
                 $ref: "#/components/schemas/primitiveRes_timestamp"
-    "200":
-      description: OK
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-              - data
-              - code
-              - message
-              - timestamp
-            properties:
-              data:
-                $ref: "#/components/schemas/objectRes_data"
-              code:
-                $ref: "#/components/schemas/primitiveRes_code"
-              message:
-                $ref: "#/components/schemas/primitiveRes_message"
-              timestamp:
-                $ref: "#/components/schemas/primitiveRes_timestamp"
+#    "200":
+#      description: OK
+#      content:
+#        application/json:
+#          schema:
+#            type: object
+#            required:
+#              - data
+#              - code
+#              - message
+#              - timestamp
+#            properties:
+#              data:
+#                $ref: "#/components/schemas/objectRes_data"
+#              code:
+#                $ref: "#/components/schemas/primitiveRes_code"
+#              message:
+#                $ref: "#/components/schemas/primitiveRes_message"
+#              timestamp:
+#                $ref: "#/components/schemas/primitiveRes_timestamp"
     "404":
       description: Not Found
       content:
@@ -1206,6 +1256,7 @@ components:
             type: object
             required:
               - code
+              - debug
               - message
               - timestamp
             properties:
@@ -1227,6 +1278,7 @@ components:
             type: object
             required:
               - code
+              - debug
               - message
               - timestamp
             properties:
@@ -1248,6 +1300,7 @@ components:
             type: object
             required:
               - code
+              - debug
               - message
               - timestamp
             properties:
@@ -1288,6 +1341,7 @@ components:
             type: object
             required:
               - code
+              - debug
               - message
               - timestamp
             properties:
@@ -1309,6 +1363,7 @@ components:
             type: object
             required:
               - code
+              - debug
               - message
               - timestamp
             properties:

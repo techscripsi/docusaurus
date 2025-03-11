@@ -160,12 +160,14 @@ const config: Config = {
           position: 'left',
           label: 'Key Concepts',
         },
+/*
         {
           type: 'doc',
           docId: 'panel',
           position: 'left',
           label: 'Merchant Panel',
         },
+*/
         {
           type: 'doc',
           docId: 'scenarios',

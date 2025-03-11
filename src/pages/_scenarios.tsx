@@ -19,16 +19,13 @@ config.autoAddCss = false
 import { faBook } from '@fortawesome/pro-solid-svg-icons'
 // FontAwesome end
 
-
 import Features from '@site/docs/_snippets/features.mdx'
-
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 
 import Index from '/docs/__snippets__/index.mdx';
 
 import styles from './index.module.css';
-
 
 import ReactDOM from 'react-dom'
 // import { byPrefixAndName } from '@awesome.me/kit-KIT_CODE/icons'

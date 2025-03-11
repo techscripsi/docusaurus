@@ -12,9 +12,9 @@ During the payment life cycle amounts can be canceled or refunded fully and part
 See the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information on the items payment life cycle.
 :::
 
-## `init` and `modify` requests {#amountmode}
+## `init` and `modify` requests {#init-modify}
 
-The `amount` property is passed with the <InitLink /> or <ModifyLink /> request. The optional `amountMode` property defines how OmniCart will treat the value passed in the item `amount` property. The available options for `amountMode` are `declared` and `calculated`. `amountMode` can be defined on the cart, tag, and item level.
+The `amount` property is passed with the <InitLink /> or <ModifyLink /> request. The optional `amountMode` property defines how OmniCart will treat the value passed in the item `amount` property. The available options for `amountMode` are `declared` and `calculated`. `amountMode` can be defined at the cart, tag, and item level.
 
 :::note
 By default, `amountMode` is `declared`.
@@ -24,13 +24,13 @@ By default, `amountMode` is `declared`.
   <div class="row">
     <div class="col col--6">
     ### `"amountMode": "declared"`
-    If `amountMode` is set to `declared`, the value of the `amount` property is included in the invoice exactly as it was received form from by OmniCart. The additional `quantity` and `amuntModifier`  properties are saved in OmniCart but have no effect on the final item price.
+    If `amountMode` is set to `declared`, the value of the `amount` property is included in the payment form exactly as it was received form from by OmniCart. The additional `quantity` and `amuntModifier`  properties are saved in OmniCart but have no effect on the final item price.
     ### `"amountMode": "calculated"`
     If `amountMode` is set to `calculated`, the `amount` value is the price per unit of goods (actual items, liters, minutes, etc.). The final price is a product of the `amount`, `quantity`, and `amountModifier` values.
     * `quantity` - number or volume of goods. Can be a whole number or a decimal fracture. For example, you can sell mana in bottles or in liters.
     * `amountModifer` - additional `amount` multiplier. You can use it to apply discounts or for any purpose you see fit.
     :::tip
-    Technically, `quantity` and `amountModifer` are just `amount` multipliers. However, `quantity` can be defined only on the item level while `amountModifer` can be defined on the cart, tag, and item level.
+    Technically, `quantity` and `amountModifer` are just `amount` multipliers. However, `quantity` can be defined only at the item level while `amountModifer` can be defined at the cart, tag, and item level.
     :::
     </div>
     <div class="col col--6">
@@ -109,7 +109,7 @@ The `itemAmounts` objects are part of item objects and contain information on th
           ```js
           //highlight-next-line
           "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-          "currency": "USD",
+          "currency": "XAU",
           //highlight-next-line
           "totalAmounts": {
             "initiated": 19900,

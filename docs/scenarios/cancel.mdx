@@ -84,7 +84,7 @@ sidebar_position: 20
         C ->> M: customer begins payment
         M ->>+O: init request
         O -->>-M: init response
-        M ->> C: invoice delivery
+        M ->> C: payment form delivery
         C ->>+V: payment authorization
         V ->>-O: authorized
       activate O
@@ -105,7 +105,7 @@ sidebar_position: 20
       1. <CustomerBeginsPayment />
       1. <InitRequest />
       1. <InitResponse />
-      1. <InvoiceDelivery />
+      1. <PaymentFormDelivery />
       1. <PaymentAuthorization />
       1. <Authorized />
       1. <FundsOnHold />
@@ -119,7 +119,7 @@ sidebar_position: 20
           ```js
           {
             "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-            "currency": "USD",
+            "currency": "XAU",
             "items": [
               {
                 "pegasus": {
@@ -219,7 +219,7 @@ sidebar_position: 20
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 1350,
                 "captured": 1100,
@@ -361,7 +361,7 @@ sidebar_position: 20
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
               "totalAmounts": {
                 "initiated": 1350,
                 "captured": 1100,
@@ -526,7 +526,7 @@ sidebar_position: 20
           {
             "data": {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
-              "currency": "USD",
+              "currency": "XAU",
 
               "totalAmounts": {
                 "initiated": 250,
@@ -577,7 +577,7 @@ import FundsOnHold from './_snippets/funds-on-hold.mdx';
 import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
 import InitRequest from './_snippets/init-request.mdx';
 import InitResponse from './_snippets/init-response.mdx';
-import InvoiceDelivery from './_snippets/invoice-delivery.mdx';
+import PaymentFormDelivery from './_snippets/paymentform-delivery.mdx';
 import ModifyRequest from './_snippets/modify-request.mdx';
 import ModifyResponse from './_snippets/modify-response.mdx';
 import Payment from './_snippets/payment.mdx';

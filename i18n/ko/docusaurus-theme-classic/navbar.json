@@ -1,0 +1,22 @@
+{
+  "logo.alt": {
+    "message": "OmniCart",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Key Concepts": {
+    "message": "Key Concepts",
+    "description": "Navbar item with label Key Concepts"
+  },
+  "item.label.Payment Scenarios": {
+    "message": "Payment Scenarios",
+    "description": "Navbar item with label Payment Scenarios"
+  },
+  "item.label.API Specification": {
+    "message": "API Specification",
+    "description": "Navbar item with label API Specification"
+  },
+  "item.label.Quick Reference": {
+    "message": "Quick Reference",
+    "description": "Navbar item with label Quick Reference"
+  }
+}
