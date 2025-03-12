@@ -1,0 +1,55 @@
+---
+hide_title: true
+hide_table_of_contents: true
+---
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from '@docusaurus/Link';
+import Cards from '/docs/\_snippets/cards.mdx';
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      <h2>API</h2>
+      | 요청 || 상태<br />전에 | 상태<br />이후 |
+      | :-- | :-- | :-- | :-- |
+      | <InitLink /> | [응답 코드 및 메시지](/docs/api/response-codes#init) | N/A | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`initiated`](/docs/concepts/lifecycle#initiated)<br />[`rejected`](/docs/concepts/lifecycle#rejected)<br />[`expired`](/docs/concepts/lifecycle#expired)<br />[`authorized`](/docs/concepts/lifecycle#authorized)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | <StatusLink /> | [응답 코드 및 메시지](/docs/api/response-codes#status) | 모두 | 모두 |
+      | <CancelLink /> | [응답 코드 및 메시지](/docs/api/response-codes#cancel) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`canceled`](/docs/concepts/lifecycle#canceled) |
+      | <CaptureLink /> | [응답 코드 및 메시지](/docs/api/response-codes#capture) | [`authorized`](/docs/concepts/lifecycle#authorized) | [`ongoing`](/docs/concepts/lifecycle#ongoing)<br />[`captured`](/docs/concepts/lifecycle#captured)<br />[`completed`](/docs/concepts/lifecycle#completed) |
+      | <ModifyLink /> | [응답 코드 및 메시지](/docs/api/response-codes#modify) | 모두 | 모두 |
+      | <RefundLink /> | [응답 코드 및 메시지](/docs/api/response-codes#refund) | [`completed`](/docs/concepts/lifecycle#completed) | [`completed`](/docs/concepts/lifecycle#completed)<br />[`refunded`](/docs/concepts/lifecycle#refunded) |
+
+      <div class="container">
+        <div class="row">
+          <div class="col col--6">
+          결제 시나리오:
+            * [기본 원스텝 결제](/docs/scenarios/basic#onestep)
+            * [기본 2단계 결제](/docs/scenarios/basic#twostep)
+            * [전체 취소(수동)](/docs/scenarios/cancel#cart-manual)
+            * [전체 취소(자동)](/docs/scenarios/cancel#cart-auto)
+            * [특정 항목 취소](/docs/scenarios/cancel#items)
+            * [부분 취소](/docs/scenarios/cancel#partial)
+            * [전액 환불](/docs/scenarios/refund#cart)
+            * [특정 항목 환불](/docs/scenarios/refund#items)
+            * [부분 환불](/docs/scenarios/refund#partial)
+            * [고객 세션 만료](/docs/scenarios/failure#expiry)
+            * [결제 인증 실패](/docs/scenarios/failure#auth)
+          </div>
+          <div class="col col--6">
+          타이머 상태:
+          * [`pending`](/docs/concepts/timer#pending)
+          * [`started`](/docs/concepts/timer#started)
+          * [`paused`](/docs/concepts/timer#paused)
+          * [`stopped`](/docs/concepts/timer#stopped)
+          * [`elapsed`](/docs/concepts/timer#elapsed)
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col col--6">
+      <h2>테스트 카드</h2>
+      <Cards />
+    </div>
+  </div>
+</div>

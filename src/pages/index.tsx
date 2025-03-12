@@ -20,7 +20,9 @@ config.autoAddCss = false
 import { faBook } from '@fortawesome/pro-solid-svg-icons'
 // FontAwesome end
 
-import Features from '@site/docs/_snippets/features.mdx'
+
+
+import Features from '/docs/_snippets/features.mdx'
 
 import Logo from '@site/static/img/logo-9BC834.svg';
 

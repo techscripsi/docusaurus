@@ -1,0 +1,130 @@
+---
+sidebar_position: 20
+---
+
+# 지급 수명 주기
+
+지급 상태는 전체 장바구니가 아닌 장바구니 항목과 관련이 있습니다. 즉, 카트에는 다양한 결제 상태의 항목이 포함될 수 있습니다. 사용 <StatusLink /> 현재 항목 상태를 확인하도록 요청합니다.
+
+<!-- general info, theat a cart goes through a life cycle etc. -->
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+    ###### 결제 상태(클릭 가능) 
+
+      <Mermaid
+        value={`
+          flowchart TB
+              initiated["initiated"] --> rejected
+              initiated --> authorized
+              initiated --> expired
+              authorized --> canceled
+              authorized -- 두 단계 --> captured
+              authorized -- 한 단계 --> completed
+              captured --> completed
+              completed --> refunded
+              
+              click initiated "#initiated"
+              click rejected "#rejected"
+              click expired "#expired"
+              click authorized "#authorized"
+              click canceled "#canceled"
+              click captured "#captured"
+              click completed "#completed"
+              click refunded "#refunded"
+
+              style initiated fill:#008B00,font-family:monospace
+              style authorized fill:#008B00,font-family:monospace
+              style captured fill:#008B00,font-family:monospace
+              style completed fill:#008B00,font-family:monospace
+              style rejected fill:#D53035,font-family:monospace
+              style expired fill:#D53035,font-family:monospace
+              style canceled fill:#B38200,font-family:monospace
+              style refunded fill:#B38200,font-family:monospace
+        `}
+      />
+      :::note 
+      일부 요청이 진행 중입니다. 이런 경우에는 이<StatusLink /> 요청은 [`ongoing`](#ongoing) 상태.
+      :::
+    </div>
+    <div class="col col--6">
+
+    ## `initiated`
+
+    이 `initiated` 상태는 지급 수명 주기의 시작입니다. 장바구니 항목은 성공 후 이 상태로 들어갑니다. <InitLink /> 요청. 이 시점에서 카트가 생성되고 결제 양식이 고객에게 전달됩니다.
+
+    ## `rejected`
+    
+    고객이 결제를 시도했지만 검증 서버가 시도를 거부했습니다. 가능한 이유는 고객 계정의 자금이 부족하거나 카드 소지자 인증에 실패했기 때문입니다.
+
+    ## `expired`
+
+    이 `expired` status는 에 설정된 시간을 의미합니다. `cartExpiry` 속성과 함께 전달된 속성 <InitLink /> 요청이 경과했습니다. 가능한 이유는 고객이 결제를 진행하지 않기로 결정했거나 진행할 수 없었기 때문입니다.
+
+    의 기본값은 `cartExpiry` 속성은 OmniCart와의 계약에 따라 다릅니다. 충분한 권한이 있는 경우 기본값을 재정의할 수 있습니다. `cartExpiry` 그러나 권장되지는 않습니다.
+
+    :::warning
+    참고로, `cartExpiry` 속성은 특정 항목이 아닌 전체 장바구니에 영향을 줍니다.
+    :::
+
+    </div>
+  </div>
+</div>
+
+
+## `authorized`
+
+이 `authorized` 상태는 확인 서비스가 모두 고객을 성공적으로 인증했으며 계정에 결제하기에 충분한 금액이 있음을 의미합니다.
+
+지불의 다음 상태는 다음 중 하나에 따라 다릅니다.-한두 단계-단계 지불 체계가 사용됩니다.
+
+### 1-단계 결제 {#onestep}
+
+한 사람에-단계 계획, 거래는 승인 직후 완료되며 그 후 지불이 입력됩니다. [`completed`\](#completed) 상태. 이 시점에서 고객에게 돈을 반품해야 하는 경우 부분 또는 전체 환불을 사용하십시오. <SeeCancelRefund />
+
+:::note
+하지만, 하나로-STEP 스킴, 지불은 `authorized` 상태를 매우 짧은 시간 동안 [상태\](/docs/api/15-status) 요청은 여전히 이 상태를 반환할 수 있습니다.
+:::
+
+### 2-단계 결제 {#twostep}
+
+둘과 함께-단계 체계, 지불이 승인된 후 금액은 고객의 계좌에 보류됩니다. 이것은 거래가 아직 완료되지 않았음에도 불구하고 사용할 수 없음을 의미합니다. 결제를 완료하려면 [`capture`\](/docs/api/30-capture) 요청을 사용합니다. 단일 요청으로 모든 카트 항목을 캡처할 필요는 없습니다.
+
+또 다른 옵션은 지불을 취소하는 것입니다. 결제를 취소하면 실제 거래가 완료되기 전에 이전에 보류된 고객의 돈을 해제할 수 있습니다. 결제를 취소하려면 <CancelLink /> 요청. 와 마찬가지로 [`capture`\](/docs/api/30-capture) 요청을 한 번에 모두 취소할 필요는 없습니다. 실제로 장바구니의 일부를 캡처하고 나머지를 취소할 수 있습니다. <SeeCancelRefund />
+
+<!--
+fully or partially
+-->
+
+:::note
+OmniCart 설정 및 권한에 따라 결제 상태가 자동으로 변경될 수 있습니다. `canceled` 또는 `captured`.
+:::
+
+## `captured`
+
+지불이 입력됩니다. `captured` 상태를 사용하여 캡처한 후 [`capture`\](/docs/api/30-capture) 요청을 사용합니다. OmniCart 설정 및 권한이 허용하는 경우 지불을 자동으로 캡처할 수도 있습니다. 캡처된 후 결제는 OmniCart에 의해 처리되고 자동으로 입력됩니다. `completed` 상태.
+
+## `canceled`
+
+지불이 입력됩니다. `canceled` 상태를 사용하여 완전히 취소된 후에만 <CancelLink /> 요청. OmniCart 설정 및 권한이 허용하는 경우 지불을 자동으로 취소 할 수도 있습니다.
+
+## `completed`
+
+이 `completed` 상태는 거래가 성공적으로 완료되었음을 의미합니다: 고객의 계좌에서 돈이 인출되어 대상 계좌로 이체됩니다.  지불은 OmniCart에 의해 자동 처리 된 후 다음에이 상태로 들어갑니다. `authorized` 상태의 경우-step scheme과 `captured` 둘 중 하나의 경우 상태-단계 체계. 이 상태에서는 지불금이 전부 또는 부분적으로 환불될 수 있습니다. 
+
+:::warning 참고해주세요
+부분 환불의 경우 지불은 `completed` 상태. <SeeCancelRefund />
+:::
+
+## `refunded`
+
+이 `refunded` 상태는 거래가 성공적으로 완료된 후 금액이 귀하의 계좌에서 고객의 계좌로 다시 이체되었음을 의미합니다. 지불이 입력됩니다. `refunded` 를 사용하여 완전히 환불된 후에만 상태가 됩니다. <RefundLink /> 요청. 그렇지 않으면 지불은 `completed` 상태. <SeeCancelRefund />
+
+## `ongoing`
+
+이 `ongoing` 상태는 지불이 중간 상태에 있음을 의미합니다. 어떤 <ModifyLink /> 요청과 부분 취소 또는 환불은 다른 요청을 처리하는 데 시간이 더 오래 걸릴 수 있습니다. 이 상태는 <InitLink /> 고객 조치가 필요한 경우 요청합니다.
+
+<!--import-->
+
+import SeeCancelRefund from '/docs/_snippets/general/refs/see-cancel-refund.mdx';

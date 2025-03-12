@@ -74,8 +74,8 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "api-source/spec.yml",
-            outputDir: "docs/api",
+            specPath: "api-source/spec-ko.yml",
+            outputDir: "i18n/ko/docusaurus-plugin-content-docs/current/api",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",

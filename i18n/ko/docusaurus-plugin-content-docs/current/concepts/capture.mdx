@@ -1,0 +1,197 @@
+---
+sidebar_position: 55
+---
+
+# 항목 캡처
+
+이 [`capture`](/docs/api/30-capture) 요청은 두 개의-결제를 준비하고 에서 항목을 수동으로 캡처할 수 있습니다. `authorized` 상태. 고객의 자금이 매입된 후 거래를 완료하기 위해 고객의 계좌에서 대상 계좌로 이체됩니다.
+
+전체 카트 또는 특정 항목을 캡처할 수 있습니다. 를 사용하는 옵션도 있습니다. <ModifyLink /> 항목을 캡처하기 전에 항목 양을 줄이도록 요청합니다 [항목 수정](/docs/concepts/modify) 섹션에서 자세한 내용을 확인할 수 있습니다. 
+
+:::warning 참고해주세요
+시작된 아이템 금액과 수정된 금액의 차액은 취소됩니다. 이 작업은 되돌릴 수 없습니다.
+:::
+
+기본적으로 OmniCart는 2일(`172800`초)를 사용하여 항목을 캡처합니다. `authorized` 상태. 항목이 이 기간 내에 캡처되지 않으면 `canceled` 상태.
+
+:::info
+캡처 설정은 인수 은행과의 계약 및 OmniCart의 권한에 따라 구성 할 수 있습니다. 구성 옵션에 대해 설명합니다 [아래](#configure)를 참조하십시오.
+:::
+
+## 캡처 설정 구성 {#configure}
+
+## 이 `capture` 요청
+
+### 전체 장바구니 캡처 {#cart}
+
+<!--FIXME single source this with cancel-->
+
+:::info
+전체 카트를 캡처한 후 모든 카트 항목이 `captured` 상태.
+:::
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      전체 장바구니를 캡처하려면 각각 [capture](/docs/api/30-capture) 요청을 사용합니다. 유일한 필수 속성은 다음과 같습니다. `cartId` 와 함께 전달됨 <InitLink /> 더 일찍 요청하십시오.
+    </div>
+    <div class="col col--6">
+      ```js
+      {
+      //highlight-next-line
+        "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402"
+      }
+
+      ```
+    </div>
+  </div>
+</div>
+
+### 특정 항목 캡처 {#items}
+
+:::info
+특정 카트 항목을 캡처한 후 이러한 항목은 `captured` 상태.
+:::
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      특정 장바구니 항목을 캡처하려면 [capture](/docs/api/30-capture) 요청을 사용합니다. 필수 항목과 별도로 요청 범위를 지정합니다. `cartId` 값에서 캡처할 항목에 대한 기준을 제공합니다. `filterBox` 객체. 
+      
+      다음을 사용할 수 있습니다. `tags` 그리고 `itemIds` objects와 `timerEnabled` 재산.
+      :::warning 참고해주세요
+      요청된 카트에는 지정된 태그 또는 항목 식별자가 포함되어야 하며, 그렇지 않으면 요청이 실패합니다.
+      :::
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="tags">
+          ```JS
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+              "tags": [
+          //highlight-start
+                "rampart",
+                "inferno"
+          //highlight-end
+              ]
+            }
+          }
+          ```
+          위의 예에서는 `rampart` 그리고 `inferno` 태그가 캡처됩니다.
+        </TabItem>
+        <TabItem value="itemIds">
+          ```JS
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+               "itemIds": [
+          //highlight-start
+                "sulfur",
+                "crystal",
+                "gems"
+          //highlight-end
+              ]
+            }
+          }
+          ```
+          위의 예에서는 `sulfur`, `crystal`그리고 `gems` 항목이 캡처됩니다.
+        </TabItem>
+        <TabItem value="timerEnabled">
+          ```JS
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+          //highlight-next-line
+              "timerEnabled": true
+            }
+          }
+          ```
+          위의 예에서는 비활성화된(설정되지 않은) 타이머가 있는 항목만 캡처됩니다.
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      이 `tags` 그리고 `itemIds` objects와 `timerEnabled` 속성은 조합하여 사용할 수 있습니다.
+      
+      이 `tags` criterion은 와의 중복을 무시합니다. `itemIds` 개체 속성을 사용합니다. 다음 예제를 참조하세요. 태그와 동일한 요청에서 지정된 태그로 표시된 항목을 지정합니다. OmniCart는 지정된 태그로 표시된 모든 항목을 캡처하고 항목이 실제로 태그와 식별자로 두 번 지정된다는 사실을 무시합니다.
+      
+      만약 당신이 통과하면 `timerEnabled` 속성을 사용하면 요청 범위가 타이머 설정에 따라 항목으로 좁혀집니다(자세한 내용은 [항목 타이머](/docs/concepts/timer) 섹션 참조). 
+      * `"timerEnabled": false` - 요청은 비활성화된(설정되지 않은) 타이머가 있는 항목에만 적용됩니다.
+      * `"timerEnabled": true` - 요청은 타이머가 활성화된 항목에만 적용됩니다.
+    </div>
+    <div class="col col--6">
+      <Tabs>
+        <TabItem value="Example #1">
+          ```JS
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-next-line
+                  "rampart",
+                ],
+                "itemIds": [
+          //highlight-start
+                  "crystal",
+                  "gems"
+          //highlight-end
+                ]
+              }
+            }
+          ```
+          위의 예에서는 다음을 가정합니다. `crystal` 항목이 로 표시되었습니다. `rampart` 태그와 `gems` 항목에 태그가 전혀 없습니다. 요청은 다음과 같은 모든 항목에 영향을 미칩니다. `rampart` 태그를 포함합니다. `crystal` 항목 **및** `gems` 태그가 지정되지 않은 항목입니다.
+        </TabItem>
+        <TabItem value="Example #2">
+          ```JS
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-start
+                  "rampart",
+                  "tower",
+                  "inferno"
+          //highlight-end
+                ],
+          //highlight-next-line
+                "timerEnabled":참
+              }
+            }
+          ```
+          위의 예에서는 장바구니에 다음이 포함되어 있다고 가정합니다. `rampart`, `tower`그리고 `inferno` 태그와 각 태그는 활성화된 타이머가 있는 하나 이상의 항목에 적용됩니다. 요청은 위의 태그 중 하나로 표시되고 타이머를 사용하도록 설정된 항목에만 영향을 줍니다. 다른 항목은 무시됩니다.
+        </TabItem>
+        <TabItem value="Example #3">
+          ```JS
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+          //highlight-start
+                  "necropolis",
+                  "dungeon"
+          //highlight-end
+                ],
+          //highlight-next-line
+                "timerEnabled": true
+              }
+            }
+          ```
+          위의 예에서는 장바구니에 다음이 포함되어 있다고 가정합니다. `necropolis` 그리고 `dungeon` 태그. 이 `necropolis` 태그가 비활성화된(설정되지 않은) 타이머가 있는 하나 이상의 항목에 적용됩니다. 로 표시된 항목이 없습니다. `dungeon` 태그는 타이머를 활성화하거나 비활성화했습니다.
+          
+          이 경우 요청이 실패합니다.
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+### 부분 항목 캡처 {#partial}
+
+OmniCart를 사용하면 캡처하기 전에 항목 양을 줄일 수 있습니다. 예를 들어, 고객이 제품에 대한 비용을 지불했는데 어떤 이유로 제품을 전체 수량으로 배송할 수 없거나 배송되지 않은 경우 이 작업이 필요할 수 있습니다. 이렇게 하려면 <ModifyLink /> 항목 금액을 더 낮은 값으로 변경하도록 요청합니다. 아이템 수량은 증가시킬 수 없습니다. `modify` [항목 수정](/docs/concepts/modify) 및 [금액](/docs/concepts/amounts) 섹션에서 자세한 내용을 확인할 수 있습니다. 초기 금액과 수정된 금액의 차액은 취소됩니다. 그 후에 다음을 사용할 수 있습니다. [`capture`](/docs/api/30-capture) 요청을 사용하여 남은 금액을 캡처합니다.

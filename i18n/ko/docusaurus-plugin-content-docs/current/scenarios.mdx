@@ -1,0 +1,55 @@
+---
+hide_title: true
+hide_table_of_contents: true
+---
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Link from '@docusaurus/Link';
+
+<div class="hero section-banner">
+  <div class="container">
+    <h1 class="hero__title"><FontAwesomeIcon icon="money-bill-transfer" /> 지불 시나리오</h1>
+    <p class="hero__subtitle">지불 시나리오의 예를 검토하여 지불이 어떻게 작동하는지 더 잘 알 수 있습니다.</p>
+    <div>
+    </div>
+  </div>
+</div>
+<p />
+<div class="tile-container">
+  <Link to="/docs/scenarios/basic#onestep" className="card-link">
+   <div class="tile card-click item shadow--md">
+       <h3>기본 단계 지불</h3>
+       <p>이 섹션은 단일 결제 거래를 실행하는 간단한 프로세스를 다룹니다.</p>
+   </div>
+  </Link>
+  <Link to="/docs/scenarios/basic#twostep" className="card-link">
+    <div class="tile card-click item shadow--md">
+      <h3>기본 2단계 지불</h3>
+       <p>두 단계의 지불 방법을 탐구, 세부적인 승인 후 자금의 캡처</p>
+    </div>
+  </Link>
+  <Link to="/docs/scenarios/complex" className="card-link">
+    <div class="tile card-click item shadow--md">
+      <h3>복잡한 시나리오</h3>
+      <p>다중 항목 카트 및 부분 지불을 포함한 고급 결제 상황을 살펴보십시오.</p>
+    </div>
+  </Link>
+  <Link to="/docs/scenarios/cancel" className="card-link">
+    <div class="tile card-click item shadow--md">
+      <h3>취소 시나리오</h3>
+      <p>처리가 완료되기 전에 지불을 취소하는 절차와 결과를 이해하십시오.</p>
+    </div>
+  </Link>
+  <Link to="/docs/scenarios/refund" className="card-link">
+    <div class="tile card-click item shadow--md">
+      <h3>환불 시나리오</h3>
+      <p>전체 금액이나 특정 항목에 대한 환불을 처리하는 방법에 대해 알아보십시오.</p>
+    </div>
+  </Link>
+  <Link to="/docs/scenarios/failure" className="card-link">
+    <div class="tile card-click item shadow--md">
+      <h3>실패 시나리오</h3>
+      <p>일반적인 지불 실패와 그 원인을 조사하십시오.</p>
+    </div>
+  </Link>
+</div>
