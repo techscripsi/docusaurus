@@ -10,8 +10,6 @@
 
   --ifm-table-border-width: 0px;
 
-
-
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
 
 /* API Method labels start */
@@ -155,16 +153,6 @@
 
 /* Custom */
 
-.card-tile {
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    background-color: #fff;
-    max-width: 300px;
-    margin: 10px;
-    transition: box-shadow 0.3s ease;
-}
-
 .card-link {
   text-decoration: none; 
   color: inherit; 
@@ -188,6 +176,16 @@
 }
 
 /* tiles start */
+
+.card-tile {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    background-color: #fff;
+    max-width: 300px;
+    margin: 10px;
+    transition: box-shadow 0.3s ease;
+}
 
 .tile-container {
 
@@ -227,12 +225,12 @@
 /* half-life-text start */
 
 .half-life-text {
-  font-family: 'Trebuchet MS', sans-serif; /* Используем Trebuchet MS */
-  font-size: 36px; /* Большой размер текста */
-  text-transform: uppercase; /* Все буквы заглавные */
-  letter-spacing: 2px; /* Расстояние между буквами */
-  color: #e3e3e3; /* Цвет текста, как в игре */
-  font-weight: bold; /* Жирный шрифт для эффекта */
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 36px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #e3e3e3;
+  font-weight: bold;
 }
 
 /* half-life-text end */
@@ -256,7 +254,7 @@ html[data-theme="dark"] .header-github-link:before {
     no-repeat;
 }
 
-/* Medium Header Link */
+/* 
 .header-medium-link:hover {
   opacity: 0.6;
 }
@@ -299,3 +297,5 @@ div[class^="announcementBar_"] {
   box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-python);
   border-color: var(--openapi-code-tab-border-color-python);
 }
+
+ */

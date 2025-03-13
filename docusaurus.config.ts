@@ -74,8 +74,10 @@ const config: Config = {
         docsPluginId: "classic", // configured for preset-classic
         config: {
           example: {
-            specPath: "api-source/spec-ko.yml",
-            outputDir: "i18n/ko/docusaurus-plugin-content-docs/current/api",
+            specPath: "api-source/spec.yml",
+            outputDir: "docs/api",
+//            specPath: "api-source/spec-ko.yml",
+//            outputDir: "i18n/ko/docusaurus-plugin-content-docs/current/api",
             sidebarOptions: {
               groupPathsBy: "tag",
               categoryLinkSource: "tag",
@@ -264,7 +266,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR POSSIBLE INTEGRATIONS
           },
         ],
 */
-        copyright: `${new Date().getFullYear()} Techscripsi, Built with Docusaurus.`,
+        copyright: `${new Date().getFullYear()} Techscripsi`,
       },
     prism: {
       theme: prismThemes.github,

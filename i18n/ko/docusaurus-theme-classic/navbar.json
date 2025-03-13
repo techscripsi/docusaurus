@@ -4,19 +4,19 @@
     "description": "The alt text of navbar logo"
   },
   "item.label.Key Concepts": {
-    "message": "Key Concepts",
+    "message": "핵심 개념",
     "description": "Navbar item with label Key Concepts"
   },
   "item.label.Payment Scenarios": {
-    "message": "Payment Scenarios",
+    "message": "지불 시나리오",
     "description": "Navbar item with label Payment Scenarios"
   },
   "item.label.API Specification": {
-    "message": "API Specification",
+    "message": "API 사양",
     "description": "Navbar item with label API Specification"
   },
   "item.label.Quick Reference": {
-    "message": "Quick Reference",
+    "message": "빠른 참조",
     "description": "Navbar item with label Quick Reference"
   }
 }
