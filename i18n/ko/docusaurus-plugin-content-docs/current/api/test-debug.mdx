@@ -1,0 +1,186 @@
+---
+sidebar_position: 120
+---
+
+# 테스트 및 디버깅
+
+## 테스트 자격 증명
+
+테스트 목적으로 다음 자격 증명과 주소를 사용하세요..
+
+| 자원 | 자격 증명 | 주소 |
+| :-- | :-- | :-- |
+| 판매자 패널 | OmniCart에 등록할 때 받은 로그인 및 비밀번호를 테스트하십시오. | https://mp.omnicart.scripsi.io/ |
+| API 서비스 | API 키 — 판매자 패널에서 생성합니다. | https://api.omnicart.scripsi.io/ |
+
+:::tip
+테스트를 완료한 후 또는 기술 지원에 문의하여 프로덕션 환경으로 전환하십시오.
+:::
+
+## 테스트 카드
+
+테스트 환경에서 이러한 카드를 사용합니다. 아래 각 카드에 대해 다음 세부 정보가 작동합니다.
+
+<div class="badge badge--secondary">
+  <table>
+    <tr>
+      <th align="left">CVV/CVC</th>
+      <td>임의의 3자리 숫자입니다.</td>
+    </tr>
+    <tr>
+      <th align="left">만료</th>
+      <td>향후 날짜.</td>
+    </tr>
+    <tr>
+      <th align="left">카드 소지자 이름</th>
+      <td>모든 이름.</td>
+    </tr>
+  </table>
+</div>
+
+<p />
+
+:::warning 제발, 주의
+과거 만료 날짜와 같은 잘못된 입력은 테스트 카드 번호에 관계없이 해당 오류를 반환합니다.
+:::
+
+import Cards from '../_snippets/cards.mdx';
+
+<Cards />
+
+## API 디버그 모드
+
+OmniCart API는 응답에서 디버그 정보를 반환할 수 있습니다. 이를 위해 `debug` 속성을 `true`요청에서. 이 설정을 지정하지 않거나 사용하지 않도록 설정하면 OmniCart는 실패의 원인이 된 오류만 리턴합니다. 이 설정이 활성화된 경우 OmniCart는 들어오는 전체 요청을 확인하고 요청 처리 실패로 이어질 수 있는 모든 오류를 반환합니다.
+
+:::warning 제발, 주의
+인증 오류로 인해 OmniCart가 요청 내용을 확인할 수 없습니다.
+:::
+
+아래의 예를 고려하십시오.
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      이는 성공적인 응답의 예입니다. `debug` 속성이 정의되지 않았거나 명시적으로 비활성화된 경우 응답에는 기본 응답 코드 및 메시지 쌍만 포함됩니다.
+      
+      `debug` 속성이 활성화된 경우 응답에는 기본 메시지와 추가 메시지가 있는 `debug` 개체가 포함됩니다. 위의 내용은 오류 메시지가 아니므로 요청이 성공한 것입니다.
+    </div>
+    <div class="col col--6">
+      ###### 성공적인 응답의 예
+      ```js title="범례"
+      //overridden
+      //디버그 정보
+      ```
+      <Tabs>
+        <TabItem value="debug: false">
+        ```js
+        {
+          "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+        //highlight-start
+          "code": "000000",
+          "message": "Success",
+        //highlight-end
+          "timestamp": "2025-04-23T18:25:43.511Z"
+        }
+        ```
+        </TabItem>
+          <TabItem value="debug: true">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+          //highlight-start
+            "code": "001001",
+            "message": "Tag(s) [...] defined but not used",
+          //highlight-end
+          //overridden
+            "debug": [
+          //overridden
+              {
+          //overridden
+                "code": "001002",
+          //overridden
+                "message": "Undefined tags in item(s): [...]"
+          //overridden
+              }
+          //overridden
+            ],
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+          </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      다음은 실패한 응답의 예입니다. `debug` 속성이 정의되지 않았거나 명시적으로 비활성화된 경우 응답에는 기본 오류 코드 및 메시지 쌍만 포함됩니다.
+      
+      `debug` 속성이 활성화된 경우 응답은 요청 실패의 원인이 된 오류를 별도로 지정합니다. `debug` 개체에는 이 시점에서 수정하지 않으면 다음에 요청이 실패하게 되는 오류가 포함되어 있습니다.
+    </div>
+    <div class="col col--6">
+      ###### 실패한 응답의 예
+      ```js title="범례"
+      //overridden
+      //디버그 정보
+      ```
+      <Tabs>
+        <TabItem value="debug: false">
+        ```js
+        {
+        //highlight-start
+          "code": 124101,
+          "message": "cartId already exists",
+        //highlight-end
+          "timestamp": "2025-04-23T18:25:43.511Z"
+        }
+        ```
+        </TabItem>
+          <TabItem value="debug: true">
+          ```js
+          {
+          //highlight-start
+            "code": 124101,
+            "message": "cartId already exists",
+          //highlight-end
+          //overridden
+            "debug": [
+          //overridden
+              {
+          //overridden
+                "code": "124102",
+          //overridden
+                "message": "customerId {0} is linked to itemId {1} in cartId {2} with an active timer"
+          //overridden
+              },
+          //overridden
+              {
+          //overridden
+                "code": "132000",
+          //overridden
+                "message": "Insufficient permissions to pass {0}"
+          //overridden
+              },
+          //overridden
+              {
+          //overridden
+                "code": "132002",
+          //overridden
+                "message": "Insufficient permissions to set or modify timer settings"
+          //overridden
+              }
+          //overridden
+            ],
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+          </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports -->
+

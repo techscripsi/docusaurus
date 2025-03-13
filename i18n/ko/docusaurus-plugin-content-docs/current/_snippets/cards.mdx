@@ -1,0 +1,25 @@
+| 상표 | 카드 번호 | 성공 | 메시지 |
+| :-: | :-: | :-: | :- |
+| <Visa width="40" height="40" /> | <code>4111&nbsp;1111&nbsp;1111&nbsp;1111</code> | <True /> | <CardPaymentSuccessful /> |
+| <Visa width="40" height="40" /> | `4012 8888 8888 1881` | <True /> | <CardPaymentSuccessful /> |
+| <Visa width="40" height="40" /> | `4000 0000 0000 0002` | <False /> | <CardAuthenticationError /> |
+| <Visa width="40" height="40" /> | `4000 0000 0000 0069` | <False /> | <CardInsufficientFunds /> |
+| <Visa width="40" height="40" /> | `4000 0000 0000 0259` | <False /> | <CardBlocked /> |
+| <Mastercard width="40" height="40" /> | `5500 0000 0000 0004` | <True /> | <CardPaymentSuccessful /> |
+| <Mastercard width="40" height="40" /> | `5105 1051 0510 5100` | <True /> | <CardPaymentSuccessful /> |
+| <Mastercard width="40" height="40" /> | `5105 1051 0510 5100` | <False /> | <CardInsufficientFunds /> |
+| <Mastercard width="40" height="40" /> | `5200 8282 8282 8210` | <False /> | <CardAuthenticationError /> |
+| <Discover width="40" height="40" /> | `6011 0000 0000 0004` | <True /> | <CardPaymentSuccessful /> |
+| <Discover width="40" height="40" /> | `6011 1111 1111 1117` | <True /> | <CardPaymentSuccessful /> |
+| <Discover width="40" height="40" /> | `6011 0000 0000 0004` | <False /> | <CardInsufficientFunds /> |
+| <Jcb width="40" height="40" /> | `3530 1113 0200 0000` | <True /> | <CardPaymentSuccessful /> |
+| <Jcb width="40" height="40" /> | `3566 1111 1111 1113` | <True /> | <CardPaymentSuccessful /> |
+
+<!-- imports -->
+
+import CardPaymentSuccessful from './cards/card-payment-successful.mdx';
+import CardInsufficientFunds from './cards/card-insufficient-funds.mdx';
+import CardAuthenticationError from './cards/card-authentication-error.mdx';
+import CardBlocked from './cards/card-blocked.mdx';
+import True from './cards/success-true.mdx';
+import False from './cards/success-false.mdx';

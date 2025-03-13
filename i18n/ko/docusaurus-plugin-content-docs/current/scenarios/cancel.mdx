@@ -1,0 +1,598 @@
+---
+sidebar_position: 20
+---
+
+# 취소 시나리오
+
+## 전체 장바구니 취소(수동) {#cart-manual}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+      opt
+        C ->> M: 고객 취소 요청
+      end
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+        M ->>+O: 취소 요청
+        O ->> O: 보류 중인 자금 해제
+        O -->>-M: 취소 응답
+      opt
+        M -->> C: 성공 메시지
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerRequestsCancellation />
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          <StatusResPegasusAuthorized />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <CancelRequest />
+      1. <FundsReleasedFromHold />
+      1. <CancelResponse />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`cancel`](/docs/api/20-cancel)
+      <Tabs>
+        <TabItem value="요청">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="응답">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## 전체 장바구니 취소(자동) {#cart-auto}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+        participant V as 인증 서비스
+        C ->> M: 고객 결제 시작
+        M ->>+O: 초기화 요청
+        O -->>-M: 초기화 응답
+        M ->> C: 결제 양식 전달
+        C ->>+V: 결제 승인
+        V ->>-O: 승인 완료
+      activate O
+        O ->>-O: 자금 보류
+        M -->> C: 성공 메시지
+      note over O: ⏲ "autoAction": "cancel" 만료
+        O ->> O: 보류 중인 자금 해제
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InitResponse />
+      1. <PaymentFormDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <FundsOnHold />
+      1. <SuccessMessage />
+      1. <FundsReleasedFromHold />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "XAU",
+            "items": [
+              {
+                "pegasus": {
+                  "amount": 250,
+          //highlight-start
+                  "capture": true,
+                  "captureSettings": {
+                    "autoAction": "cancel",
+                    "value": 172800
+          //highlight-end
+                  }
+                }
+              }
+            ]
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      10. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          <StatusResPegasusCanceled />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## 태그 또는 항목으로 취소 {#items}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+      loop
+      opt
+        C ->> M: 고객 취소 요청
+      end
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+        M ->>+O: 취소 요청
+        O ->> O: 보류 중인 자금 해제
+        O -->>-M: 취소 응답
+      opt
+        M -->> C: 성공 메시지
+      end
+      end
+      rect rgb(83, 140, 233)
+      note over C,O: 장바구니의 나머지 부분 캡처
+        M ->>+O: 캡처 요청
+        O ->> O: 결제 처리
+        O -->>-M: 캡처 응답
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerRequestsCancellation />
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 0,
+                "current": 1350
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 250
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <CancelRequest />
+      1. <FundsReleasedFromHold />
+      1. <CancelResponse />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`cancel`](/docs/api/20-cancel)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "filterBox": {
+          //overridden
+              "tags": [
+          //overridden
+                "rampart"
+              ]
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+          //overridden
+              "itemIds": [
+          //overridden
+                "pegasus"
+            },
+            "code": "string",
+            "message": "string",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <CaptureRequest />
+      1. <Payment />
+      1. <CaptureResponse />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture)
+      <Tabs>
+        <TabItem value="요청">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "itemIds": [
+          //added
+                "naga"
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      11. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 1350,
+                "captured": 1100,
+                "refunded": 0,
+                "current": 1100
+              },
+              "items": [
+                {
+          //added
+                  "naga": {
+          //added
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 1100,
+                      "captured": 1100,
+                      "refunded": 0,
+                      "current": 1100
+                    },
+          //added
+                    "tag": "tower"
+                  }
+                },
+                {
+          //overridden
+                  "pegasus": {
+          //overridden
+                    "paymentStatus": "canceled",
+                    "itemAmounts": {
+                      "initiated": 250,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+          //overridden
+                    "tag": "rampart"
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## 부분 취소 {#partial}
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+      loop
+      opt
+        C ->> M: 고객 취소 요청
+      end
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+        M ->>+O: 수정 요청
+        O ->> O: 보류 중인 자금 해제
+        O -->>-M: 수정 응답
+      opt
+        M -->> C: 성공 메시지
+      end
+      end
+      rect rgb(83, 140, 233)
+      note over C,O: 장바구니의 나머지 부분 캡처
+        M ->>+O: 캡처 요청
+        O ->> O: 결제 처리
+        O -->>-M: 캡처 응답
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerRequestsCancellation />
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          <StatusResPegasusAuthorized />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      4. <ModifyRequest />
+      1. <FundsReleasedFromHold />
+      1. <ModifyResponse />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify)
+      <Tabs>
+        <TabItem value="요청">
+          <ModifyReqPegasusAmount />
+        </TabItem>
+        <TabItem value="응답">
+          <ModifyResPegasusAmount />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      8. <CaptureRequest />
+      1. <Payment />
+      1. <CaptureResponse />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture)
+      <Tabs>
+        <TabItem value="요청">
+          <CartIdOnlyReq />
+        </TabItem>
+        <TabItem value="응답">
+          <PegasusItemResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      11. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+
+              "totalAmounts": {
+                "initiated": 250,
+         //highlight-start
+                "captured": 150,
+                "refunded": 0,
+                "current": 150
+        //highlight-end
+              },
+              "items": [
+                {
+                  "pegasus": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 250,
+        //highlight-start
+                      "captured": 150,
+                      "refunded": 0,
+                      "current": 150
+        //highlight-end
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports -->
+
+import Authorized from './_snippets/authorized.mdx';
+import CancelRequest from './_snippets/cancel-request.mdx';
+import CancelResponse from './_snippets/cancel-response.mdx';
+import CaptureRequest from './_snippets/capture-request.mdx';
+import CaptureResponse from './_snippets/capture-response.mdx';
+import CustomerBeginsPayment from './_snippets/customer-begins-payment.mdx';
+import CustomerRequestsARefund from './_snippets/customer-requests-a-refund.mdx';
+import CustomerRequestsCancellation from './_snippets/customer-requests-cancellation.mdx';
+import FundsOnHold from './_snippets/funds-on-hold.mdx';
+import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
+import InitRequest from './_snippets/init-request.mdx';
+import InitResponse from './_snippets/init-response.mdx';
+import PaymentFormDelivery from './_snippets/paymentform-delivery.mdx';
+import ModifyRequest from './_snippets/modify-request.mdx';
+import ModifyResponse from './_snippets/modify-response.mdx';
+import Payment from './_snippets/payment.mdx';
+import PaymentAuthorization from './_snippets/payment-authorization.mdx';
+import RefundRequest from './_snippets/refund-request.mdx';
+import RefundResponse from './_snippets/refund-response.mdx';
+import StatusRequest from './_snippets/status-request.mdx';
+import StatusResponse from './_snippets/status-response.mdx';
+import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx'
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx'
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx'
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx'
+import StatusResPegasusAuthorized from '../_snippets/api/code-snippets/status-res-pegasus-authorized.mdx';
+import StatusResPegasusCanceled from '../_snippets/api/code-snippets/status-res-pegasus-canceled.mdx';
+import ModifyReqPegasusAmount from '../_snippets/api/code-snippets/modify-req-pegasus-amount.mdx';
+import ModifyResPegasusAmount from '../_snippets/api/code-snippets/modify-res-pegasus-amount.mdx';

@@ -68,52 +68,52 @@ import Code503 from '../_snippets/api/response-codes/503-na.mdx';
 
 # 응답 코드 및 메시지
 
-Response codes are 6 digits long. The first digit indicates whether a request failed:
+응답 코드는 6자리 길이입니다. 첫 번째 숫자는 요청이 실패했는지 여부를 나타냅니다.
 
-* `0` - the request was processed without errors
-* `1` - the request failed.
+* `0` - 요청이 오류없이 처리되었습니다.
+* `1` - 요청이 실패했습니다.
 
-The next two digits indicate the error category and subcategory and the last three digits are the specific error code for the category and subcategory indicated by the two digits before.
+다음 두 숫자는 오류 범주와 하위 범주를 나타내며 마지막 세 숫자는 이전 두 숫자가 나타내는 범주와 하위 범주에 대한 특정 오류 코드입니다.
 
-See the example below.
+아래의 예를 보십시오.
 
 :::note
-Note that in case of an error the returned HTTP response code matches the error that caused the request to fail (i.e., the only error that is returned if the `debug` property is set to `false`).
+하십시오. 오류가 발생하면 반환된 HTTP 응답 코드는 요청이 실패하게 만든 오류(즉, `debug` 속성이 `false`로 설정된 경우 반환되는 유일한 오류)와 일치합니다.
 :::
 
 ```
 xxxxxx
-││ └─ specific error code, 3 digits
-│└─ error category and subcategory, 2 digits
-│   ├─ 0 - not an error
-│   │  ├─ 00 - no special messages
-│   │  └─ 01 - info message
-│   ├─ 1 - authentication errors
-│   │  ├─ 11 - authentication failed
-│   │  └─ 19 - other authentication related errors
-│   ├─ 2 - data related errors
-│   │  ├─ 21 - did not receive expected data
-│   │  ├─ 22 - the received data has wrong format
-│   │  ├─ 23 - the received data has invalid value
-│   │  ├─ 24 - conflict with existing data
-│   │  └─ 29 - other data related errors
-│   ├─ 3 - permissions related errors
-│   │  ├─ 31 - not allowed to pass this method
-│   │  ├─ 32 - not allowed to pass this object or parameter
-│   │  ├─ 33 - the passed value is out of the allowed range
-│   │  └─ 39 - other permission related errors
-│   └─ 9 - other errors
-└─ whether a request failed, 1 digit
-   ├─ 0 - request is successful
-   └─ 1 - request failed
+││ └─ 특정 오류 코드, 3자리
+│└─ 오류 카테고리 및 하위 카테고리, 2자리
+│   ├─ 0 - 오류 아님
+│   │  ├─ 00 - 특별한 메시지 없음
+│   │  └─ 01 - 정보 메시지
+│   ├─ 1 - 인증 오류
+│   │  ├─ 11 - 인증 실패
+│   │  └─ 19 - 기타 인증 관련 오류
+│   ├─ 2 - 데이터 관련 오류
+│   │  ├─ 21 - 예상된 데이터를 받지 못함
+│   │  ├─ 22 - 받은 데이터의 형식이 잘못됨
+│   │  ├─ 23 - 받은 데이터의 값이 유효하지 않음
+│   │  ├─ 24 - 기존 데이터와 충돌
+│   │  └─ 29 - 기타 데이터 관련 오류
+│   ├─ 3 - 권한 관련 오류
+│   │  ├─ 31 - 이 메서드를 허용하지 않음
+│   │  ├─ 32 - 이 객체 또는 매개변수를 허용하지 않음
+│   │  ├─ 33 - 전달된 값이 허용 범위를 벗어남
+│   │  └─ 39 - 기타 권한 관련 오류
+│   └─ 9 - 기타 오류
+└─ 요청 실패 여부, 1자리
+   ├─ 0 - 요청 성공
+   └─ 1 - 요청 실패
 ```
 
-## Initiate Cart {#init}
+## 카트 시작 {#init}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>
@@ -151,12 +151,12 @@ xxxxxx
 </table>
 
 
-## Retrieve Status {#status}
+## 상태 검색 {#status}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>
@@ -188,12 +188,12 @@ xxxxxx
   </tbody>
 </table>
 
-## Cancel Cart or Items {#cancel}
+## 취소 카트 또는 항목 {#cancel}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>
@@ -223,12 +223,12 @@ xxxxxx
   </tbody>
 </table>
 
-## Capture Cart or Items {#capture}
+## 캡처 카트 또는 항목 {#capture}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>
@@ -258,12 +258,12 @@ xxxxxx
   </tbody>
 </table>
 
-## Modify Cart or Items {#modify}
+## 바구니 또는 항목 수정 {#modify}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>
@@ -320,12 +320,12 @@ xxxxxx
   </tbody>
 </table>
 
-## Refund Cart or Items {#refund}
+## 환불 카트 또는 항목 {#refund}
 
 <table>
   <thead>
     <tr>
-      <th>API<br />코드</th>
+      <th>API 코드</th>
       <th>HTTP 코드</th>
       <th>API 메시지</th>
       <th>설명</th>

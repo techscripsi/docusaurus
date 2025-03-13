@@ -1,0 +1,897 @@
+---
+sidebar_position: 40
+---
+
+# 복잡한 시나리오
+
+## 예제 #1
+
+이 시나리오에서 카트 항목은 만료 타이머와 함께 생성됩니다. 예를 들어 모바일 앱 기능에 대한 임시 액세스가 될 수 있습니다. 그런 다음 고객은 임시 타이머가 만료되기 전에 PRO 버전으로 업그레이드하려고 합니다. PRO 버전은 기능을 무제한으로 사용할 수 있음을 의미합니다. 이를 달성하는 한 가지 방법은 항목 타이머를 중지하고 무제한 타이머가 있는 새 카트를 등록하는 것입니다.
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+        participant V as 인증 서비스
+      loop
+        C ->> M: 고객 결제 시작
+        M ->>+O: 임시 타이머와 함께 초기화 요청
+        O -->>-M: 초기화 응답
+        M ->> C: 결제 양식 전달
+        C ->>+V: 결제 승인
+        V ->>-O: 승인 완료
+      activate O
+        O ->>-O: 결제 처리
+        M ->> C: 성공 메시지
+      end
+        C ->> M: 고객이 PRO로 업그레이드 요청
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+        M ->>+O: 수정 요청: 타이머 중지
+        O ->> O: 타이머 중지
+        O -->>-M: 수정 응답
+      opt
+        M -->> C: 성공 메시지
+      end
+        C ->> M: 고객이 업그레이드 확인
+        M ->>+O: 초기화 요청: 타이머 값을 0으로 설정
+        O -->>-M: 초기화 응답
+        M ->> C: 결제 양식 전달
+        C ->> +V: 결제 승인
+        V ->> -O: 승인 완료
+      activate O
+        O ->>-O: 결제 처리
+        M -->> C: 성공 메시지
+  `}
+/>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InitResponse />
+      1. <PaymentFormDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <Payment />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init) (타이머를 설정하다)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
+            "currency": "XAU",
+            "items": [
+              {
+                "bloodlust": {
+                  "amount": 100,
+          //highlight-start
+                  "enableTimer": true,
+                  "timer": {
+                    "triggerEvent": "completed",
+                    "value": 259200
+          //highlight-end
+                  }
+                }
+              }
+            ],
+            "paymentForm": {
+              "deliveryOption": "redirect",
+              "value": "https://test.com/payment"
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          <InitResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      9. 고객이 PRO 버전으로 업그레이드하고 싶어합니다..
+      1. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 100,
+                "captured": 100,
+                "refunded": 0,
+                "current": 100
+              },
+              "items": [
+                {
+                  "bloodlust": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 100,
+                      "captured": 100,
+                      "refunded": 0,
+                      "current": 100
+                    },
+                    "paymentSnapshot": {
+                      "amount": 100
+                    },
+          //highlight-start
+                    "timerSnapshot": {
+                      "triggerEvent": "completed",
+                      "timerStatus": "started",
+                      "remainingSecs": 169387
+          //highlight-end
+          }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      12. <ModifyRequest /> 이러한 설정은 OmniCart가 항목 타이머를 중지하도록 지시합니다.
+      1. 타이머는 수동 동작으로 중지됩니다.
+      1. <ModifyResponse />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify) (타이머를 멈추다)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "modifyBox": {
+              "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
+              "items": [
+                {
+                  "bloodlust": {
+                    "modifyTimer": {
+                      "manualAction": "stop"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          <PlainResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      16. 고객이 업그레이드를 확인했습니다.
+      1. <InitRequest /> 타이머 값은 `0`으로 설정되어 만료되지 않음을 의미합니다.
+      1. <InitResponse />
+      1. <PaymentFormDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <Payment />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init) (새로운 타이머를 설정하다
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "998090f3-e1a3-446b-b503-c41ad9ee546a",
+            "customerId": "8d7d8181-b4bf-49bb-b732-d498d15dc5cc",
+            "currency": "XAU",
+            "items": [
+              {
+                "bloodlust": {
+                  "amount": 10000,
+          //highlight-start
+                  "enableTimer": true,
+                  "timer": {
+                    "triggerEvent": "completed",
+                    "value": 0
+          //highlight-end
+                  }
+                }
+              }
+            ],
+            "paymentForm": {
+              "deliveryOption": "redirect",
+              "value": "https://test.com/payment"
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "cartId": "998090f3-e1a3-446b-b503-c41ad9ee546a",
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+## 예제 #2
+
+이 시나리오에는 승인 후 태그를 재할당하고, 선택한 항목을 캡처하고, 캡처 기간이 만료되고, 부분 환불이 포함됩니다.
+
+<Mermaid
+  value={`
+    sequenceDiagram
+      autonumber
+        participant C as 고객
+        participant M as 판매자
+        participant O as OmniCart
+        participant V as 인증 서비스
+        C ->> M: 고객 결제 시작
+        M ->>+O: 초기화 요청
+        O -->>-M: 초기화 응답
+        M ->> C: 결제 양식 전달
+        C ->>+V: 결제 승인
+        V ->>-O: 승인 완료
+      activate O
+        O ->>-O: 자금 보류
+        M ->> C: 성공 메시지
+      opt
+        M ->>+O: 상태 요청
+        O ->>-M: 상태 응답
+      end
+        M ->>+O: 수정 요청 (태그 재적용)
+        O -->>-M: 수정 응답
+      opt
+        M ->>+O: 상태 요청
+        O ->>-M: 상태 응답
+      end
+        M ->>+O: 캡처 요청 (태그 기준)
+        O ->> O: 결제 처리
+        O -->>-M: 캡처 응답
+    note over O: ⏲ "autoAction": "cancel" 만료
+        O ->> O: 보류 중인 자금 해제
+      opt
+        M ->>+O: 상태 요청
+        O ->>-M: 상태 응답
+      end
+        C ->> M: 고객 환불 요청
+        M ->>+O: 수정 요청 (항목 수량 감소)
+        O ->> O: 결제 환불 처리
+        O -->>-M: 수정 응답
+      opt
+        M -->> C: 성공 메시지
+      end
+      opt
+        M ->>+O: 상태 요청
+        O -->>-M: 상태 응답
+      end
+  `}
+/>
+
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      1. <CustomerBeginsPayment />
+      1. <InitRequest />
+      1. <InitResponse />
+      1. <PaymentFormDelivery />
+      1. <PaymentAuthorization />
+      1. <Authorized />
+      1. <FundsOnHold />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`init`](/docs/api/10-init)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "currency": "XAU",
+            "scope": {
+              "cart": {
+                "paymentBox": {
+                  "amountMode": "calculated",
+                  "capture": true,
+                  "captureSettings": {
+                    "autoAction": "complete",
+                    "value": 172800
+                  }
+                }
+              },
+            },
+            "items": [
+              {
+                "marksman": {
+                  "tag": "shield",
+                  "amount": 150,
+                  "quantity": 18
+                }
+              },
+              {
+                "zealot": {
+                  "tag": "shield",
+                  "amount": 450,
+                  "quantity": 6
+                }
+              {
+                "archangel": {
+                  "tag": "shield",
+                  "amount": 5000,
+                  "quantity": 2
+                }
+              }
+            ],
+            "paymentForm": {
+              "deliveryOption": "redirect",
+              "value": "https://test.com/payment"
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          <InitResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      9. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+            {
+              "data": {
+                "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+                "currency": "XAU",
+                "totalAmounts": {
+                  "initiated": 15400,
+                  "captured": 0,
+                  "refunded": 0,
+                  "current": 15400
+                },
+                "items": [
+                  {
+                    "marksman": {
+                      "paymentStatus": "authorized",
+                      "itemAmounts": {
+                        "initiated": 2700,
+                        "captured": 0,
+                        "refunded": 0,
+                        "current": 2700
+                      },
+                      "tag": "shield",
+                      "paymentSnapshot": {
+                        "amount": 150,
+                        "amountMode": "calculated",
+                        "quantity": 18,
+                      }
+                    }
+                  },
+                  {
+                    "zealot": {
+                      "paymentStatus": "authorized",
+                      "itemAmounts": {
+                        "initiated": 2700,
+                        "captured": 0,
+                        "refunded": 0,
+                        "current": 2700
+                      },
+                      "tag": "shield",
+                      "paymentSnapshot": {
+                        "amount": 450,
+                        "amountMode": "calculated",
+                        "quantity": 6,
+                      }
+                    }
+                  },
+                  {
+                    "archangel": {
+                      "paymentStatus": "authorized",
+                      "itemAmounts": {
+                        "initiated": 10000,
+                        "captured": 0,
+                        "refunded": 0,
+                        "current": 10000
+                      },
+                      "tag": "shield",
+                      "paymentSnapshot": {
+                        "amount": 5000,
+                        "amountMode": "calculated",
+                        "quantity": 2,
+                      }
+                    }
+                  }
+                ]
+              },
+              "code": "000000",
+              "message": "Success",
+              "timestamp": "2025-04-23T18:25:43.511Z"
+            }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      11. <ModifyRequest />
+      1. <ModifyResponse />
+    </div>
+    <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify) (태그 재할당)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "modifyBox": {
+                "items": [
+                  {
+                    "marksman": {
+                      "tag": "slow"
+                    }
+                  }
+                ]
+              }
+            }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          <PlainResSuccess />
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      13. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 15400,
+                "captured": 0,
+                "refunded": 0,
+                "current": 15400
+              },
+              "items": [
+                {
+                  "marksman": {
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 2700
+                    },
+                    "tag": "slow",
+                    "paymentSnapshot": {
+                      "amount": 150,
+                      "amountMode": "calculated",
+                      "quantity": 18,
+                    }
+                  }
+                },
+          //highlight-start
+                {
+                  "zealot": {
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 2700
+                    },
+          //overridden
+                    "tag": "shield",
+                    "paymentSnapshot": {
+                      "amount": 450,
+                      "amountMode": "calculated",
+                      "quantity": 6,
+                    }
+                  }
+                },
+          //highlight-end
+                {
+                  "archangel": {
+                    "paymentStatus": "authorized",
+                    "itemAmounts": {
+                      "initiated": 10000,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 10000
+                    },
+                    "tag": "shield",
+                    "paymentSnapshot": {
+                      "amount": 5000,
+                      "amountMode": "calculated",
+                      "quantity": 2,
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      15. <CaptureRequest />
+      1. <Payment />
+      1. <CaptureResponse />
+      1. <FundsReleasedFromHold />
+    </div>
+    <div class="col col--6">
+      ### [`capture`](/docs/api/30-capture) by tag
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+            {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "filterBox": {
+                "tags": [
+                  "shield"
+                ]
+              }
+            }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+            {
+              "data": {
+                "itemIds": [
+                  "zealot",
+                  "archangel"
+                ]
+              },
+              "code": "000000",
+              "message": "Success",
+              "timestamp": "2025-04-23T18:25:43.511Z"
+            }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      19. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 15400,
+                "captured": 12700,
+                "refunded": 0,
+                "current": 0
+              },
+              "items": [
+                {
+                  "marksman": {
+                    "paymentStatus": "canceled",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+                    "tag": "slow",
+                    "paymentSnapshot": {
+                      "amount": 150,
+                      "amountMode": "calculated",
+                      "quantity": 18,
+                    }
+                  }
+                },
+                {
+                  "zealot": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 2700
+                    },
+                    "tag": "shield",
+                    "paymentSnapshot": {
+                      "amount": 450,
+                      "amountMode": "calculated",
+                      "quantity": 6,
+                    }
+                  }
+                },
+                {
+                  "archangel": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 10000,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 10000
+                    },
+                    "tag": "shield",
+                    "paymentSnapshot": {
+                      "amount": 5000,
+                      "amountMode": "calculated",
+                      "quantity": 2,
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      21. 고객이 부분 환불을 원합니다.
+      1. <ModifyRequest />
+      1. <PaymentRefunded />
+      1. <ModifyResponse />
+      1. <SuccessMessage />
+    </div>
+    <div class="col col--6">
+      ### [`modify`](/docs/api/40-modify) (부분 환불)
+      <Tabs>
+        <TabItem value="요청">
+          ```js
+          {
+            "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+            "modifyBox": {
+              "items": [
+                {
+                  "archangel": {
+                    "tag": "anti-magic",
+                  }
+                },
+                {
+                  "zealot": {
+                    "tag": "armageddon",
+                    "modifyAmount": {
+                      "quantity": 1
+                    }
+                  }
+                }
+              ]
+            }
+          }
+          ```
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "modifiedAmounts": [
+                "zealot"
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col col--6">
+      26. <StatusRequest />
+      1. <StatusResponse />
+    </div>
+    <div class="col col--6">
+      ### [`status`](/docs/api/15-status) (선택 과목)
+      <Tabs>
+        <TabItem value="요청">
+          <StatusReq />
+        </TabItem>
+        <TabItem value="응답">
+          ```js
+          {
+            "data": {
+              "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
+              "currency": "XAU",
+              "totalAmounts": {
+                "initiated": 15400,
+                "captured": 12700,
+                "refunded": 2250,
+                "current": 10450
+              },
+              "items": [
+                {
+                  "marksman": {
+                    "paymentStatus": "canceled",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 0
+                    },
+                    "tag": "slow",
+                    "paymentSnapshot": {
+                      "amount": 150,
+                      "amountMode": "calculated",
+                      "quantity": 18,
+                    }
+                  }
+                },
+                {
+                  "zealot": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 2700,
+                      "captured": 2700,
+                      "refunded": 2250,
+                      "current": 450
+                    },
+                    "tag": "armageddon",
+                    "paymentSnapshot": {
+                      "amount": 450,
+                      "amountMode": "calculated",
+                      "quantity": 1,
+                    }
+                  }
+                },
+                {
+                  "archangel": {
+                    "paymentStatus": "completed",
+                    "itemAmounts": {
+                      "initiated": 10000,
+                      "captured": 0,
+                      "refunded": 0,
+                      "current": 10000
+                    },
+                    "tag": "anti-magic",
+                    "paymentSnapshot": {
+                      "amount": 5000,
+                      "amountMode": "calculated",
+                      "quantity": 2,
+                    }
+                  }
+                }
+              ]
+            },
+            "code": "000000",
+            "message": "Success",
+            "timestamp": "2025-04-23T18:25:43.511Z"
+          }
+          ```
+        </TabItem>
+      </Tabs>
+    </div>
+  </div>
+</div>
+
+<!-- imports -->
+
+import Authorized from './_snippets/authorized.mdx';
+import CancelRequest from './_snippets/cancel-request.mdx';
+import CancelResponse from './_snippets/cancel-response.mdx';
+import CaptureRequest from './_snippets/capture-request.mdx';
+import CaptureResponse from './_snippets/capture-response.mdx';
+import CustomerBeginsPayment from './_snippets/customer-begins-payment.mdx';
+import CustomerRequestsARefund from './_snippets/customer-requests-a-refund.mdx';
+import CustomerRequestsCancellation from './_snippets/customer-requests-cancellation.mdx';
+import FundsOnHold from './_snippets/funds-on-hold.mdx';
+import FundsReleasedFromHold from './_snippets/funds-released-from-hold.mdx';
+import InitRequest from './_snippets/init-request.mdx';
+import InitResponse from './_snippets/init-response.mdx';
+import PaymentFormDelivery from './_snippets/paymentform-delivery.mdx';
+import ModifyRequest from './_snippets/modify-request.mdx';
+import ModifyResponse from './_snippets/modify-response.mdx';
+import Payment from './_snippets/payment.mdx';
+import PaymentAuthorization from './_snippets/payment-authorization.mdx';
+import PaymentRefunded from './_snippets/payment-refunded.mdx';
+import RefundRequest from './_snippets/refund-request.mdx';
+import RefundResponse from './_snippets/refund-response.mdx';
+import StatusRequest from './_snippets/status-request.mdx';
+import StatusResponse from './_snippets/status-response.mdx';
+import SuccessMessage from './_snippets/success-message.mdx';
+
+import InitResSuccess from '../_snippets/api/code-snippets/init-res-success.mdx'
+import PlainResSuccess from '../_snippets/api/code-snippets/plain-res-success.mdx'
+import StatusReq from '../_snippets/api/code-snippets/status-req.mdx'
+import CartIdOnlyReq from '../_snippets/api/code-snippets/cartId-only-req.mdx'
+import PegasusItemResSuccess from '../_snippets/api/code-snippets/pegasus-item-res-success.mdx'
+import StatusResPegasusAuthorized from '../_snippets/api/code-snippets/status-res-pegasus-authorized.mdx';
+import StatusResPegasusCompleted from '../_snippets/api/code-snippets/status-res-pegasus-completed.mdx';
+import ModifyReqPegasusAmount from '../_snippets/api/code-snippets/modify-req-pegasus-amount.mdx';
+import ModifyResPegasusAmount from '../_snippets/api/code-snippets/modify-res-pegasus-amount.mdx';

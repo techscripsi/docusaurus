@@ -306,7 +306,7 @@ paths:
                 cartId:
                   $ref: "#/components/schemas/primitive_cartId"
                   description: |
-                    `cartId` 는 하나 이상의 제품을 포함할 수 있는 결제 주문의 고유 식별자입니다. (items). 창조하다 `cartId` 주문 생성시 OmniCart에 전달하십시오.
+                    `cartId`는 하나 이상의 제품(아이템)을 포함할 수 있는 결제 주문의 고유 식별자입니다. 귀하 측에서 `cartId`를 생성하여 주문 생성 시 OmniCart에 전달합니다.
                 customerId:
                   $ref: "#/components/schemas/primitive_customerId"
                   description: |

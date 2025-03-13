@@ -58,7 +58,7 @@ sidebar_position: 55
     <div class="col col--6">
       특정 장바구니 항목을 캡처하려면 [capture](/docs/api/30-capture) 요청을 사용합니다. 필수 항목과 별도로 요청 범위를 지정합니다. `cartId` 값에서 캡처할 항목에 대한 기준을 제공합니다. `filterBox` 객체. 
       
-      다음을 사용할 수 있습니다. `tags` 그리고 `itemIds` objects와 `timerEnabled` 재산.
+      `tags` 및 `itemIds` 객체와 `timerEnabled` 속성을 사용할 수 있습니다.
       :::warning 참고해주세요
       요청된 카트에는 지정된 태그 또는 항목 식별자가 포함되어야 하며, 그렇지 않으면 요청이 실패합니다.
       :::
@@ -128,7 +128,7 @@ sidebar_position: 55
     </div>
     <div class="col col--6">
       <Tabs>
-        <TabItem value="Example #1">
+        <TabItem value="예제 #1">
           ```JS
             {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
@@ -148,7 +148,7 @@ sidebar_position: 55
           ```
           위의 예에서는 다음을 가정합니다. `crystal` 항목이 로 표시되었습니다. `rampart` 태그와 `gems` 항목에 태그가 전혀 없습니다. 요청은 다음과 같은 모든 항목에 영향을 미칩니다. `rampart` 태그를 포함합니다. `crystal` 항목 **및** `gems` 태그가 지정되지 않은 항목입니다.
         </TabItem>
-        <TabItem value="Example #2">
+        <TabItem value="예제 #2">
           ```JS
             {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",
@@ -167,7 +167,7 @@ sidebar_position: 55
           ```
           위의 예에서는 장바구니에 다음이 포함되어 있다고 가정합니다. `rampart`, `tower`그리고 `inferno` 태그와 각 태그는 활성화된 타이머가 있는 하나 이상의 항목에 적용됩니다. 요청은 위의 태그 중 하나로 표시되고 타이머를 사용하도록 설정된 항목에만 영향을 줍니다. 다른 항목은 무시됩니다.
         </TabItem>
-        <TabItem value="Example #3">
+        <TabItem value="예제 #3">
           ```JS
             {
               "cartId": "6f891edb-1e1f-48bb-b042-2cb790a0f402",

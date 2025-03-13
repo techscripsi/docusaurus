@@ -140,17 +140,17 @@ OmniCart는 기본적으로 결제 요청에 여러 품목을 수락하도록 �
       항목 설정은 상위 `amountMode` 및 `autoAction` 속성을 재정의하고 해당 특정 항목에 대한 `amountModifier` 속성을 추가합니다. 다른 설정은 상속됩니다.
     </div>
     <div class="col col--6">
-      ```js title="Legend"
-        //undefined
+      ```js title="전설"
+        //한정되지 않은
         // added
-        //newly defined
+        //새롭게 정의된
         // info
-        //inherited from parent
+        //부모로부터 상속받음
         // overridden
-        //overridden by child
+        //자식에 의해 재정의됨
       ```
       <Tabs>
- <TabItem value="Cart">
+ <TabItem value="카트">
         ```js
         //added
               "amountMode": "declared", 
@@ -168,7 +168,7 @@ OmniCart는 기본적으로 결제 요청에 여러 품목을 수락하도록 �
  }
         ```
  </TabItem>
-      <TabItem value="Tag">
+      <TabItem value="꼬리표">
         ``` js
       // info
               "amountMode": "declared",
@@ -190,7 +190,7 @@ OmniCart는 기본적으로 결제 요청에 여러 품목을 수락하도록 �
  }
     ```
       </TabItem>
-      <TabItem value="Item">
+      <TabItem value="목">
         ```js
       // overridden
               "amountMode": "calculated",
@@ -220,6 +220,6 @@ OmniCart는 기본적으로 결제 요청에 여러 품목을 수락하도록 �
 
 :::info 참고해주세요
 실제 요청에서는 원하는 만큼 태그를 정의하거나 정의하지 않고 항목에 할당할 수 있습니다.
-\* 태그를 정의하고 항목에 할당하지 않으면 정의된 태그가 요청 결과에 실질적인 영향을 미치지 않더라도 [장바구니 시작\](/docs/api/10-init) 요청은 OmniCart에서 승인됩니다.
-\* 마찬가지로 정의되지 않은 태그를 항목에 할당해도 오류로 간주되지 않습니다.
+* 태그를 정의하고 항목에 할당하지 않으면 정의된 태그가 요청 결과에 실질적인 영향을 미치지 않더라도 [장바구니 시작](/docs/api/10-init) 요청은 OmniCart에서 승인됩니다.
+* 마찬가지로 정의되지 않은 태그를 항목에 할당해도 오류로 간주되지 않습니다.
 :::

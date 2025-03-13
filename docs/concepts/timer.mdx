@@ -10,7 +10,7 @@ OmniCart remembers the relation between the `customerId` value and the item iden
 
 ## Timer Life Cycle {#lifecycle}
 
-Timer statuses can be retrieved using the [status](/docs/api/15-status) request. These statuses are returned per item.
+Timer statuses can be retrieved using the [`status`](/docs/api/15-status) request. These statuses are returned per item.
 
 <div class="container">
   <div class="row">
@@ -71,8 +71,7 @@ A timer enters the `stopped` status after it has been manually stopped with the 
 
 A timer enters the `stopped` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
-
-## Enabling a timer {#enable}
+## Enabling a Timer {#enable}
 
 By default, timers are disabled (not set). You can enable a timer at the beginning of the payment life cycle with the <InitLink /> request or at any other stage of the payment process using the <ModifyLink /> request. By enabling a timer, you define its settings like starting conditions and the countdown value.
 
@@ -80,7 +79,7 @@ By default, timers are disabled (not set). You can enable a timer at the beginni
 With the <ModifyLink /> request, you can disable any timer at any moment regardless of its current status.
 :::
 
-## Starting a timer {#start}
+## Starting a Timer {#start}
 
 A timer can be started by a trigger event or manually. Until started, an enabled timer stays in the `pending` state.
 
@@ -96,7 +95,7 @@ A trigger event is an item [payment status](/docs/concepts/lifecycle). For examp
 It's up to you whether to use timers and how to utilize them. If we refer to the last example, you, for some reason, might want to prevent your customer from purchasing the item they asked to refund for a certain period of time (or forever, if the countdown value is set to `0`).
 :::
 
-### Manual start {#manual-start}
+### Manual Start {#manual-start}
 
 An enabled timer can be started manually from the `pending` or `paused` state with the <ModifyLink /> request. Note that you can start the timer manually prior to a previously set trigger event. On that event, the timer will continue the countdown. If a timer is manually started and elapses before a previously set trigger event, it is not restarted as the `elapsed` status is final in the timer life cycle.
 
@@ -105,7 +104,7 @@ An enabled timer can be started manually from the `pending` or `paused` state wi
 The timer works as a countdown, its value is specified in seconds. For example, to set a timer for 2 hours, pass `7200` as the timer value in the <InitLink /> or <ModifyLink /> request. If you need to set a timer for 3 days, pass `259200` and so on. 
 
 :::tip
-If you pass value `0`, the timer is infinite. For example, you can utilize this for items that cannot be purchased more than once like unique artifacts in video games or one-time pro upgrades. Later you can always change the timer settings with the <ModifyLink /> request.
+If you pass value `0`, the timer is infinite. For example, you can utilize this for items that cannot be purchased more than once like unique artifacts in video games or one-time PRO upgrades. Later you can always change the timer settings with the <ModifyLink /> request.
 :::
 
 <!--
