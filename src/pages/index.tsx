@@ -67,7 +67,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="OmniCart <head />">
+      description="Techscripsi docs-as-code">
       <HomepageHeader />
       <main>
         <p />
