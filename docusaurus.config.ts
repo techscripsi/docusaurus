@@ -10,16 +10,11 @@ const config: Config = {
   tagline: ' ',
   favicon: 'img/favicon.svg',
 
-  // Set the production url of your site here
   url: 'https://techscripsi.github.io/',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/docusaurus/',
 
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'techscripsi', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'techscripsi',
+  projectName: 'docusaurus',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -33,32 +28,17 @@ const config: Config = {
     mermaid: true,
   },
 
-
   presets: [
     [
       'classic',
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          docItemComponent: "@theme/ApiItem", // Derived from docusaurus-theme-openapi
-//        Remove this to remove the "edit this page" links.
+          docItemComponent: "@theme/ApiItem",
 //          editUrl:
 //          'https://github.com/techscripsi/docusaurus',
         },
-//      blog: {
-//          showReadingTime: false,
-//          feedOptions: {
-//            type: ['rss', 'atom'],
-//            xslt: true,
-//          },
-//          Remove this to remove the "edit this page" links.
-//          editUrl:
-//          'https://github.com/techscripsi/docusaurus/tree/main/',
-//          Useful options to enforce blogging best practices
-//          onInlineTags: 'warn',
-//          onInlineAuthors: 'warn',
-//          onUntruncatedBlogPosts: 'ignore',
-//       },
+
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -70,44 +50,29 @@ const config: Config = {
     [
       'docusaurus-plugin-openapi-docs',
       {
-        id: "api", // plugin id
-        docsPluginId: "classic", // configured for preset-classic
+        id: "api",
+        docsPluginId: "classic",
         config: {
-          example: {
+          api: {
             specPath: "api-source/spec.yml",
             outputDir: "docs/api",
-//            specPath: "api-source/spec-ko.yml",
-//            outputDir: "i18n/ko/docusaurus-plugin-content-docs/current/api",
+
             sidebarOptions: {
-              groupPathsBy: "tag",
-              categoryLinkSource: "tag",
+//              groupPathsBy: "tag",
+              categoryLinkSource: "auto",
+            },
+            } satisfies OpenApiPlugin.Options,
+          apiko: {
+            specPath: "api-source/spec-ko.yml",
+            outputDir: "i18n/ko/docusaurus-plugin-content-docs/current/api",
+            sidebarOptions: {
+//              groupPathsBy: "tag",
+              categoryLinkSource: "auto",
             },
           } satisfies OpenApiPlugin.Options,
         }
       },
-    ]
-/*
-    [
-        'docusaurus-pushfeedback',{
-            project: 'xtq56xw90n',
-            buttonPosition: 'sidebar-right',
-        }
-    ]
-*/
-/* 
-        [
-            "docusaurus-plugin-remote-content",
-            {
-                // options here
-                name: "gitflick", // used by CLI, must be path safe
-                sourceBaseUrl: "https://github.com/techscripsi/docusaurus/blob/main/", // the base url for the markdown (gets prepended to all of the documents when fetching)
-                outDir: "docs/remote", // the base directory to output to.
-                documents: ["ANOTHER.md"], // the file names to download
-                noRuntimeDownloads: true,
-            },
-        ]
-*/
-
+    ],
   ],
 
   themes: [ "docusaurus-theme-openapi-docs",
@@ -147,7 +112,6 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
 
-    // Replace with your project's social card
     image: 'img/social.png',
     navbar: {
 //      title: 'OmniCart',

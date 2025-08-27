@@ -85,22 +85,22 @@ By default, `amountMode` is `declared`.
 
 ### `totalAmounts` and `itemAmounts` objects {#totalamounts-itemamounts}
 
-`totalAmounts` and `itemAmounts` are objects that are returned in successful responses to the [status](/docs/api/15-status) method. 
+`totalAmounts` and `itemAmounts` are objects that are returned in successful responses to the [status](/docs/api/status) method. 
 :::note
 See the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information on payment statuses.
 :::
 
 The `totalAmounts` and `itemAmounts` objects have same sets of properties. The difference is as follows.
 
-The `totalAmounts` object contains information on the total amounts per certain statuses for the entire request scope at the time of request. That means that if you, for example, filter your [status](/docs/api/15-status) request by a tag, the `totalAmounts` object will contain the total amounts of all cart items marked with that tag. The [status](/docs/api/15-status) request returns only one `totalAmounts` object.
+The `totalAmounts` object contains information on the total amounts per certain statuses for the entire request scope at the time of request. That means that if you, for example, filter your [status](/docs/api/status) request by a tag, the `totalAmounts` object will contain the total amounts of all cart items marked with that tag. The [status](/docs/api/status) request returns only one `totalAmounts` object.
 
-The `itemAmounts` objects are part of item objects and contain information on the amounts per certain statuses of specific items at the time of the request. There are as many `itemAmounts` objects as there are items in the [status](/docs/api/15-status) scope. If a [status](/docs/api/15-status) request returns a single item, the `itemAmounts` values are equal to the `totalAmounts` values.
+The `itemAmounts` objects are part of item objects and contain information on the amounts per certain statuses of specific items at the time of the request. There are as many `itemAmounts` objects as there are items in the [status](/docs/api/status) scope. If a [status](/docs/api/status) request returns a single item, the `itemAmounts` values are equal to the `totalAmounts` values.
 
 <div class="container">
   <div class="row">
     <div class="col col--6">
       * `initiated` - the initial amount that was registered with the <InitLink /> request.
-      * `captured` - the authorized amount that has been captured with the [`capture`](/docs/api/30-capture) request. Note that item amounts can be partially canceled before being captured, so this value may be different from the `initiated` amount. Also, cart items do not have to be captured all at once, therefore, a cart may contain items that are authorized but hasn't been captured or canceled, hence, this value may change. However, the`captured` amount cannot exceed the `initiated` amount.
+      * `captured` - the authorized amount that has been captured with the [`capture`](/docs/api/capture) request. Note that item amounts can be partially canceled before being captured, so this value may be different from the `initiated` amount. Also, cart items do not have to be captured all at once, therefore, a cart may contain items that are authorized but hasn't been captured or canceled, hence, this value may change. However, the`captured` amount cannot exceed the `initiated` amount.
       * `refunded` - the completed amount that has been refunded. Similar to the above, item amounts can be partially refunded, so this value may be different from the `captured` amount. As in the previous case, you have an option to refund selected items from the cart, not necessarily the entire cart. That means that the `refunded` value may change, however, the`refunded` amount cannot exceed the `captured` amount.
     </div>
     <div class="col col--6">

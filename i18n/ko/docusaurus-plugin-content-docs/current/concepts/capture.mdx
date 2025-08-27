@@ -4,7 +4,7 @@ sidebar_position: 55
 
 # 항목 캡처
 
-이 [`capture`](/docs/api/30-capture) 요청은 두 개의-결제를 준비하고 에서 항목을 수동으로 캡처할 수 있습니다. `authorized` 상태. 고객의 자금이 매입된 후 거래를 완료하기 위해 고객의 계좌에서 대상 계좌로 이체됩니다.
+이 [`capture`](/docs/api/capture) 요청은 두 개의-결제를 준비하고 에서 항목을 수동으로 캡처할 수 있습니다. `authorized` 상태. 고객의 자금이 매입된 후 거래를 완료하기 위해 고객의 계좌에서 대상 계좌로 이체됩니다.
 
 전체 카트 또는 특정 항목을 캡처할 수 있습니다. 를 사용하는 옵션도 있습니다. <ModifyLink /> 항목을 캡처하기 전에 항목 양을 줄이도록 요청합니다 [항목 수정](/docs/concepts/modify) 섹션에서 자세한 내용을 확인할 수 있습니다. 
 
@@ -33,7 +33,7 @@ sidebar_position: 55
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      전체 장바구니를 캡처하려면 각각 [capture](/docs/api/30-capture) 요청을 사용합니다. 유일한 필수 속성은 다음과 같습니다. `cartId` 와 함께 전달됨 <InitLink /> 더 일찍 요청하십시오.
+      전체 장바구니를 캡처하려면 각각 [capture](/docs/api/capture) 요청을 사용합니다. 유일한 필수 속성은 다음과 같습니다. `cartId` 와 함께 전달됨 <InitLink /> 더 일찍 요청하십시오.
     </div>
     <div class="col col--6">
       ```js
@@ -56,7 +56,7 @@ sidebar_position: 55
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      특정 장바구니 항목을 캡처하려면 [capture](/docs/api/30-capture) 요청을 사용합니다. 필수 항목과 별도로 요청 범위를 지정합니다. `cartId` 값에서 캡처할 항목에 대한 기준을 제공합니다. `filterBox` 객체. 
+      특정 장바구니 항목을 캡처하려면 [capture](/docs/api/capture) 요청을 사용합니다. 필수 항목과 별도로 요청 범위를 지정합니다. `cartId` 값에서 캡처할 항목에 대한 기준을 제공합니다. `filterBox` 객체. 
       
       `tags` 및 `itemIds` 객체와 `timerEnabled` 속성을 사용할 수 있습니다.
       :::warning 참고해주세요
@@ -194,4 +194,4 @@ sidebar_position: 55
 
 ### 부분 항목 캡처 {#partial}
 
-OmniCart를 사용하면 캡처하기 전에 항목 양을 줄일 수 있습니다. 예를 들어, 고객이 제품에 대한 비용을 지불했는데 어떤 이유로 제품을 전체 수량으로 배송할 수 없거나 배송되지 않은 경우 이 작업이 필요할 수 있습니다. 이렇게 하려면 <ModifyLink /> 항목 금액을 더 낮은 값으로 변경하도록 요청합니다. 아이템 수량은 증가시킬 수 없습니다. `modify` [항목 수정](/docs/concepts/modify) 및 [금액](/docs/concepts/amounts) 섹션에서 자세한 내용을 확인할 수 있습니다. 초기 금액과 수정된 금액의 차액은 취소됩니다. 그 후에 다음을 사용할 수 있습니다. [`capture`](/docs/api/30-capture) 요청을 사용하여 남은 금액을 캡처합니다.
+OmniCart를 사용하면 캡처하기 전에 항목 양을 줄일 수 있습니다. 예를 들어, 고객이 제품에 대한 비용을 지불했는데 어떤 이유로 제품을 전체 수량으로 배송할 수 없거나 배송되지 않은 경우 이 작업이 필요할 수 있습니다. 이렇게 하려면 <ModifyLink /> 항목 금액을 더 낮은 값으로 변경하도록 요청합니다. 아이템 수량은 증가시킬 수 없습니다. `modify` [항목 수정](/docs/concepts/modify) 및 [금액](/docs/concepts/amounts) 섹션에서 자세한 내용을 확인할 수 있습니다. 초기 금액과 수정된 금액의 차액은 취소됩니다. 그 후에 다음을 사용할 수 있습니다. [`capture`](/docs/api/capture) 요청을 사용하여 남은 금액을 캡처합니다.

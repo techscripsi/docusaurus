@@ -27,7 +27,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 50refund
+      operationId: refund
       requestBody:
         content:
           application/json:
@@ -67,7 +67,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 20cancel
+      operationId: cancel
       requestBody:
         content:
           application/json:
@@ -103,7 +103,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 40modify
+      operationId: modify
       requestBody:
         content:
           application/json:
@@ -190,7 +190,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 15status
+      operationId: status
       parameters:
         - name: cartId
           in: path
@@ -255,7 +255,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 30capture
+      operationId: capture
       requestBody:
         content:
           application/json:
@@ -293,7 +293,7 @@ paths:
           $ref: "#/components/responses/500"
         "503":
           description: Service Unavailable
-      operationId: 10init
+      operationId: init
       requestBody:
         content:
           application/json:

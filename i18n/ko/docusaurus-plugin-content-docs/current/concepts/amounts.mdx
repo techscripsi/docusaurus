@@ -85,22 +85,22 @@ sidebar_position: 30
 
 ### `TotalAmounts` 그리고 `itemAmounts` 객체 {#totalamounts-itemamounts}
 
-`TotalAmounts` 그리고 `itemAmounts` 에 대한 성공적인 응답으로 반환되는 개체입니다. [`status`](/docs/api/15-status) 메소드를 사용합니다.
+`TotalAmounts` 그리고 `itemAmounts` 에 대한 성공적인 응답으로 반환되는 개체입니다. [`status`](/docs/api/status) 메소드를 사용합니다.
 :::note
 자세한 내용은 다음을 참조하십시오. [지급 상태에 대한 자세한 내용은 지급 수명 주기](/docs/concepts/lifecycle) 섹션을 참조하십시오.
 :::
 
 이 `TotalAmounts` 그리고 `itemAmounts` 개체에는 동일한 속성 집합이 있습니다. 차이점은 다음과 같습니다.
 
-이 `TotalAmounts` 개체에는 요청 시점의 전체 요청 범위에 대한 특정 상태별 총 금액에 대한 정보가 포함되어 있습니다. 즉, 예를 들어 [`status`](/docs/api/15-status) 태그에 의한 요청인 경우 `TotalAmounts` 개체에는 해당 태그가 표시된 모든 장바구니 항목의 총 금액이 포함됩니다. 이 [`status`](/docs/api/15-status) 요청은 `TotalAmounts` 객체.
+이 `TotalAmounts` 개체에는 요청 시점의 전체 요청 범위에 대한 특정 상태별 총 금액에 대한 정보가 포함되어 있습니다. 즉, 예를 들어 [`status`](/docs/api/status) 태그에 의한 요청인 경우 `TotalAmounts` 개체에는 해당 태그가 표시된 모든 장바구니 항목의 총 금액이 포함됩니다. 이 [`status`](/docs/api/status) 요청은 `TotalAmounts` 객체.
 
-이 `itemAmounts` 객체는 item 객체의 일부이며 요청 시 특정 품목의 특정 상태별 금액에 대한 정보를 포함합니다. 그만큼 많습니다 `itemAmounts` objects에 항목이 있는 경우 [`status`](/docs/api/15-status) 범위에 있습니다. 만약 [`status`](/docs/api/15-status) 요청이 단일 항목을 반환하면 `itemAmounts` 값은 `TotalAmounts` 값.
+이 `itemAmounts` 객체는 item 객체의 일부이며 요청 시 특정 품목의 특정 상태별 금액에 대한 정보를 포함합니다. 그만큼 많습니다 `itemAmounts` objects에 항목이 있는 경우 [`status`](/docs/api/status) 범위에 있습니다. 만약 [`status`](/docs/api/status) 요청이 단일 항목을 반환하면 `itemAmounts` 값은 `TotalAmounts` 값.
 
 <div class="container">
   <div class="row">
     <div class="col col--6">
       * `initiated` - 에 등록된 초기 금액 <InitLink /> 요청.
-      * `captured` - [`capture`](/docs/api/30-capture) 요청을 보냅니다. 항목 금액은 캡처되기 전에 부분적으로 취소될 수 있으므로 이 값은 `initiated` 분량. 또한 카트 항목을 한 번에 모두 캡처할 필요는 없으므로 카트에 권한이 부여되었지만 캡처되거나 취소되지 않은 항목이 포함될 수 있으므로 이 값이 변경될 수 있습니다. 그러나`captured` 금액은 초과할 수 없습니다. `initiated` 분량.
+      * `captured` - [`capture`](/docs/api/capture) 요청을 보냅니다. 항목 금액은 캡처되기 전에 부분적으로 취소될 수 있으므로 이 값은 `initiated` 분량. 또한 카트 항목을 한 번에 모두 캡처할 필요는 없으므로 카트에 권한이 부여되었지만 캡처되거나 취소되지 않은 항목이 포함될 수 있으므로 이 값이 변경될 수 있습니다. 그러나`captured` 금액은 초과할 수 없습니다. `initiated` 분량.
       * `refunded` - 완료된 환불 금액입니다. 위와 마찬가지로 아이템 금액은 부분적으로 환불될 수 있으므로 이 값은 아이템 금액과 다를 수 있습니다. `captured` 분량. 이전의 경우와 마찬가지로 전체 장바구니가 아닌 장바구니에서 선택한 항목을 환불할 수 있는 옵션이 있습니다. 즉, `refunded` 그러나 값은 변경될 수 있습니다.`refunded` 금액은 초과할 수 없습니다. `captured` 분량.
     </div>
     <div class="col col--6">

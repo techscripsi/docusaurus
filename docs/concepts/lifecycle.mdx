@@ -86,14 +86,14 @@ The next status of the payment depends on whether one-step or two-step payment s
 In the one-stage scheme, the transaction is done immediately after authorization after which the payment enters the [`completed`](#completed) state. If you need to return the money to the customer at this point, use partial or complete refund. <SeeCancelRefund />
 
 :::note
-Although, with one-step scheme, the payment stays in the `authorized` status for a very short time, the [status](/docs/api/15-status) request may still return this state.
+Although, with one-step scheme, the payment stays in the `authorized` status for a very short time, the [status](/docs/api/status) request may still return this state.
 :::
 
 ### Two-Step Payment {#twostep}
 
-With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although, the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/30-capture) request. Note that you do not have to capture all cart items in a single request.
+With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although, the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/capture) request. Note that you do not have to capture all cart items in a single request.
 
-Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the <CancelLink /> request. Like with the [`capture`](/docs/api/30-capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. <SeeCancelRefund />
+Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the <CancelLink /> request. Like with the [`capture`](/docs/api/capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. <SeeCancelRefund />
 
 <!--
 fully or partially
@@ -105,7 +105,7 @@ Depending on the OmniCart settings and your privileges, the payment may auto cha
 
 ## `captured`
 
-A payment enters the `captured` status after you capture it using the [`capture`](/docs/api/30-capture) request. A payment can also be auto captured if the OmniCart settings and your privileges allow that. After being captured, a payment is processed by OmniCart and automatically enters the `completed` status.
+A payment enters the `captured` status after you capture it using the [`capture`](/docs/api/capture) request. A payment can also be auto captured if the OmniCart settings and your privileges allow that. After being captured, a payment is processed by OmniCart and automatically enters the `completed` status.
 
 ## `canceled`
 

@@ -4,7 +4,7 @@ sidebar_position: 55
 
 # Capturing Items
 
-The [`capture`](/docs/api/30-capture) request applies to two-stage payments and allows you to manually capture items in the `authorized` status. After the customer's money has been captured it is transferred from their account to the target account to complete the transaction.
+The [`capture`](/docs/api/capture) request applies to two-stage payments and allows you to manually capture items in the `authorized` status. After the customer's money has been captured it is transferred from their account to the target account to complete the transaction.
 
 You can capture the entire cart or specific items. There is also an option to use the <ModifyLink /> request to reduce an item amount before capturing it (see the [Modifying Items](/docs/concepts/modify) section for more information). 
 
@@ -33,7 +33,7 @@ After capturing the entire cart, all cart items enter the `captured` status.
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      To capture an entire cart, use the [capture](/docs/api/30-capture) request respectively. The only mandatory property is `cartId` passed with the <InitLink /> request earlier.
+      To capture an entire cart, use the [capture](/docs/api/capture) request respectively. The only mandatory property is `cartId` passed with the <InitLink /> request earlier.
     </div>
     <div class="col col--6">
       ```js
@@ -56,7 +56,7 @@ After capturing specific cart items, these items enter the `captured` status.
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      To capture specific cart items, use the [capture](/docs/api/30-capture) request. The specify the request scope, apart from the mandatory `cartId` value, provide the criteria for the items to be captured in the `filterBox` object. 
+      To capture specific cart items, use the [capture](/docs/api/capture) request. The specify the request scope, apart from the mandatory `cartId` value, provide the criteria for the items to be captured in the `filterBox` object. 
       
       You can use the `tags` and `itemIds` objects and the `timerEnabled` property.
       :::warning Please, note
@@ -194,4 +194,4 @@ After capturing specific cart items, these items enter the `captured` status.
 
 ### Partial Item Capture {#partial}
 
-With OmniCart, it is possible to reduce an item amount before capturing. For example, this might be needed if a customer paid for a product and, for some reason, the product cannot be (or was not) delivered in full quantity. To do this, use the <ModifyLink /> request to change the item amount to a lower value. Note that you cannot increase the item amount with the `modify` request (see the [Modifying Items](/docs/concepts/modify) and the [Amounts](/docs/concepts/amounts) sections for more information). The difference between the initial amount and the modified amount will be canceled. After that, you can use the [`capture`](/docs/api/30-capture) request to capture the remaining amount.
+With OmniCart, it is possible to reduce an item amount before capturing. For example, this might be needed if a customer paid for a product and, for some reason, the product cannot be (or was not) delivered in full quantity. To do this, use the <ModifyLink /> request to change the item amount to a lower value. Note that you cannot increase the item amount with the `modify` request (see the [Modifying Items](/docs/concepts/modify) and the [Amounts](/docs/concepts/amounts) sections for more information). The difference between the initial amount and the modified amount will be canceled. After that, you can use the [`capture`](/docs/api/capture) request to capture the remaining amount.
