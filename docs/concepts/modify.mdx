@@ -124,7 +124,7 @@ Tags can be modified regardless of the payment status, unless it involves changi
 
 ## Modifying Amounts {#amounts}
 
-Amount settings ​​can be modified at the cart, tag, or item level as with the <InitLink /> request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed status` (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
+Amount settings ​​can be modified at the cart, tag, or item level as with the <InitLink /> request (see also the [Cart, Tags, and Items](/docs/concepts/cart) section for more information). An item being modified must be in the `authorized` or `completed` status (see the [Payment Life Cycle](/docs/concepts/lifecycle) section for more information). 
 
 :::warning Please, note
 The full item amount cannot be modified to a greater value.
@@ -153,7 +153,7 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section 
 
       Since `amountMode` was changed to `calculated`, the total price of the `naga` item is a product of the `amount` and `quantity` values. That equals `4400` and is not different from the initiated price. What changed are the components of the final item price and the fact that now it is calculated by OmniCart instead of being taken as is from the `amount` property.
       
-      Note that the `initiated` and `current` values of the `itemAmounts`object has not changed after the item has been modified.
+      Note that the `initiated` and `current` values of the `itemAmounts` object have not changed after the item has been modified.
       
       :::info
       See the [Amounts](/docs/concepts/amounts) section for more information.
@@ -355,7 +355,7 @@ See the [Cancellation and Refund](/docs/concepts/cancel-refund#partial) section 
 
 Timer settings can be changed regardless of any payment status.
 
-With the <ModifyLink /> request request you can:
+With the <ModifyLink /> request you can:
 
 * enable a previously disabled (not set) timer
 * change existing timer settings, including the trigger event or countdown value
@@ -443,7 +443,7 @@ Enabling a timer starts its life cycle which only ends when a timer enters the `
 <div class="container">
   <div class="row">
     <div class="col col--6">
-      In this example, the `unicorn` item is in the `authorized` status. The timer has been  previously enabled to start when the item enters the `captured` status. The `modify` request contains the `manualAction` property with the `start` value. It is a manual action to start the timer. After the request is processed, the timer is counting down
+      In this example, the `unicorn` item is in the `authorized` status. The timer has been previously enabled to start when the item enters the `captured` status. The `modify` request contains the `manualAction` property with the `start` value. It is a manual action to start the timer. After the request is processed, the timer is counting down.
 
       :::note
       The trigger event (the `captured` status) remains unchanged as the `modify` request did not contain instructions to alter it. This is the expected behavior.
