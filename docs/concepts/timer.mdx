@@ -54,7 +54,7 @@ Timer statuses can be retrieved using the [`status`](/docs/api/status) request. 
 
     ### `started`
 
-    The `started` status that the countdown is on. The remaining time (in seconds) is the value of the `remainingSecs` property of the `timerSnapshot` object in the [status](/docs/api/status) response.
+    The `started` status means that the countdown is on. The remaining time (in seconds) is the value of the `remainingSecs` property of the `timerSnapshot` object in the [status](/docs/api/status) response.
 
     ### `paused`
 
@@ -65,11 +65,11 @@ Timer statuses can be retrieved using the [`status`](/docs/api/status) request. 
 
 ### `stopped`
 
-A timer enters the `stopped` status after it has been manually stopped with the <ModifyLink /> request. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
+A timer enters the `stopped` status after it has been manually stopped with the <ModifyLink /> request. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted. To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
 ### `elapsed`
 
-A timer enters the `stopped` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted . To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
+A timer enters the `elapsed` status when the number of seconds specified in the timer settings elapses. This is the end of a timer life cycle. From this status, the timer for the current item and `customerId` cannot be restarted. To start a new timer, initiate a new cart with the <InitLink /> request or enable a timer for an existing cart item with the <ModifyLink /> request.
 
 ## Enabling a Timer {#enable}
 

@@ -24,13 +24,13 @@ By default, `amountMode` is `declared`.
   <div class="row">
     <div class="col col--6">
     ### `"amountMode": "declared"`
-    If `amountMode` is set to `declared`, the value of the `amount` property is included in the payment form exactly as it was received form from by OmniCart. The additional `quantity` and `amuntModifier`  properties are saved in OmniCart but have no effect on the final item price.
+    If `amountMode` is set to `declared`, the value of the `amount` property is included in the payment form exactly as it was received from OmniCart. The additional `quantity` and `amountModifier` properties are saved in OmniCart but have no effect on the final item price.
     ### `"amountMode": "calculated"`
     If `amountMode` is set to `calculated`, the `amount` value is the price per unit of goods (actual items, liters, minutes, etc.). The final price is a product of the `amount`, `quantity`, and `amountModifier` values.
-    * `quantity` - number or volume of goods. Can be a whole number or a decimal fracture. For example, you can sell mana in bottles or in liters.
-    * `amountModifer` - additional `amount` multiplier. You can use it to apply discounts or for any purpose you see fit.
+    * `quantity` - number or volume of goods. Can be a whole number or a decimal fraction. For example, you can sell mana in bottles or in liters.
+    * `amountModifier` - additional `amount` multiplier. You can use it to apply discounts or for any purpose you see fit.
     :::tip
-    Technically, `quantity` and `amountModifer` are just `amount` multipliers. However, `quantity` can be defined only at the item level while `amountModifer` can be defined at the cart, tag, and item level.
+    Technically, `quantity` and `amountModifier` are just `amount` multipliers. However, `quantity` can be defined only at the item level while `amountModifier` can be defined at the cart, tag, and item level.
     :::
     </div>
     <div class="col col--6">
@@ -100,8 +100,8 @@ The `itemAmounts` objects are part of item objects and contain information on th
   <div class="row">
     <div class="col col--6">
       * `initiated` - the initial amount that was registered with the <InitLink /> request.
-      * `captured` - the authorized amount that has been captured with the [`capture`](/docs/api/capture) request. Note that item amounts can be partially canceled before being captured, so this value may be different from the `initiated` amount. Also, cart items do not have to be captured all at once, therefore, a cart may contain items that are authorized but hasn't been captured or canceled, hence, this value may change. However, the`captured` amount cannot exceed the `initiated` amount.
-      * `refunded` - the completed amount that has been refunded. Similar to the above, item amounts can be partially refunded, so this value may be different from the `captured` amount. As in the previous case, you have an option to refund selected items from the cart, not necessarily the entire cart. That means that the `refunded` value may change, however, the`refunded` amount cannot exceed the `captured` amount.
+      * `captured` - the authorized amount that has been captured with the [`capture`](/docs/api/capture) request. Note that item amounts can be partially canceled before being captured, so this value may be different from the `initiated` amount. Also, cart items do not have to be captured all at once, therefore, a cart may contain items that are authorized but haven't been captured or canceled, hence, this value may change. However, the `captured` amount cannot exceed the `initiated` amount.
+      * `refunded` - the completed amount that has been refunded. Similar to the above, item amounts can be partially refunded, so this value may be different from the `captured` amount. As in the previous case, you have an option to refund selected items from the cart, not necessarily the entire cart. That means that the `refunded` value may change, however, the `refunded` amount cannot exceed the `captured` amount.
     </div>
     <div class="col col--6">
       <Tabs>
@@ -140,7 +140,7 @@ The `itemAmounts` objects are part of item objects and contain information on th
   </div>
 </div>
 
-* `current` - current amount of a cart or item. For example, if the some cart items are `authorized` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less that the `captured` amount.
+* `current` - current amount of a cart or item. For example, if some cart items are `authorized` and partially canceled, their current amount is less than the `initiated` amount. Similarly, if some cart items are `captured` or `completed` and partially refunded, their `current` amount is less than the `captured` amount.
 
 ### `paymentSnapshot` object {#paymentsnapshot}
 

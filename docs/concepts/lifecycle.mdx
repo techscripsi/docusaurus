@@ -62,7 +62,7 @@ Payment statuses are related to cart items rather than to the entire cart. This 
 
     ## `expired`
 
-    The `expired` status means that the time set in the `cartExpiry` property passed with the <InitLink /> request has elapsed. The possible reasons are that the customer decided no to proceed with the payment or was unable to do it.
+    The `expired` status means that the time set in the `cartExpiry` property passed with the <InitLink /> request has elapsed. The possible reasons are that the customer decided not to proceed with the payment or was unable to do it.
 
     The default value of the `cartExpiry` property depends on your agreement with OmniCart. If you have sufficient permissions, you can override the default `cartExpiry` value, although, it is not recommended.
 
@@ -86,12 +86,12 @@ The next status of the payment depends on whether one-step or two-step payment s
 In the one-stage scheme, the transaction is done immediately after authorization after which the payment enters the [`completed`](#completed) state. If you need to return the money to the customer at this point, use partial or complete refund. <SeeCancelRefund />
 
 :::note
-Although, with one-step scheme, the payment stays in the `authorized` status for a very short time, the [status](/docs/api/status) request may still return this state.
+Although with one-step scheme, the payment stays in the `authorized` status for a very short time, the [status](/docs/api/status) request may still return this state.
 :::
 
 ### Two-Step Payment {#twostep}
 
-With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although, the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/capture) request. Note that you do not have to capture all cart items in a single request.
+With the two-step scheme, after a payment has been authorized, the money is put on hold on the customer's account. This means that they cannot use it, although the transaction is not completed yet. To complete the payment, use the [`capture`](/docs/api/capture) request. Note that you do not have to capture all cart items in a single request.
 
 Another option is to cancel the payment. By canceling a payment you release the customer's money that has been previously put on hold before the actual transaction is done. To cancel a payment, use the <CancelLink /> request. Like with the [`capture`](/docs/api/capture) request, you do not have to cancel all at once. In fact, you can capture a part of your cart and cancel the rest. <SeeCancelRefund />
 
@@ -125,7 +125,7 @@ The `refunded` status means that after a successful transaction the money has be
 
 ## `ongoing`
 
-The `ongoing` status means that a payment is in an intermediate state. Some <ModifyLink /> requests as well as partial cancellations or refunds might take longer to process that other requests. This status is also returned after the <InitLink /> request when customer action is required.
+The `ongoing` status means that a payment is in an intermediate state. Some <ModifyLink /> requests as well as partial cancellations or refunds might take longer to process than other requests. This status is also returned after the <InitLink /> request when customer action is required.
 
 <!--import-->
 
