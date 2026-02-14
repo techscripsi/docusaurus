@@ -109,11 +109,11 @@ A payment enters the `captured` status after you capture it using the [`capture`
 
 ## `canceled`
 
-A payment enters the `canceled` state only after it has been fully canceled with the the <CancelLink /> request. A payment can also be auto canceled if the OmniCart settings and your privileges allow that.
+A payment enters the `canceled` state only after it has been fully canceled with the <CancelLink /> request. A payment can also be auto canceled if the OmniCart settings and your privileges allow that.
 
 ## `completed`
 
-The `completed` status means that the transaction is successfully done: the money is withdrawn from the customer's account and transferred to the target account.  A payment enters this status after it has been auto processed by OmniCart following the `authorized` status in case of the one-step scheme and `captured` status in case of the two-step scheme. In this state, the payment may be fully or partially refunded. 
+The `completed` status means that the transaction is successfully done: the money is withdrawn from the customer's account and transferred to the target account. A payment enters this status after it has been auto processed by OmniCart following the `authorized` status in case of the one-step scheme and `captured` status in case of the two-step scheme. In this state, the payment may be fully or partially refunded. 
 
 :::warning Please, note
 In the case of a partial refund, the payment remains in the `completed` status. <SeeCancelRefund />
