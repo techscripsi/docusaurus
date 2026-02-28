@@ -93,10 +93,6 @@ const config: Config = {
 
   themeConfig: {
 
-    prism: {
-      additionalLanguages: ['curl, kt'],
-    },
-
       tableOfContents: {
         minHeadingLevel: 2,
         maxHeadingLevel: 4,
@@ -235,6 +231,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR POSSIBLE INTEGRATIONS
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ['kotlin'],
       magicComments: [
 //    Remember to extend the default highlight class name as well!
         {

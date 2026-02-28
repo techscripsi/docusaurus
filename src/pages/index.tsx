@@ -17,14 +17,9 @@ library.add(fab, fas);
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
-import { faBook } from '@fortawesome/pro-solid-svg-icons'
 // FontAwesome end
 
-import Features from '/docs/_snippets/features.mdx'
-
 import Logo from '@site/static/img/logo-9BC834.svg';
-
-import Index from '/docs/__snippets__/index.mdx';
 
 import styles from './index.module.css';
 
