@@ -226,7 +226,7 @@ THIS INSTANCE IS INACTIVE, SAVED FOR POSSIBLE INTEGRATIONS
           },
         ],
 */
-        copyright: `${new Date().getFullYear()} Techscripsi`,
+        copyright: `${new Date().getFullYear()} Techscripsi  ПУ ПУ ПУ`,
       },
     prism: {
       theme: prismThemes.github,
